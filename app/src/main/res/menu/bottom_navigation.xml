@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home_filled"
+        />
+
+    <item
+        android:id="@+id/findMealsFragment"
+        android:title="Find Meals"
+        android:icon="@drawable/ic_search_filled"
+        />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title=""
+        />
+
+    <item
+        android:id="@+id/myMealsFragment"
+        android:title="My Meals"
+        android:icon="@drawable/ic_my_meals_filled"
+        />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="Settings"
+        android:icon="@drawable/ic_settings_filled"
+        />
+
+</menu>

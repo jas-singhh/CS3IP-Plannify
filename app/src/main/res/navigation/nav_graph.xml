@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_findMealsFragment"
+            app:destination="@id/findMealsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myMealsFragment"
+            app:destination="@id/myMealsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/findMealsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.FindMealsFragment"
+        android:label="fragment_find_meals"
+        tools:layout="@layout/fragment_find_meals" >
+        <action
+            android:id="@+id/action_findMealsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_findMealsFragment_to_myMealsFragment"
+            app:destination="@id/myMealsFragment" />
+        <action
+            android:id="@+id/action_findMealsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myMealsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.MyMealsFragment"
+        android:label="fragment_my_meals"
+        tools:layout="@layout/fragment_my_meals" >
+        <action
+            android:id="@+id/action_myMealsFragment_to_findMealsFragment"
+            app:destination="@id/findMealsFragment" />
+        <action
+            android:id="@+id/action_myMealsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_myMealsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_findMealsFragment"
+            app:destination="@id/findMealsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_myMealsFragment"
+            app:destination="@id/myMealsFragment" />
+    </fragment>
+</navigation>
