@@ -2,4 +2,37 @@
     <string name="app_name">MealPlanner</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="placeholder">Placeholder</string>
+
+    <!--    MEAL TYPES -->
+    <array name="array_meal_types">
+        <item>Popular</item>
+        <item>Breakfast</item>
+        <item>Brunch</item>
+        <item>Lunch</item>
+        <item>Snack</item>
+        <item>Tea Time</item>
+        <item>Dinner</item>
+    </array>
+
+<!--    MEAL TYPES SUB-TEXT-->
+<string name="breakfast_subtext">Most important meal of the day</string>
+<string name="brunch_subtext">Brunch placeholder</string>
+<string name="lunch_subtext">Lunch placeholder</string>
+<string name="snack_subtext">Snack placeholder</string>
+<string name="teatime_subtext">Tea Time placeholder</string>
+<string name="dinner_subtext">Dinner placeholder</string>
+
+<!--    CARD PROPERTIES -->
+    <dimen name="radius_card">20dp</dimen>
+    <dimen name="elevation_card">10dp</dimen>
+    
+<!--    TEXT SIZES -->
+    <dimen name="text_titles">20sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_important">16sp</dimen>
+
+<!--    PADDINGS -->
+    <dimen name="padding_cards">20dp</dimen>
+
 </resources>

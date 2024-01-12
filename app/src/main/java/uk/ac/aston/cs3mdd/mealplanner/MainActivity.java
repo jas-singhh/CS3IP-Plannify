@@ -12,6 +12,7 @@ import uk.ac.aston.cs3mdd.mealplanner.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    public static final String TAG = "WMK";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

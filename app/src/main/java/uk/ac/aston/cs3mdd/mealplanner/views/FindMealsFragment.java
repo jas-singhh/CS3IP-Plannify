@@ -1,22 +1,16 @@
-package uk.ac.aston.cs3mdd.mealplanner;
+package uk.ac.aston.cs3mdd.mealplanner.views;
 
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentFindMealsBinding;
-import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentHomeBinding;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FindMealsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentFindMealsBinding;
+
 public class FindMealsFragment extends Fragment {
 
     private FragmentFindMealsBinding binding;
@@ -29,7 +23,7 @@ public class FindMealsFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFindMealsBinding.inflate(inflater, container, false);
         return binding.getRoot();
