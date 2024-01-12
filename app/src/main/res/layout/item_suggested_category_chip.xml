@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/chip"
+    style="@style/Widget.MaterialComponents.Chip.Choice">
+
+<!--&lt;!&ndash;    MAIN CONTENT &ndash;&gt;-->
+<!--<com.google.android.material.card.MaterialCardView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="48dp"-->
+<!--    android:elevation="@dimen/elevation_card"-->
+<!--    android:padding="@dimen/padding_cards"-->
+<!--    app:cardCornerRadius="@dimen/radius_card"-->
+<!--    app:layout_constraintTop_toTopOf="parent"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    android:layout_marginStart="32dp"-->
+<!--    >-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        >-->
+
+<!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:gravity="center_vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/category_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingHorizontal="15dp"-->
+<!--                android:text="Breakfast"-->
+<!--                android:textSize="@dimen/text_medium"-->
+<!--                android:letterSpacing=".1"/>-->
+
+<!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
+
+<!--</com.google.android.material.card.MaterialCardView>-->
+<!--&lt;!&ndash; MAIN CONTENT &ndash;&gt;-->
+
+
+<!--    &lt;!&ndash;    ICON &ndash;&gt;-->
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        app:cardBackgroundColor="@color/complementary"-->
+<!--        app:cardCornerRadius="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:strokeColor="@color/white">-->
+
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:id="@+id/category_icon"-->
+<!--            app:srcCompat="@drawable/ic_breakfast"-->
+<!--            android:padding="5dp"-->
+<!--            app:tint="@color/white"-->
+
+<!--            />-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
+<!--&lt;!&ndash;    ICON &ndash;&gt;-->
+
+</com.google.android.material.chip.Chip>
