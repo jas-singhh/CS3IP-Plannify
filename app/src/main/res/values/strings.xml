@@ -25,6 +25,7 @@
 
     <!--    CARD PROPERTIES -->
     <dimen name="radius_card">20dp</dimen>
+    <dimen name="radius_small_card">5dp</dimen>
     <dimen name="elevation_card">10dp</dimen>
 
     <!--    TEXT SIZES -->

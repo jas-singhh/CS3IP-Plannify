@@ -6,194 +6,526 @@
     android:layout_height="match_parent"
     tools:context=".views.MealDetailsFragment">
 
-    <!--    HEADER IMAGE -->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/header_image"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_meal_sample"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--    HEADER IMAGE -->
+    <!--    &lt;!&ndash;    HEADER IMAGE &ndash;&gt;-->
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:id="@+id/header_image"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="300dp"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:src="@drawable/img_meal_sample"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    &lt;!&ndash;    HEADER IMAGE &ndash;&gt;-->
 
-    <!--    BACK BUTTON -->
-    <RelativeLayout
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+    <!--    &lt;!&ndash;    BACK BUTTON &ndash;&gt;-->
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="64dp"-->
+    <!--        android:layout_height="64dp"-->
+    <!--        android:layout_margin="15dp"-->
+    <!--        android:background="@drawable/rounded_outline"-->
+    <!--        android:backgroundTint="@color/semi_transparent_white"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--        <androidx.appcompat.widget.AppCompatImageView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:padding="10dp"-->
+    <!--            app:srcCompat="@drawable/ic_back" />-->
+    <!--    </RelativeLayout>-->
+    <!--    &lt;!&ndash;    BACK BUTTON &ndash;&gt;-->
+
+    <!--    &lt;!&ndash;    MAIN CONTENT &ndash;&gt;-->
+    <!--    <com.google.android.material.card.MaterialCardView-->
+    <!--        style="@style/CustomCardViewStyle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_marginTop="260dp"-->
+    <!--        android:backgroundTint="@color/dark_grey"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--        &lt;!&ndash;        CARD CONTENT CONTAINER &ndash;&gt;-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            &lt;!&ndash;        TITLE &ndash;&gt;-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/details_name"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_margin="@dimen/margin"-->
+    <!--                android:text="Name of the meal"-->
+    <!--                android:textColor="@color/white"-->
+    <!--                android:textSize="@dimen/text_headings"-->
+    <!--                android:textStyle="bold"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <!--            &lt;!&ndash;            MAIN ATTRIBUTES CONTAINER &ndash;&gt;-->
+    <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+    <!--                android:id="@+id/main_attributes_container"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginHorizontal="@dimen/margin"-->
+    <!--                android:layout_marginTop="5dp"-->
+    <!--                android:orientation="horizontal"-->
+    <!--                android:paddingVertical="5dp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/details_name">-->
+
+    <!--                &lt;!&ndash;            CUISINE &ndash;&gt;-->
+    <!--                <TextView-->
+    <!--                    android:id="@+id/details_cuisine"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:drawablePadding="5dp"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:text="Cuisine"-->
+    <!--                    android:textColor="@color/text_grey"-->
+    <!--                    android:textSize="@dimen/text_medium"-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    app:drawableStartCompat="@drawable/ic_cuisine"-->
+    <!--                    app:drawableTint="@color/white" />-->
+
+    <!--                &lt;!&ndash;            SEPARATOR&ndash;&gt;-->
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginHorizontal="5dp"-->
+    <!--                    android:text="•"-->
+    <!--                    android:textColor="@color/text_grey"-->
+    <!--                    android:textSize="@dimen/text_medium"-->
+    <!--                    android:textStyle="bold" />-->
+
+    <!--                &lt;!&ndash;            DISH TYPE  &ndash;&gt;-->
+    <!--                <TextView-->
+    <!--                    android:id="@+id/details_dish_type"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:drawablePadding="5dp"-->
+    <!--                    android:text="Dish type"-->
+    <!--                    android:textColor="@color/text_grey"-->
+    <!--                    android:textSize="@dimen/text_medium"-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    app:drawableStartCompat="@drawable/ic_dish_type"-->
+    <!--                    app:drawableTint="@color/white" />-->
+
+    <!--                &lt;!&ndash;            SEPARATOR&ndash;&gt;-->
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginHorizontal="5dp"-->
+    <!--                    android:text="•"-->
+    <!--                    android:textColor="@color/text_grey"-->
+    <!--                    android:textSize="@dimen/text_medium"-->
+    <!--                    android:textStyle="bold" />-->
+
+    <!--                &lt;!&ndash;            SERVINGS  &ndash;&gt;-->
+    <!--                <TextView-->
+    <!--                    android:id="@+id/details_servings"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:drawablePadding="5dp"-->
+    <!--                    android:text="X Servings"-->
+    <!--                    android:textColor="@color/text_grey"-->
+    <!--                    android:textSize="@dimen/text_medium"-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    app:drawableStartCompat="@drawable/ic_servings"-->
+    <!--                    app:drawableTint="@color/white" />-->
+
+    <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+    <!--            &lt;!&ndash;            MAIN ATTRIBUTES CONTAINER &ndash;&gt;-->
+
+    <!--            &lt;!&ndash;            SEPARATOR &ndash;&gt;-->
+    <!--            <View-->
+    <!--                android:id="@+id/separator"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="1dp"-->
+    <!--                android:layout_marginTop="@dimen/margin"-->
+    <!--                android:background="@color/gray"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/main_attributes_container" />-->
+
+    <!--            &lt;!&ndash;            INGREDIENTS CONTAINER  &ndash;&gt;-->
+    <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_margin="@dimen/margin"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/separator">-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/details_ingredients_title"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:text="Ingredients"-->
+    <!--                    android:textColor="@color/white"-->
+    <!--                    android:textSize="@dimen/text_titles"-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    app:layout_constraintStart_toStartOf="parent"-->
+    <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--                <androidx.recyclerview.widget.RecyclerView-->
+    <!--                    android:id="@+id/details_ingredients_rv"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="horizontal"-->
+    <!--                    app:layout_constraintTop_toBottomOf="@+id/details_ingredients_title"-->
+    <!--                    app:layout_constraintStart_toStartOf="parent"-->
+    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                    android:layout_marginTop="5dp"-->
+    <!--                    />-->
+
+
+    <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--            &lt;!&ndash;            INGREDIENTS CONTAINER  &ndash;&gt;-->
+
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--        &lt;!&ndash;        CARD CONTENT CONTAINER &ndash;&gt;-->
+
+    <!--    </com.google.android.material.card.MaterialCardView>-->
+    <!--    &lt;!&ndash;    MAIN CONTENT &ndash;&gt;-->
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="15dp"
-        android:background="@drawable/rounded_outline"
         android:backgroundTint="@color/semi_transparent_white"
+        app:cardCornerRadius="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
             app:srcCompat="@drawable/ic_back" />
-    </RelativeLayout>
-    <!--    BACK BUTTON -->
 
-    <!--    MAIN CONTENT -->
-    <com.google.android.material.card.MaterialCardView
-        style="@style/CustomCardViewStyle"
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="260dp"
-        android:backgroundTint="@color/dark_grey"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--        CARD CONTENT CONTAINER -->
+        <!--        MAIN PARENT CONTAINER -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--        TITLE -->
-            <TextView
-                android:id="@+id/details_name"
+            <!--    HEADER IMAGE -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/header_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
-                android:text="Name of the meal"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_headings"
-                android:textStyle="bold"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_meal_sample"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <!--    HEADER IMAGE -->
 
-
-            <!--            MAIN ATTRIBUTES CONTAINER -->
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/main_attributes_container"
+            <!--    MAIN CONTENT -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:paddingVertical="5dp"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/dark_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/details_name">
+                app:layout_constraintTop_toBottomOf="@+id/header_image">
 
-                <!--            CUISINE -->
-                <TextView
-                    android:id="@+id/details_cuisine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:gravity="center"
-                    android:text="Cuisine"
-                    android:textColor="@color/text_grey"
-                    android:textSize="@dimen/text_medium"
-                    android:textStyle="bold"
-                    app:drawableStartCompat="@drawable/ic_cuisine"
-                    app:drawableTint="@color/white" />
-
-                <!--            SEPARATOR-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:text="•"
-                    android:textColor="@color/text_grey"
-                    android:textSize="@dimen/text_medium"
-                    android:textStyle="bold" />
-
-                <!--            DISH TYPE  -->
-                <TextView
-                    android:id="@+id/details_dish_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:text="Dish type"
-                    android:textColor="@color/text_grey"
-                    android:textSize="@dimen/text_medium"
-                    android:textStyle="bold"
-                    app:drawableStartCompat="@drawable/ic_dish_type"
-                    app:drawableTint="@color/white" />
-
-                <!--            SEPARATOR-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:text="•"
-                    android:textColor="@color/text_grey"
-                    android:textSize="@dimen/text_medium"
-                    android:textStyle="bold" />
-
-                <!--            SERVINGS  -->
-                <TextView
-                    android:id="@+id/details_servings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:text="X Servings"
-                    android:textColor="@color/text_grey"
-                    android:textSize="@dimen/text_medium"
-                    android:textStyle="bold"
-                    app:drawableStartCompat="@drawable/ic_servings"
-                    app:drawableTint="@color/white" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <!--            MAIN ATTRIBUTES CONTAINER -->
-
-            <!--            SEPARATOR -->
-            <View
-                android:id="@+id/separator"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/margin"
-                android:background="@color/gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/main_attributes_container" />
-
-            <!--            INGREDIENTS CONTAINER  -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/separator">
-
-                <TextView
-                    android:id="@+id/details_ingredients_title"
+                <!--        CARD CONTENT CONTAINER -->
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ingredients"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_titles"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/details_ingredients_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/details_ingredients_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="5dp"
-                    />
+                    <!--        TITLE -->
+                    <TextView
+                        android:id="@+id/details_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin"
+                        android:text="Name of the meal"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_headings"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--            INGREDIENTS CONTAINER  -->
+                    <!--            MAIN ATTRIBUTES CONTAINER -->
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/main_attributes_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:paddingVertical="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/details_name">
+
+                        <!--            CUISINE -->
+                        <TextView
+                            android:id="@+id/details_cuisine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="5dp"
+                            android:gravity="center"
+                            android:text="Cuisine"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/text_medium"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_cuisine"
+                            app:drawableTint="@color/white" />
+
+                        <!--            SEPARATOR-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:text="•"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/text_medium"
+                            android:textStyle="bold" />
+
+                        <!--            HEALTH RATING  -->
+                        <TextView
+                            android:id="@+id/details_health_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="5dp"
+                            android:text="Very Healthy"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/text_medium"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_healthy"
+                            app:drawableTint="@color/white" />
+
+                        <!--            SEPARATOR-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:text="•"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/text_medium"
+                            android:textStyle="bold" />
+
+                        <!--            SERVINGS  -->
+                        <TextView
+                            android:id="@+id/details_servings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="5dp"
+                            android:text="X Servings"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/text_medium"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_servings"
+                            app:drawableTint="@color/white" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <!--            MAIN ATTRIBUTES CONTAINER -->
+
+                    <!--            SEPARATOR -->
+                    <View
+                        android:id="@+id/separator"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin"
+                        android:background="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/main_attributes_container" />
+
+                    <!--            INGREDIENTS CONTAINER  -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ingredients_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/separator">
+
+                        <TextView
+                            android:id="@+id/details_ingredients_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ingredients"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_titles"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/details_ingredients_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/details_ingredients_title" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--            INGREDIENTS CONTAINER  -->
+
+
+                    <!--            SEPARATOR -->
+                    <View
+                        android:id="@+id/separator1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin"
+                        android:background="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ingredients_parent" />
+
+                    <!--            INSTRUCTIONS CONTAINER  -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/instructions_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/separator1">
+
+                        <TextView
+                            android:id="@+id/details_instructions_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Instructions"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_titles"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--                BUTTONS CONTAINER -->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/details_instructions_title">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_details_instructions"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight=".5"
+                                android:padding="10dp"
+                                android:text="View Instructions"
+                                android:textAllCaps="false"
+                                app:backgroundTint="@color/complementary" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_details_tutorails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:padding="10dp"
+                                android:text="View Tutorials"
+                                android:textAllCaps="false"
+                                app:backgroundTint="@color/complementary" />
+                        </androidx.appcompat.widget.LinearLayoutCompat><!--                BUTTONS CONTAINER -->
+                        <!--                BUTTONS CONTAINER -->
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--            INSTRUCTIONS CONTAINER  -->
+
+                    <!--            SEPARATOR -->
+                    <View
+                        android:id="@+id/separator2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin"
+                        android:background="@color/gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/instructions_parent" />
+
+                    <!--            NUTRIENTS CONTAINER  -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/nutrients_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/separator2">
+
+                        <TextView
+                            android:id="@+id/details_nutrients_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nutrients"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_titles"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--                NUTRIENTS CONTENT CONTAINER -->
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/details_nutrients_title">
+
+                            <!--                    MEAL NUTRIENTS CONTAINER -->
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nutrient: Amount"
+                                    android:textColor="@color/text_white"
+                                    android:textSize="@dimen/text_medium" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--            NUTRIENTS CONTAINER  -->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <!--        CARD CONTENT CONTAINER -->
+
+            </com.google.android.material.card.MaterialCardView>
+            <!--    MAIN CONTENT -->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--        CARD CONTENT CONTAINER -->
+        <!--        MAIN PARENT CONTAINER -->
 
-    </com.google.android.material.card.MaterialCardView>
-    <!--    MAIN CONTENT -->
-
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

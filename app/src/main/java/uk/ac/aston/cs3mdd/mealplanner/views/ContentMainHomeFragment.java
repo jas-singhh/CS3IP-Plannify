@@ -56,8 +56,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeRecyclerVie
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 
         // Perform Retrofit call to request the quote from the API
-        requestQuote();
-        requestBreakfastMeals();
+            requestQuote();
+            requestBreakfastMeals();
     }
 
 
@@ -90,9 +90,9 @@ public class ContentMainHomeFragment extends Fragment implements HomeRecyclerVie
      * motivational quote container.
      */
     private void setupOnClickForExpandMinimiseMotivationalQuote() {
-        binding.motivationalQuoteExpandMinimise.setOnClickListener(click -> {
-            expandOrMinimiseMotivationalQuote();
-        });
+//        binding.motivationalQuoteExpandMinimise.setOnClickListener(click -> {
+//            expandOrMinimiseMotivationalQuote();
+//        });
     }
 
     /**
@@ -162,6 +162,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeRecyclerVie
      */
     private void requestBreakfastMeals() {
         recipeViewModel.requestRecipesByMealType(EnumMealType.BREAKFAST);
+        Log.d(MainActivity.TAG, "breakfast meals requested");
     }
 
 
@@ -170,15 +171,15 @@ public class ContentMainHomeFragment extends Fragment implements HomeRecyclerVie
      * it is already visible or not.
      */
     private void expandOrMinimiseMotivationalQuote() {
-        if (binding.tvMotivationalQuote.getVisibility() == View.VISIBLE) {
-            TransitionManager.beginDelayedTransition(binding.cardContentContainer, new AutoTransition());
-            binding.tvMotivationalQuote.setVisibility(View.GONE);
-            binding.expandLess.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_more));
-        } else {
-            TransitionManager.beginDelayedTransition(binding.motivationalQuoteContainer, new AutoTransition());
-            binding.tvMotivationalQuote.setVisibility(View.VISIBLE);
-            binding.expandLess.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_less));
-        }
+//        if (binding.tvMotivationalQuote.getVisibility() == View.VISIBLE) {
+//            TransitionManager.beginDelayedTransition(binding.cardContentContainer, new AutoTransition());
+//            binding.tvMotivationalQuote.setVisibility(View.GONE);
+//            binding.motivationalQuoteExpandMinimise.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_more));
+//        } else {
+//            TransitionManager.beginDelayedTransition(binding.motivationalQuoteContainer, new AutoTransition());
+//            binding.tvMotivationalQuote.setVisibility(View.VISIBLE);
+//            binding.motivationalQuoteExpandMinimise.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_expand_less));
+//        }
     }
 
     @Override

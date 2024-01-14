@@ -11,6 +11,15 @@
     <color name="gray">#424242</color>
     <color name="card_bg">#2D2D2D</color>
 
+<!--    RECOMMENDED BY MATERIALS
+        REFERENCE 1: https://m1.material.io/style/color.html#color-themes
+         REFERENCE 2: https://m2.material.io/design/color/dark-theme.html#ui-application -->
+    <color name="background">#303030</color>
+    <color name="cards">#424242</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_black">#000000</color>
+
+
 
     <!--    STRESS REDUCING COLOURS -->
 <!--    Reference1: https://onlinelibrary.wiley.com/doi/full/10.1002/col.20597 -->
