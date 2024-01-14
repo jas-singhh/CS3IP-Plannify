@@ -15,24 +15,29 @@
         <item>Dinner</item>
     </array>
 
-<!--    MEAL TYPES SUB-TEXT-->
-<string name="breakfast_subtext">Most important meal of the day</string>
-<string name="brunch_subtext">Brunch placeholder</string>
-<string name="lunch_subtext">Lunch placeholder</string>
-<string name="snack_subtext">Snack placeholder</string>
-<string name="teatime_subtext">Tea Time placeholder</string>
-<string name="dinner_subtext">Dinner placeholder</string>
+    <!--    MEAL TYPES SUB-TEXT-->
+    <string name="breakfast_subtext">Most important meal of the day</string>
+    <string name="brunch_subtext">Brunch placeholder</string>
+    <string name="lunch_subtext">Lunch placeholder</string>
+    <string name="snack_subtext">Snack placeholder</string>
+    <string name="teatime_subtext">Tea Time placeholder</string>
+    <string name="dinner_subtext">Dinner placeholder</string>
 
-<!--    CARD PROPERTIES -->
+    <!--    CARD PROPERTIES -->
     <dimen name="radius_card">20dp</dimen>
     <dimen name="elevation_card">10dp</dimen>
-    
-<!--    TEXT SIZES -->
+
+    <!--    TEXT SIZES -->
+    <dimen name="text_headings">24sp</dimen>
     <dimen name="text_titles">20sp</dimen>
     <dimen name="text_medium">14sp</dimen>
     <dimen name="text_important">16sp</dimen>
 
-<!--    PADDINGS -->
+    <!--    PADDINGS -->
     <dimen name="padding_cards">20dp</dimen>
+
+<!--    MARGINS RECOMMENDED BY ANDROID -->
+<!--    REFERENCE: https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-basics#:~:text=To%20begin%20creating%20a%20solid,adapt%20to%20accommodate%20larger%20screens. -->
+    <dimen name="margin">16dp</dimen>
 
 </resources>

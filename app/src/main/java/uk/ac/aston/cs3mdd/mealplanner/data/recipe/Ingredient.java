@@ -9,6 +9,8 @@ public class Ingredient {
     private float weight;
     private String foodId;
 
+    private String image;
+
     public String getText() {
         return text;
     }
@@ -55,5 +57,13 @@ public class Ingredient {
 
     public void setFoodId(String foodId) {
         this.foodId = foodId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

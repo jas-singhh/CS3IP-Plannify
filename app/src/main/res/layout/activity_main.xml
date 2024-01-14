@@ -49,7 +49,6 @@
             app:labelVisibilityMode="labeled"
             android:background="@drawable/transparent_bg"
             android:elevation="0dp"
-
             />
 
     </com.google.android.material.bottomappbar.BottomAppBar>

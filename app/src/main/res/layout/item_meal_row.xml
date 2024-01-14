@@ -1,139 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginHorizontal="@dimen/margin"
+    android:layout_height="165dp">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="@dimen/radius_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/meal_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_meal_sample" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="150dp"
+        android:layout_marginVertical="@dimen/margin"
+        android:layout_marginStart="55dp"
         app:cardBackgroundColor="@color/card_bg"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:cardElevation="7dp"
-        android:layout_margin="7dp"
         app:cardCornerRadius="@dimen/radius_card"
-        >
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="70dp">
 
-<!--            IMAGE -->
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:id="@+id/meal_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/meal_name"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/img_meal_sample"
-                android:layout_marginStart="0dp"
-                android:scaleType="centerCrop"
-                />
-            <!--            IMAGE -->
-
-
-<!--            MEAL NAME -->
+            <!--            MEAL NAME -->
             <TextView
                 android:id="@+id/meal_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/meal_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Name of the meal"
-                android:textSize="@dimen/text_titles"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:maxLines="2"
-                />
-<!--            MEAL NAME -->
+                android:text="Name of the meal"
+                android:textSize="@dimen/text_important"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <!--            MEAL NAME -->
 
-<!--            MEAL HEALTH RATING -->
+            <!--            MEAL HEALTH RATING -->
             <TextView
                 android:id="@+id/meal_health_rating"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/meal_name"
-                app:layout_constraintStart_toEndOf="@id/meal_image"
-                android:text="Very Healthy"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:gravity="start"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
+                android:gravity="start"
+                android:text="Very Healthy"
                 android:textSize="@dimen/text_medium"
-                />
-<!--            MEAL HEALTH RATING -->
+                app:drawableStartCompat="@drawable/ic_healthy"
+                app:drawableTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/meal_name" />
+            <!--            MEAL HEALTH RATING -->
 
 
-<!--            ATTRIBUTES' CARDS -->
+            <!--            ATTRIBUTES' CARDS -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/meal_image"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintStart_toStartOf="parent">
 
-<!--                CALORIES -->
+                <!--                CALORIES -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/attribute_calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:cardCornerRadius="@dimen/radius_card"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/split_complementary"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginBottom="10dp">
+                    app:cardCornerRadius="@dimen/radius_card"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
                         android:id="@+id/meal_calories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawablePadding="2dp"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="7dp"
+                        android:paddingVertical="5dp"
                         android:text="340 Calories "
-                        android:padding="7dp"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
+                        android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_calories"
                         app:drawableTint="@color/white" />
                 </com.google.android.material.card.MaterialCardView>
 
 
-<!--                TIME-->
+                <!--                TIME-->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@+id/attribute_calories"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:cardCornerRadius="@dimen/radius_card"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/split_complementary"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginBottom="10dp">
+                    app:cardCornerRadius="@dimen/radius_card"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/attribute_calories"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/meal_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawablePadding="2dp"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="7dp"
+                        android:paddingVertical="5dp"
                         android:text="120 Min"
-                        android:padding="7dp"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
+                        android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_time_filled"
                         app:drawableTint="@color/white" />
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--            ATTRIBUTES' CARDS -->
+
+            <!--            ATTRIBUTES' CARDS -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

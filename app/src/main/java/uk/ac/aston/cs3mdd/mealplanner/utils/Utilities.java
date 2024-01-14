@@ -108,4 +108,20 @@ public class Utilities {
                 return "n/a";
         }
     }
+
+    public static String capitaliseString(String value) {
+        if (value != null && !value.isEmpty()) {
+            return value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase();
+        }
+
+        return null;
+    }
+
+    public static String getHoursFromMinutes(int minutes) {
+        if (minutes >= 60) {
+            return minutes/60 + "h";
+        }
+
+        return minutes + "m";
+    }
 }

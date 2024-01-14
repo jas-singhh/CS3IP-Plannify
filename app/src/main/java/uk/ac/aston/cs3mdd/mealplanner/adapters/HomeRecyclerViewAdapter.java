@@ -1,5 +1,6 @@
 package uk.ac.aston.cs3mdd.mealplanner.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Hit;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
@@ -23,6 +26,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 //    Reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
     private List<Hit> localDataSet;
+    private HomeRecyclerViewInterface mInterface;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -35,8 +39,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         private final TextView mealCalories;
         private final TextView mealTime;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private final HomeRecyclerViewInterface homeInterface;
+
+        public MyViewHolder(@NonNull View itemView, HomeRecyclerViewInterface homeInterface) {
             super(itemView);
+            this.homeInterface = homeInterface;
 
             mealImage = itemView.findViewById(R.id.meal_image);
             mealName = itemView.findViewById(R.id.meal_name);
@@ -64,6 +71,17 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         public TextView getMealTime() {
             return mealTime;
         }
+
+        public void setOnClickListener(Recipe recipe) {
+            if (homeInterface != null) {
+                itemView.setOnClickListener(v -> {
+                    int currentPos = getAdapterPosition();
+                    if (currentPos != RecyclerView.NO_POSITION) {
+                        homeInterface.onClickMeal(recipe);
+                    }
+                });
+            }
+        }
     }
 
     /**
@@ -72,7 +90,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
      * @param dataSet List of recipes containing the data to populate views to be used
      *                by RecyclerView
      */
-    public HomeRecyclerViewAdapter(List<Hit> dataSet) {
+    public HomeRecyclerViewAdapter(HomeRecyclerViewInterface homeInterface, List<Hit> dataSet) {
+        mInterface = homeInterface;
         localDataSet = dataSet;
     }
 
@@ -83,7 +102,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meal_row,
                 parent, false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, mInterface);
     }
 
     @Override
@@ -97,9 +116,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.getMealHealthRating().setText(Utilities.getMealHealthRating(currentItem.getRecipe()));
 
         String calories = Math.round(currentItem.getRecipe().getCalories()) + " Calories";
-        String time = Math.round(currentItem.getRecipe().getTotalTime()) + " Min";
+        String time = Utilities.getHoursFromMinutes(Math.round(currentItem.getRecipe().getTotalTime()));
+//        String time = Math.round(currentItem.getRecipe().getTotalTime()) + "m";
         holder.getMealCalories().setText(calories);
         holder.getMealTime().setText(time);
+
+        // set on click listener for the meal
+        holder.setOnClickListener(localDataSet.get(position).getRecipe());
     }
 
     @Override
