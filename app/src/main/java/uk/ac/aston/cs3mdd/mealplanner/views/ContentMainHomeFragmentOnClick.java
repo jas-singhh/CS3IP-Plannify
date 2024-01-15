@@ -3,13 +3,10 @@ package uk.ac.aston.cs3mdd.mealplanner.views;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import uk.ac.aston.cs3mdd.mealplanner.BuildConfig;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.R;
-import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeRecyclerViewAdapter;
-import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeRecyclerViewInterface;
+import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsAdapter;
+import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.api.QuoteService;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
@@ -34,14 +31,14 @@ import uk.ac.aston.cs3mdd.mealplanner.repos.QuotesRepository;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.QuoteViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 
-public class ContentMainHomeFragment extends Fragment implements HomeRecyclerViewInterface {
+public class ContentMainHomeFragmentOnClick extends Fragment implements HomeMealsOnClickInterface {
 
     // Reference: CS3MDD Lab 2
     private QuoteViewModel quoteViewModel;
     private RecipeViewModel recipeViewModel;
 
     private DialogLottie animatedLoading;
-    private HomeRecyclerViewAdapter mAdapter;
+    private HomeMealsAdapter mAdapter;
 
     private FragmentContentMainHomeBinding binding;
 
@@ -51,7 +48,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeRecyclerVie
 
         // Initialise variables
         animatedLoading = new DialogLottie(requireContext());
-        mAdapter = new HomeRecyclerViewAdapter(this, new ArrayList<>());
+        mAdapter = new HomeMealsAdapter(this, new ArrayList<>());
         quoteViewModel = new ViewModelProvider(requireActivity()).get(QuoteViewModel.class);
         recipeViewModel = new ViewModelProvider(requireActivity()).get(RecipeViewModel.class);
 

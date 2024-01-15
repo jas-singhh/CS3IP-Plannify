@@ -1,6 +1,5 @@
 package uk.ac.aston.cs3mdd.mealplanner.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +13,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Hit;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder> {
+public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyViewHolder> {
 
 //    Reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
     private List<Hit> localDataSet;
-    private HomeRecyclerViewInterface mInterface;
+    private final HomeMealsOnClickInterface mInterface;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -39,9 +37,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         private final TextView mealCalories;
         private final TextView mealTime;
 
-        private final HomeRecyclerViewInterface homeInterface;
+        private final HomeMealsOnClickInterface homeInterface;
 
-        public MyViewHolder(@NonNull View itemView, HomeRecyclerViewInterface homeInterface) {
+        public MyViewHolder(@NonNull View itemView, HomeMealsOnClickInterface homeInterface) {
             super(itemView);
             this.homeInterface = homeInterface;
 
@@ -90,14 +88,14 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
      * @param dataSet List of recipes containing the data to populate views to be used
      *                by RecyclerView
      */
-    public HomeRecyclerViewAdapter(HomeRecyclerViewInterface homeInterface, List<Hit> dataSet) {
+    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, List<Hit> dataSet) {
         mInterface = homeInterface;
         localDataSet = dataSet;
     }
 
     @NonNull
     @Override
-    public HomeRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HomeMealsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meal_row,
                 parent, false);
@@ -106,7 +104,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeMealsAdapter.MyViewHolder holder, int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 

@@ -1,6 +1,8 @@
 package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
-public class Nutrient {
+import java.io.Serializable;
+
+public class Nutrient implements Serializable {
     private String label;
     private float quantity;
     private String unit;

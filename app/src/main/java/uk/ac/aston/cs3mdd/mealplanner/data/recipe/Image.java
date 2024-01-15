@@ -1,6 +1,8 @@
 package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
-public class Image {
+import java.io.Serializable;
+
+public class Image implements Serializable {
 
     private String url;
     private int width;

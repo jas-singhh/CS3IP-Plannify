@@ -1,8 +1,9 @@
 package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Digest {
+public class Digest implements Serializable {
 
     private String label;
     private String tag;

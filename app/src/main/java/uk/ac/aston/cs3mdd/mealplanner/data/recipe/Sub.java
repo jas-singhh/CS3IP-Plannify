@@ -1,6 +1,8 @@
 package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
-public class Sub {
+import java.io.Serializable;
+
+public class Sub implements Serializable {
 
     private String label;
     private String tag;

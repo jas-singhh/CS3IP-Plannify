@@ -1,8 +1,12 @@
 package uk.ac.aston.cs3mdd.mealplanner.utils;
 
+import java.util.Locale;
+
 import uk.ac.aston.cs3mdd.mealplanner.R;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Digest;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Nutrient;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Sub;
 
 public class Utilities {
 
@@ -18,6 +22,13 @@ public class Utilities {
 //    Nutrients
     private static final String FAT = "FAT";
     private static final String SUGAR = "SUGAR";
+
+//    Nutrients recommended quantity per 100g by NHS
+//    Reference: https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/how-to-read-food-labels/
+    private static final double MAX_TOTAL_FAT_PER_100G = 17.5;
+    private static final int MAX_SATURATED_FAT_PER_100G = 5;
+    private static final double MAX_SUGARS_PER_100G = 22.5;
+
 
     /**
      * Returns the appropriate icon based on the meal type requested.
@@ -123,5 +134,34 @@ public class Utilities {
         }
 
         return minutes + "m";
+    }
+
+    public static String getListOfNutrientsFromRecipe(Recipe recipe) {
+        if (recipe==null) return "";
+
+        StringBuilder result = new StringBuilder();
+
+        StringBuilder fatSubs = new StringBuilder();
+
+        for (Sub fatSub: recipe.getDigest().get(0).getSub()) {
+            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", fatSub.getTotal());
+            fatSubs.append(fatSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
+        }
+
+        StringBuilder carbsSubs = new StringBuilder();
+
+        for (Sub carbsSub: recipe.getDigest().get(1).getSub()) {
+            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", carbsSub.getTotal());
+            carbsSubs.append(carbsSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
+        }
+
+        for (Digest nutrient: recipe.getDigest()) {
+            result.append(nutrient.getLabel()).append(": ").append(String.format(Locale.getDefault(),
+                    "%.2f", nutrient.getTotal())).append("g\n");
+        }
+
+        result = new StringBuilder(result + fatSubs.toString() + carbsSubs);
+
+        return result.toString();
     }
 }

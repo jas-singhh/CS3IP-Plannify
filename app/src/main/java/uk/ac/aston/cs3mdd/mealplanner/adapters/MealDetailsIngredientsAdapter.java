@@ -15,9 +15,9 @@ import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
-public class MealDetailsRecyclerViewAdapter extends RecyclerView.Adapter<MealDetailsRecyclerViewAdapter.MyViewHolder> {
+public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDetailsIngredientsAdapter.MyViewHolder> {
 
-    private Ingredient[] localDataSet;
+    private final Ingredient[] localDataSet;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -59,7 +59,7 @@ public class MealDetailsRecyclerViewAdapter extends RecyclerView.Adapter<MealDet
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public MealDetailsRecyclerViewAdapter(Ingredient[] dataSet) {
+    public MealDetailsIngredientsAdapter(Ingredient[] dataSet) {
         localDataSet = dataSet;
     }
 
