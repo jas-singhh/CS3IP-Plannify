@@ -1,5 +1,8 @@
 package uk.ac.aston.cs3mdd.mealplanner.utils;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.Locale;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
@@ -163,5 +166,16 @@ public class Utilities {
         result = new StringBuilder(result + fatSubs.toString() + carbsSubs);
 
         return result.toString();
+    }
+
+    /**
+     * Displays an error toast message indicating that an error occurred.
+     *
+     * @param context context required to display the toast.
+     */
+    public static void showErrorToast(Context context) {
+        if (context != null) {
+            Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG).show();
+        }
     }
 }

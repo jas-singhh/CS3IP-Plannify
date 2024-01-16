@@ -1,13 +1,21 @@
 package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumImageType;
 
+@Entity
 public class Recipe implements Serializable {
 
+    public Recipe() { uri = "null"; }
+
+    @PrimaryKey @NonNull
     private String uri;
     private String label;
     private String image;
@@ -40,11 +48,12 @@ public class Recipe implements Serializable {
 
     private Map<EnumImageType, Image> images;
 
+    @NonNull
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(@NonNull String uri) {
         this.uri = uri;
     }
 

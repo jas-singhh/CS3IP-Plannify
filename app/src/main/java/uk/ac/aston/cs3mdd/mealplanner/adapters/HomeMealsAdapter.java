@@ -26,6 +26,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
     private List<Hit> localDataSet;
     private final HomeMealsOnClickInterface mInterface;
 
+
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
@@ -73,13 +74,25 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         public void setOnClickListener(Recipe recipe) {
             if (homeInterface != null) {
                 itemView.setOnClickListener(v -> {
-                    int currentPos = getAdapterPosition();
+                    int currentPos = getAbsoluteAdapterPosition();
                     if (currentPos != RecyclerView.NO_POSITION) {
                         homeInterface.onClickMeal(recipe);
                     }
                 });
             }
         }
+    }
+
+    /**
+     * Returns the recipe at the given position (if present).
+     *
+     * @param pos index where to find the recipe.
+     * @return the recipe at the given index.
+     */
+    public Recipe getRecipeAt(int pos) {
+        if (pos == RecyclerView.NO_POSITION || localDataSet.isEmpty()) return null;
+
+        return localDataSet.get(pos).getRecipe();
     }
 
     /**

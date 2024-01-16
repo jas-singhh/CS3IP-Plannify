@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
         // Reference: https://stackoverflow.com/questions/22713128/how-can-i-switch-between-two-fragments-without-recreating-the-fragments-each-ti
         if (getChildFragmentManager().findFragmentById(R.id.fragment_container_view) == null) {
             // add the fragment only if the fragment container is empty
-            ContentMainHomeFragmentOnClick homeContentFragment = new ContentMainHomeFragmentOnClick();
+            ContentMainHomeFragment homeContentFragment = new ContentMainHomeFragment();
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_view, homeContentFragment)
                     .commit();
