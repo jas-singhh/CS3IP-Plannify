@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.views;
+package uk.ac.aston.cs3mdd.mealplanner.views.find_meals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,12 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentSettingsBinding;
+import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentFindMealsBinding;
 
+public class FindMealsFragment extends Fragment {
 
-public class SettingsFragment extends Fragment {
-
-    private FragmentSettingsBinding binding;
+    private FragmentFindMealsBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        binding = FragmentFindMealsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 }

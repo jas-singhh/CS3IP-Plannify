@@ -1,5 +1,6 @@
 package uk.ac.aston.cs3mdd.mealplanner.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.R;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Hit;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
 public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyViewHolder> {
 
 //    Reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
-    private List<Hit> localDataSet;
+    private ArrayList<Recipe> localDataSet;
     private final HomeMealsOnClickInterface mInterface;
 
 
@@ -84,24 +84,12 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
     }
 
     /**
-     * Returns the recipe at the given position (if present).
-     *
-     * @param pos index where to find the recipe.
-     * @return the recipe at the given index.
-     */
-    public Recipe getRecipeAt(int pos) {
-        if (pos == RecyclerView.NO_POSITION || localDataSet.isEmpty()) return null;
-
-        return localDataSet.get(pos).getRecipe();
-    }
-
-    /**
      * Initialize the dataset of the Adapter
      *
      * @param dataSet List of recipes containing the data to populate views to be used
      *                by RecyclerView
      */
-    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, List<Hit> dataSet) {
+    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, ArrayList<Recipe> dataSet) {
         mInterface = homeInterface;
         localDataSet = dataSet;
     }
@@ -121,19 +109,22 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        Hit currentItem = localDataSet.get(position);
-        Picasso.get().load(currentItem.getRecipe().getImage()).into(holder.getMealImage());
-        holder.getMealName().setText(currentItem.getRecipe().getLabel());
-        holder.getMealHealthRating().setText(Utilities.getMealHealthRating(currentItem.getRecipe()));
+        Recipe currentItem = localDataSet.get(position);
+        Log.d(MainActivity.TAG, currentItem.getImage());
+        Picasso.get().load(currentItem.getImage())
+                .error(R.drawable.loading_img)
+                .placeholder(R.drawable.loading_img)
+                .into(holder.getMealImage());
+        holder.getMealName().setText(currentItem.getLabel());
+        holder.getMealHealthRating().setText(Utilities.getMealHealthRating(currentItem));
 
-        String calories = Math.round(currentItem.getRecipe().getCalories()) + " Calories";
-        String time = Utilities.getHoursFromMinutes(Math.round(currentItem.getRecipe().getTotalTime()));
-//        String time = Math.round(currentItem.getRecipe().getTotalTime()) + "m";
+        String calories = Math.round(currentItem.getCalories()) + " Calories";
+        String time = Utilities.getHoursFromMinutes(Math.round(currentItem.getTotalTime()));
         holder.getMealCalories().setText(calories);
         holder.getMealTime().setText(time);
 
         // set on click listener for the meal
-        holder.setOnClickListener(localDataSet.get(position).getRecipe());
+        holder.setOnClickListener(currentItem);
     }
 
     @Override
@@ -141,11 +132,24 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         return localDataSet.size();
     }
 
-    public void updateData(RecipeResponse recipeResponse) {
-        if (recipeResponse != null && !recipeResponse.getHits().isEmpty()) {
-            localDataSet = recipeResponse.getHits();
+    public void updateData(ArrayList<Recipe> recipes) {
+        if (recipes != null && recipes.size() != 0) {
+            localDataSet = recipes;
             notifyDataSetChanged();
         }
     }
+
+    /**
+     * Returns the recipe at the given position (if present).
+     *
+     * @param pos index where to find the recipe.
+     * @return the recipe at the given index.
+     */
+    public Recipe getRecipeAt(int pos) {
+        if (pos == RecyclerView.NO_POSITION || localDataSet.size() == 0) return null;
+
+        return localDataSet.get(pos);
+    }
+
 
 }

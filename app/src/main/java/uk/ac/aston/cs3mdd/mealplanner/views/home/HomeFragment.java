@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.views;
+package uk.ac.aston.cs3mdd.mealplanner.views.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

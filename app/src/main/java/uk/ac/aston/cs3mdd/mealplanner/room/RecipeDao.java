@@ -11,6 +11,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 
 @Dao
@@ -33,4 +34,7 @@ public interface RecipeDao {
 
     @Query("DELETE FROM Recipe")
     Completable deleteAll();
+
+    @Query("SELECT EXISTS (SELECT 1 FROM Recipe WHERE uri = :uri)")
+    Single<Integer> existsByUri(String uri);
 }

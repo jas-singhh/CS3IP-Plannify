@@ -1,6 +1,7 @@
 package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -19,6 +20,11 @@ public class Recipe implements Serializable {
     private String uri;
     private String label;
     private String image;
+
+    // image is required to be stored as the api does not allow permanent
+    // access to the images through the url
+    @ColumnInfo(name = "localImage", typeAffinity = ColumnInfo.BLOB)
+    private byte[] localImage;
     private String source;
     private String url;
     private String shareAs;
@@ -279,5 +285,13 @@ public class Recipe implements Serializable {
 
     public void setTotalTime(float totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public byte[] getLocalImage() {
+        return localImage;
+    }
+
+    public void setLocalImage(byte[] localImage) {
+        this.localImage = localImage;
     }
 }

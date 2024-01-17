@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.views;
+package uk.ac.aston.cs3mdd.mealplanner.views.my_meals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,26 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentFindMealsBinding;
+import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsGroceryListBinding;
 
-public class FindMealsFragment extends Fragment {
 
-    private FragmentFindMealsBinding binding;
+public class MyMealsGroceryListFragment extends Fragment {
 
+    private FragmentMyMealsGroceryListBinding binding;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentFindMealsBinding.inflate(inflater, container, false);
+        binding = FragmentMyMealsGroceryListBinding.inflate(inflater, container, false);
+
+
         return binding.getRoot();
     }
 }

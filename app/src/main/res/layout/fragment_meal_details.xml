@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.MealDetailsFragment">
+    tools:context=".views.meal_details.MealDetailsFragment">
 
 
 
@@ -54,6 +54,34 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <!--    SAVE BUTTON -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btn_save"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="@dimen/margin"
+                android:backgroundTint="@color/complementary"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="10dp"
+                app:cardCornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/header_image"
+                app:layout_constraintTop_toBottomOf="@id/header_image"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/bnt_save_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_add_filled" />
+
+            </com.google.android.material.card.MaterialCardView>
+            <!-- SAVE BUTTON -->
+
+
 
                 <!--        CARD CONTENT CONTAINER -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,6 +89,7 @@
                     android:layout_height="match_parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="25dp"
                     app:layout_constraintTop_toBottomOf="@id/header_image"
                     app:layout_constraintBottom_toBottomOf="parent">
 

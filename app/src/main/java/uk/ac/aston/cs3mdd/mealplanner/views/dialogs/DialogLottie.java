@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.views;
+package uk.ac.aston.cs3mdd.mealplanner.views.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

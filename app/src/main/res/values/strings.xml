@@ -37,8 +37,8 @@
     <!--    PADDINGS -->
     <dimen name="padding_cards">20dp</dimen>
 
-<!--    MARGINS RECOMMENDED BY ANDROID -->
-<!--    REFERENCE: https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-basics#:~:text=To%20begin%20creating%20a%20solid,adapt%20to%20accommodate%20larger%20screens. -->
+    <!--    MARGINS RECOMMENDED BY ANDROID -->
+    <!--    REFERENCE: https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-basics#:~:text=To%20begin%20creating%20a%20solid,adapt%20to%20accommodate%20larger%20screens. -->
     <dimen name="margin">16dp</dimen>
 
 </resources>

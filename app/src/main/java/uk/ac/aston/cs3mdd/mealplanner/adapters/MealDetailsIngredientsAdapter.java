@@ -17,6 +17,8 @@ import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
 public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDetailsIngredientsAdapter.MyViewHolder> {
 
+    // using array as the size of the ingredients will be known and
+    // it can save some memory.
     private final Ingredient[] localDataSet;
 
     /**

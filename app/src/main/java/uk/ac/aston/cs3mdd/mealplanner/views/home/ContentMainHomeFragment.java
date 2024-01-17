@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.views;
+package uk.ac.aston.cs3mdd.mealplanner.views.home;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -39,6 +39,8 @@ import uk.ac.aston.cs3mdd.mealplanner.repos.QuotesRepository;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.QuoteViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogLottie;
+import uk.ac.aston.cs3mdd.mealplanner.views.meal_details.MealDetailsFragment;
 
 public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClickInterface {
 
@@ -65,8 +67,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         mDisposable = new CompositeDisposable();
 
         // Perform Retrofit call to request the quote from the API
-            requestQuote();
-            requestBreakfastMeals();
+        requestQuote();
+        requestBreakfastMeals();
     }
 
 
@@ -87,7 +89,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         quoteViewModel.getQuote().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
 
         recipeViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponse -> {
-            mAdapter.updateData(recipeResponse);
+            ArrayList<Recipe> recipes = Utilities.fromHitsToRecipes(recipeResponse.getHits());
+            mAdapter.updateData(recipes);
             animatedLoading.dismiss();
         });
 
@@ -202,6 +205,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 // only allow right swipe
@@ -213,7 +217,13 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
                         mDisposable.add(recipeViewModel.insert(mAdapter.getRecipeAt(pos))
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> showSnackBarWithUndo(mAdapter.getRecipeAt(pos), pos)));
+                                .subscribe(() -> {
+                                    // update adapter
+                                    if (mAdapter != null) {
+                                        mAdapter.notifyItemChanged(pos);
+                                        showSnackBarWithUndo(mAdapter.getRecipeAt(pos), pos);
+                                    }
+                                }));
                     }
                 }
             }
@@ -242,7 +252,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      * the action performed - aligns with error preventions principle of Nielsen.
      *
      * @param recipeToUndo recipe that was initially saved but has been un-saved.
-     * @param adapterPos recycler view adapter position which needs to be updated.
+     * @param adapterPos   recycler view adapter position which needs to be updated.
      */
     private void showSnackBarWithUndo(Recipe recipeToUndo, int adapterPos) {
         // reference: https://m2.material.io/components/snackbars/android#theming-snackbars
@@ -251,7 +261,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
             mDisposable.add(recipeViewModel.delete(recipeToUndo)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos), throwable -> Utilities.showErrorToast(requireContext())));
+                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
+                            throwable -> Utilities.showErrorToast(requireContext())));
 
         }).show();
     }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import uk.ac.aston.cs3mdd.mealplanner.BuildConfig;
 import uk.ac.aston.cs3mdd.mealplanner.api.RecipeService;
@@ -74,4 +75,6 @@ public class RecipesRepository {
     public Flowable<List<Recipe>> getAllLocalRecipes() {
         return database.recipeDao().getAll();
     }
+
+    public Single<Integer> existsByUri(String uri) { return database.recipeDao().existsByUri(uri);}
 }

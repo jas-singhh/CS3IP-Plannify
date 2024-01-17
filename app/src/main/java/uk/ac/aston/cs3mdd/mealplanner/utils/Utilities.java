@@ -3,10 +3,13 @@ package uk.ac.aston.cs3mdd.mealplanner.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Digest;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Hit;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Nutrient;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Sub;
@@ -177,5 +180,16 @@ public class Utilities {
         if (context != null) {
             Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public static ArrayList<Recipe> fromHitsToRecipes(List<Hit> hits) {
+        if (hits == null || hits.isEmpty()) return null;
+
+        ArrayList<Recipe> result = new ArrayList<>(hits.size());
+        for (int i = 0; i < hits.size(); i++) {
+            result.add(hits.get(i).getRecipe());
+        }
+
+        return result;
     }
 }

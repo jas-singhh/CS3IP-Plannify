@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.HomeFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.views.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/findMealsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.FindMealsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.views.find_meals.FindMealsFragment"
         android:label="fragment_find_meals"
         tools:layout="@layout/fragment_find_meals" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/myMealsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.MyMealsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.views.my_meals.MyMealsFragment"
         android:label="fragment_my_meals"
         tools:layout="@layout/fragment_my_meals" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.SettingsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.views.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action

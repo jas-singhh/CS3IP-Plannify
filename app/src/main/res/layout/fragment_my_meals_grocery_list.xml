@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.settings.SettingsFragment">
+    tools:context=".views.my_meals.MyMealsGroceryListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Settings"
-        android:textSize="40sp" />
+        android:text="Grocery list"
+        android:gravity="center"/>
 
 </FrameLayout>

@@ -9,4 +9,8 @@ public class RecipeResponse {
     public List<Hit> getHits() {
         return hits;
     }
+
+    public void setHits(List<Hit> hits) {
+        this.hits = hits;
+    }
 }

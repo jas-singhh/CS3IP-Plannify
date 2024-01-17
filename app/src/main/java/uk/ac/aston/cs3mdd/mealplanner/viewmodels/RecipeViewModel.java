@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -172,5 +173,16 @@ public class RecipeViewModel extends ViewModel {
      */
     public Flowable<List<Recipe>> getAllLocalRecipes() {
         return recipeRepository.getAllLocalRecipes();
+    }
+
+    /**
+     * Checks whether the recipe already exists in the database and returns 1 if it exists
+     * and 0 if it doesn't.
+     *
+     * @param uri unique identifier of the recipe.
+     * @return 1 if it exists - 0 if it doesn't.
+     */
+    public Single<Integer> existsByUri(String uri) {
+        return recipeRepository.existsByUri(uri);
     }
 }
