@@ -1,11 +1,11 @@
 package uk.ac.aston.cs3mdd.mealplanner;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-
-import android.os.Bundle;
 
 import uk.ac.aston.cs3mdd.mealplanner.databinding.ActivityMainBinding;
 

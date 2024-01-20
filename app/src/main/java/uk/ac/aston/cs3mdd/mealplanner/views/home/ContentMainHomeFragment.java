@@ -67,8 +67,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         mDisposable = new CompositeDisposable();
 
         // Perform Retrofit call to request the quote from the API
-        requestQuote();
-        requestBreakfastMeals();
+//        requestQuote();
+//        requestBreakfastMeals();
     }
 
 
@@ -78,7 +78,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         // Inflate the layout for this fragment
         binding = FragmentContentMainHomeBinding.inflate(inflater, container, false);
 
-        animatedLoading.show();
+//        animatedLoading.show();
 
         // setup UI elements
         setupChipGroupOnClickListeners();
@@ -91,7 +91,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         recipeViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponse -> {
             ArrayList<Recipe> recipes = Utilities.fromHitsToRecipes(recipeResponse.getHits());
             mAdapter.updateData(recipes);
-            animatedLoading.dismiss();
+//            animatedLoading.dismiss();
         });
 
         return binding.getRoot();

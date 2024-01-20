@@ -19,10 +19,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
-import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumDiet;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
 
 public class RecipeViewModel extends ViewModel {
 

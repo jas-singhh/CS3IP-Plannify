@@ -198,7 +198,7 @@
                 app:fabSize="normal"
                 app:maxImageSize="30dp"
                 android:contentDescription="Add"
-                android:layout_gravity="center|bottom"
+                android:layout_gravity="center"
                 android:id="@+id/fab"
                 app:backgroundTint="@color/primary"
                 />

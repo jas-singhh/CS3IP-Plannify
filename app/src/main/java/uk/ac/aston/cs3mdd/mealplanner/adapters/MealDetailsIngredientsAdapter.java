@@ -38,8 +38,6 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
             ingredientName = view.findViewById(R.id.ingredient_name);
 
             // Define click listener for the ViewHolder's View
-
-
         }
 
         public AppCompatImageView getIngredientImage() {

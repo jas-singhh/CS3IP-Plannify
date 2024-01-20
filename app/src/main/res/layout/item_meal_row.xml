@@ -5,23 +5,7 @@
     android:layout_height="165dp">
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:elevation="10dp"
-        app:cardCornerRadius="@dimen/radius_card"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/meal_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_meal_sample" />
-
-    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -149,6 +133,26 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+
+<!--    IMAGE CONTAINER -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="@dimen/radius_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/meal_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_meal_sample" />
+
+    </com.google.android.material.card.MaterialCardView>
+    <!--    IMAGE CONTAINER -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
