@@ -1,7 +1,6 @@
 package uk.ac.aston.cs3mdd.mealplanner.views.my_meals;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -16,25 +16,27 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsCalendarAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsCalendarOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsViewPagerAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
+import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
 
 public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickInterface {
 
     private FragmentMyMealsBinding binding;
     private MyMealsCalendarAdapter mAdapter;
+    private CalendarViewModel calendarViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // initialisation
+        calendarViewModel = new ViewModelProvider(requireActivity()).get(CalendarViewModel.class);
         mAdapter = new MyMealsCalendarAdapter(CalendarUtils.
-                getDatesInWeekBasedOnDate(CalendarUtils.getCurrentDate()),
+                getDatesInWeekBasedOnDate(calendarViewModel.getSelectedDate().getValue()),
                 this);//pass the current week days
     }
 
@@ -44,27 +46,33 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
                              Bundle savedInstanceState) {
         binding = FragmentMyMealsBinding.inflate(inflater, container, false);
 
-        setMonthText();
         setupViewPager();
         setupRecyclerView();
         setupOnClickNextWeek();
         setupOnClickPreviousWeek();
 
+        subscribeToViewingDateChanges();
+
         return binding.getRoot();
     }
 
+    /**
+     * Subscribes to the changes in the viewing date, which is updated when the user
+     * visits the previous or next week within the horizontal calendar view,
+     * and updates the month text accordingly.
+     */
+    private void subscribeToViewingDateChanges() {
+        calendarViewModel.getViewingDate().observe(getViewLifecycleOwner(), viewingDate -> binding.tvMonth.setText(CalendarUtils.getFormattedMonthYearFromDate(viewingDate)));
+    }
+
+    /**
+     * Sets up the recycler view and its adapter.
+     */
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.rvWeekDays.setLayoutManager(layoutManager);
         if (mAdapter != null) binding.rvWeekDays.setAdapter(mAdapter);
-    }
-
-    /**
-     * Sets up the current month name.
-     */
-    private void setMonthText() {
-        binding.tvMonth.setText(CalendarUtils.getFormattedMonthYearFromDate(CalendarUtils.getCurrentDate()));
     }
 
     /**
@@ -87,16 +95,13 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
      */
     private void setupOnClickPreviousWeek() {
         binding.btnPreviousWeek.setOnClickListener(v -> {
-            CalendarUtils.setCurrentDate(CalendarUtils.getCurrentDate()
-                    .minusWeeks(1));
-            ArrayList<LocalDate> previousWeek = CalendarUtils.getDatesInWeekBasedOnDate(CalendarUtils.getCurrentDate());
+            if (calendarViewModel.getViewingDate().getValue() != null)
+                calendarViewModel.setViewingDate(calendarViewModel.getViewingDate().getValue().minusWeeks(1));
+            ArrayList<LocalDate> previousWeek = CalendarUtils.getDatesInWeekBasedOnDate(calendarViewModel.getViewingDate().getValue());
 
             if (mAdapter != null) {
                 mAdapter.updateData(previousWeek);
             }
-
-            // update the month text after changing the week
-            setMonthText();
         });
     }
 
@@ -106,22 +111,18 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
      */
     private void setupOnClickNextWeek() {
         binding.btnNextWeek.setOnClickListener(v -> {
-            CalendarUtils.setCurrentDate(CalendarUtils.getCurrentDate()
-                    .plusWeeks(1));
-            ArrayList<LocalDate> previousWeek = CalendarUtils.getDatesInWeekBasedOnDate(CalendarUtils.getCurrentDate());
+            if (calendarViewModel.getViewingDate().getValue() != null)
+                calendarViewModel.setViewingDate(calendarViewModel.getViewingDate().getValue().plusWeeks(1));
+            ArrayList<LocalDate> nextWeek = CalendarUtils.getDatesInWeekBasedOnDate(calendarViewModel.getViewingDate().getValue());
 
             if (mAdapter != null) {
-                mAdapter.updateData(previousWeek);
+                mAdapter.updateData(nextWeek);
             }
-
-            // update the month text after changing the week
-            setMonthText();
         });
     }
 
     @Override
     public void onClick(LocalDate selectedDate) {
-        CalendarUtils.setCurrentDate(selectedDate);
-        Log.d(MainActivity.TAG, "selected date: " + selectedDate);
+        calendarViewModel.setSelectedDate(selectedDate);
     }
 }

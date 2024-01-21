@@ -2,6 +2,7 @@ package uk.ac.aston.cs3mdd.mealplanner.repos;
 
 import android.app.Application;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -28,7 +29,9 @@ public class RecipesRepository {
         this.database = AppDatabase.getDatabase(application);
     }
 
-    /** Network related queries */
+    /**
+     * Network related queries
+     */
 
     public Call<RecipeResponse> getRecipesByQuery(String query) {
         return request.getRecipesByQuery(TYPE, BuildConfig.EDAMAM_APP_ID,
@@ -46,7 +49,9 @@ public class RecipesRepository {
                 BuildConfig.EDAMAM_API_KEY, mealType.getMealType());
     }
 
-    /** Local database related queries */
+    /**
+     * Local database related queries
+     */
 
     public Completable insert(Recipe recipe) {
         if (recipe != null) {
@@ -76,5 +81,12 @@ public class RecipesRepository {
         return database.recipeDao().getAll();
     }
 
-    public Single<Integer> existsByUri(String uri) { return database.recipeDao().existsByUri(uri);}
+    public Single<Integer> existsByUri(String uri) {
+        return database.recipeDao().existsByUri(uri);
+    }
+
+    public Flowable<List<Recipe>> getRecipesForDate(LocalDate date) {
+        return database.recipeDao().getRecipesForDate(date);
+    }
+
 }

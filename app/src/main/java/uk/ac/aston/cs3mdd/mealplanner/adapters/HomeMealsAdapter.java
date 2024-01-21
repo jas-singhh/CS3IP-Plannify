@@ -133,7 +133,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
     }
 
     public void updateData(ArrayList<Recipe> recipes) {
-        if (recipes != null && recipes.size() != 0) {
+        if (recipes != null) {
             localDataSet = recipes;
             notifyDataSetChanged();
         }

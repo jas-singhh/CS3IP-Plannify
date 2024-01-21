@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -28,6 +29,7 @@ import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsSavedBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
+import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogLottie;
 
@@ -39,6 +41,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     private RecipeViewModel recipeViewModel;
     private HomeMealsAdapter mAdapter;
     private DialogLottie animatedLoading;
+    private CalendarViewModel calendarViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         mDisposable = new CompositeDisposable();
         recipeViewModel = new ViewModelProvider(requireActivity(),
                 ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
+        calendarViewModel = new ViewModelProvider(requireActivity()).get(CalendarViewModel.class);
         mAdapter = new HomeMealsAdapter(this, new ArrayList<>());
         animatedLoading = new DialogLottie(requireContext());
     }
@@ -59,9 +63,42 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         animatedLoading.show();
 
         setupRecyclerView();
-        loadSavedRecipes();
+
+        subscribeToChangesInTheSelectedDate();
 
         return binding.getRoot();
+    }
+
+    /**
+     * Subscribes to the changes in the selected date, which occur each time the user
+     * selects a date in the horizontal calendar view, and fetches the local recipes
+     * for that specific date.
+     */
+    private void subscribeToChangesInTheSelectedDate() {
+        calendarViewModel.getSelectedDate().observe(getViewLifecycleOwner(), this::getLocalRecipesForDate);
+    }
+
+    /**
+     * Fetches local recipes for the given date if there are any, otherwise it displays
+     * a status message indicating that there are no saved recipes (Visibility of system
+     * status - Nielsen's principle).
+     *
+     * @param selectedDate date for which the recipes are retrieved.
+     */
+    private void getLocalRecipesForDate(LocalDate selectedDate) {
+        mDisposable.add(recipeViewModel.getRecipesForDate(selectedDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    animatedLoading.dismiss();
+
+                    if (list.isEmpty()) binding.savedMealsStatusText.setVisibility(View.VISIBLE);
+                    else binding.savedMealsStatusText.setVisibility(View.GONE);
+
+                    // update the adapter
+                    if (mAdapter != null)
+                        mAdapter.updateData((ArrayList<Recipe>) list);
+                }));
     }
 
     /**
@@ -74,28 +111,8 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     }
 
     /**
-     * Check if there are any saved recipes and load them onto the screen.
-     * If there are no saved recipes, display a status message.
+     * Sets up the "swipe to delete" feature for individual saved recipes.
      */
-    private void loadSavedRecipes() {
-        mDisposable.add(recipeViewModel.getAllLocalRecipes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(list -> {
-                    animatedLoading.dismiss();
-
-                    if (list.isEmpty()) {
-                        // no saved recipes
-                        binding.savedMealsStatusText.setVisibility(View.VISIBLE);
-                    } else {
-                        // load the recipes saved in the database
-                        if (mAdapter != null) {
-                            mAdapter.updateData((ArrayList<Recipe>) list);
-                        }
-                    }
-                }));
-    }
-
     private void setupSwipeToDelete() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -144,6 +161,13 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         }).attachToRecyclerView(binding.rvSavedRecipes);
     }
 
+    /**
+     * Displays a SnackBar indicating the action completion and allows the user to undo
+     * the action - aligns with Nielsen's error prevention principle.
+     *
+     * @param removedRecipe recipe that was initially un-saved.
+     * @param adapterPos recycler view adapter position which needs to be updated.
+     */
     private void showSnackBarWithUndo(Recipe removedRecipe, int adapterPos) {
         if (removedRecipe == null || adapterPos == RecyclerView.NO_POSITION) return;
 

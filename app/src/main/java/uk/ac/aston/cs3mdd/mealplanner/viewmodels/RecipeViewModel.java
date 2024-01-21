@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -184,5 +185,15 @@ public class RecipeViewModel extends ViewModel {
      */
     public Single<Integer> existsByUri(String uri) {
         return recipeRepository.existsByUri(uri);
+    }
+
+    /**
+     * Returns a list of local recipes saved for the specified date.
+     *
+     * @param date date for which to retrieve saved recipes.
+     * @return a list of recipes for the given date.
+     */
+    public Flowable<List<Recipe>> getRecipesForDate(LocalDate date) {
+        return recipeRepository.getRecipesForDate(date);
     }
 }

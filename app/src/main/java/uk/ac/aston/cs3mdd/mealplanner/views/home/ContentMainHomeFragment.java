@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -67,8 +68,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         mDisposable = new CompositeDisposable();
 
         // Perform Retrofit call to request the quote from the API
-//        requestQuote();
-//        requestBreakfastMeals();
+        requestQuote();
+        requestBreakfastMeals();
     }
 
 
@@ -212,7 +213,10 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
                 if (direction == ItemTouchHelper.RIGHT) {
                     int pos = viewHolder.getAbsoluteAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        // save the meal
+                        // save the recipe for the given date
+                        LocalDate date = LocalDate.now().minusDays(1);
+                        mAdapter.getRecipeAt(pos).setDateSavedFor(date);
+
                         // reference: https://developer.android.com/training/data-storage/room/async-queries
                         mDisposable.add(recipeViewModel.insert(mAdapter.getRecipeAt(pos))
                                 .subscribeOn(Schedulers.io())
@@ -248,11 +252,11 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
     }
 
     /**
-     * Displays a SnackBar indicating the action completion and allows user to undo
-     * the action performed - aligns with error preventions principle of Nielsen.
+     * Displays a SnackBar indicating the action completion and allows the user to undo
+     * the action - aligns with Nielsen's error prevention principle.
      *
-     * @param recipeToUndo recipe that was initially saved but has been un-saved.
-     * @param adapterPos   recycler view adapter position which needs to be updated.
+     * @param recipeToUndo recipe that was initially saved.
+     * @param adapterPos recycler view adapter position which needs to be updated.
      */
     private void showSnackBarWithUndo(Recipe recipeToUndo, int adapterPos) {
         // reference: https://m2.material.io/components/snackbars/android#theming-snackbars

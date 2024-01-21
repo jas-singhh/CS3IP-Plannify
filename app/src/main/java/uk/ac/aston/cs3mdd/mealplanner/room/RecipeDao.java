@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -37,4 +38,8 @@ public interface RecipeDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM Recipe WHERE uri = :uri)")
     Single<Integer> existsByUri(String uri);
+
+    @Query("SELECT * FROM Recipe WHERE dateSavedFor = :date")
+    Flowable<List<Recipe>> getRecipesForDate(LocalDate date);
+
 }

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,27 @@ import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumImageType;
  * store custom data types.
  */
 public class RoomDataTypeConverter {
+
+    /** For Local Date */
+    // reference: https://stackoverflow.com/questions/54927913/room-localdatetime-typeconverter
+
+    @TypeConverter
+    public String fromLocalDate(LocalDate value) {
+        if (value == null) {
+            return (null);
+        }
+
+        return value.toString();
+    }
+
+    @TypeConverter
+    public LocalDate toLocalDate(String value) {
+        if (value == null) {
+            return (null);
+        }
+
+        return LocalDate.parse(value);
+    }
 
     /** For list of String */
     @TypeConverter
