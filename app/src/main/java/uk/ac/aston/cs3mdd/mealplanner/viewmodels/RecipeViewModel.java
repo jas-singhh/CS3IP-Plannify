@@ -183,8 +183,8 @@ public class RecipeViewModel extends ViewModel {
      * @param uri unique identifier of the recipe.
      * @return 1 if it exists - 0 if it doesn't.
      */
-    public Single<Integer> existsByUri(String uri) {
-        return recipeRepository.existsByUri(uri);
+    public Single<Integer> existsById(String id) {
+        return recipeRepository.existsById(id);
     }
 
     /**

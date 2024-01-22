@@ -81,7 +81,7 @@ public class RecipesRepository {
         return database.recipeDao().getAll();
     }
 
-    public Single<Integer> existsByUri(String uri) {
+    public Single<Integer> existsById(String uri) {
         return database.recipeDao().existsByUri(uri);
     }
 

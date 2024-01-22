@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -22,10 +24,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MealDetailsIngredientsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMealDetailsBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogSaveRecipe;
 
 public class MealDetailsFragment extends Fragment {
 
@@ -35,7 +39,7 @@ public class MealDetailsFragment extends Fragment {
     private ConstraintLayout[] tabLayouts;
     private RecipeViewModel recipeViewModel;
     private CompositeDisposable mDisposable;
-    private boolean isRecipeAlreadySaved;
+//    private boolean isRecipeAlreadySaved;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class MealDetailsFragment extends Fragment {
         recipeViewModel = new ViewModelProvider(requireActivity(),
                 ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
         mDisposable = new CompositeDisposable();
-        isRecipeAlreadySaved = false;
+//        isRecipeAlreadySaved = false;
 
         // retrieve the received arguments
         assert getArguments() != null;
@@ -72,27 +76,28 @@ public class MealDetailsFragment extends Fragment {
         tabLayouts = new ConstraintLayout[]{binding.ingredientsParent, binding.instructionsParent, binding.nutrientsParent};
         setupTabSwitching();
 
-        checkIfRecipeIsAlreadySaved();
+//        checkIfRecipeIsAlreadySaved();
 
         return binding.getRoot();
     }
 
-    /**
-     * Checks whether this particular recipe is already saved in the database
-     * and updates the layout accordingly.
-     */
-    private void checkIfRecipeIsAlreadySaved() {
-        mDisposable.add(recipeViewModel.existsByUri(selectedRecipe.getUri())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    if (result != 0) {
-                        // recipe is already saved
-                        isRecipeAlreadySaved = true;
-                        binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
-                }
-                }));
-    }
+//    /**
+//     * Checks whether this particular recipe is already saved in the database
+//     * and updates the layout accordingly.
+//     */
+//    private void checkIfRecipeIsAlreadySaved() {
+//        LocalRecipe currentRecipe = (LocalRecipe) selectedRecipe;
+//        mDisposable.add(recipeViewModel.existsById(currentRecipe.getPrimaryId())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(result -> {
+//                    if (result != 0) {
+//                        // recipe is already saved
+//                        isRecipeAlreadySaved = true;
+//                        binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
+//                }
+//                }));
+//    }
 
 
     /**
@@ -133,10 +138,10 @@ public class MealDetailsFragment extends Fragment {
     private void displayMealMainAttributes() {
         if (selectedRecipe == null) return;
 
-//        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
-//        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getLabel()));
-//        binding.detailsCuisine.setText(Utilities.capitaliseString(selectedRecipe.getCuisineType().get(0)));
-//        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
+        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
+        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getLabel()));
+        binding.detailsCuisine.setText(Utilities.capitaliseString(selectedRecipe.getCuisineType().get(0)));
+        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
 
         String servings = selectedRecipe.getYield() + " servings";
         binding.detailsServings.setText(servings);
@@ -198,27 +203,25 @@ public class MealDetailsFragment extends Fragment {
      * whether it is already saved or not.
      */
     private void onClickSaveOrDelete() {
-//        binding.btnSave.setOnClickListener(v -> {
+        binding.btnSave.setOnClickListener(v -> {
 
 //            if (!isRecipeAlreadySaved) {
-//                // recipe is not already saved, therefore
-//                // show the dialog box for the date and meal type
-//                new DialogSaveRecipe(requireContext(), (date, mealType) -> {
-//                    selectedRecipe.setDateSavedFor(date);
-//                    selectedRecipe.setMealTypeSavedFor(mealType);
+                // show the dialog box for the date and meal type
+                new DialogSaveRecipe(requireContext(), (date, mealType) -> {
+                    LocalRecipe recipeToSave = new LocalRecipe(selectedRecipe, date, mealType);
 
-//                    mDisposable.add(recipeViewModel.insert(selectedRecipe)
-//                            .subscribeOn(Schedulers.io())
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe(() -> {
-//                                Toast.makeText(requireContext(), "Recipe Saved", Toast.LENGTH_LONG).show();
-//                                binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
-//                            }, throwable -> Utilities.showErrorToast(requireContext())));
-//                });
+                    mDisposable.add(recipeViewModel.insert(recipeToSave)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(() -> {
+                                Toast.makeText(requireContext(), "Recipe Saved", Toast.LENGTH_LONG).show();
+                                binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
+                            }, throwable -> Utilities.showErrorToast(requireContext())));
+                });
 
 //            } else {
 //                // recipe is already saved - remove it
-//                mDisposable.add(recipeViewModel.delete(selectedRecipe)
+//                mDisposable.add(recipeViewModel.delete((LocalRecipe) selectedRecipe)
 //                        .subscribeOn(Schedulers.io())
 //                        .observeOn(AndroidSchedulers.mainThread())
 //                        .subscribe(() -> {
@@ -226,8 +229,9 @@ public class MealDetailsFragment extends Fragment {
 //                            binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_filled));
 //                        }, throwable -> Utilities.showErrorToast(requireContext())));
 //            }
-//        });
+        });
     }
+
 
 
     /**
