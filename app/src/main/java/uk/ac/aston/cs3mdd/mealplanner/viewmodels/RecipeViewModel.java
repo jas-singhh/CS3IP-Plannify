@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumDiet;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
@@ -152,7 +152,7 @@ public class RecipeViewModel extends ViewModel {
      * @param recipe recipe to insert.
      * @return whether the operation succeeded or not.
      */
-    public Completable insert(Recipe recipe) {
+    public Completable insert(LocalRecipe recipe) {
         return recipeRepository.insert(recipe);
     }
 
@@ -162,7 +162,7 @@ public class RecipeViewModel extends ViewModel {
      * @param recipe recipe to delete.
      * @return whether the operation succeeded or not.
      */
-    public Completable delete(Recipe recipe) {
+    public Completable delete(LocalRecipe recipe) {
         return recipeRepository.delete(recipe);
     }
 
@@ -172,7 +172,7 @@ public class RecipeViewModel extends ViewModel {
      * Returns the local recipes present in the database.
      * @return local recipes in the database.
      */
-    public Flowable<List<Recipe>> getAllLocalRecipes() {
+    public Flowable<List<LocalRecipe>> getAllLocalRecipes() {
         return recipeRepository.getAllLocalRecipes();
     }
 
@@ -193,7 +193,7 @@ public class RecipeViewModel extends ViewModel {
      * @param date date for which to retrieve saved recipes.
      * @return a list of recipes for the given date.
      */
-    public Flowable<List<Recipe>> getRecipesForDate(LocalDate date) {
+    public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {
         return recipeRepository.getRecipesForDate(date);
     }
 }

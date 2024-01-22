@@ -20,7 +20,7 @@ public class DialogLottie extends Dialog {
     public DialogLottie(@NonNull Context context) {
         super(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
 
-        assert  getWindow() != null;
+        assert getWindow() != null;
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
         wlmp.gravity = Gravity.CENTER_HORIZONTAL;
         getWindow().setAttributes(wlmp);

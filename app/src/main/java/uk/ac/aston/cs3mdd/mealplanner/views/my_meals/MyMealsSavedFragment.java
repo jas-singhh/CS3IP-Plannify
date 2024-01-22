@@ -26,6 +26,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsSavedBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
@@ -95,9 +96,10 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                     if (list.isEmpty()) binding.savedMealsStatusText.setVisibility(View.VISIBLE);
                     else binding.savedMealsStatusText.setVisibility(View.GONE);
 
+
                     // update the adapter
                     if (mAdapter != null)
-                        mAdapter.updateData((ArrayList<Recipe>) list);
+                        mAdapter.updateData((ArrayList<? extends Recipe>) list);
                 }));
     }
 
@@ -126,14 +128,14 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                 if (direction == ItemTouchHelper.LEFT) {
                     int pos = viewHolder.getBindingAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION && mAdapter != null) {
-                        Recipe recipeToDelete = mAdapter.getRecipeAt(pos);
+                        LocalRecipe recipeToDelete = (LocalRecipe) mAdapter.getRecipeAt(pos);
 
                         // delete the recipe
                         mDisposable.add(recipeViewModel.delete(recipeToDelete)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(() -> {
-                                            showSnackBarWithUndo(mAdapter.getRecipeAt(pos), pos);
+                                            showSnackBarWithUndo((LocalRecipe) mAdapter.getRecipeAt(pos), pos);
                                             // update adapter
                                             mAdapter.notifyItemChanged(pos);
                                         }
@@ -168,7 +170,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
      * @param removedRecipe recipe that was initially un-saved.
      * @param adapterPos recycler view adapter position which needs to be updated.
      */
-    private void showSnackBarWithUndo(Recipe removedRecipe, int adapterPos) {
+    private void showSnackBarWithUndo(LocalRecipe removedRecipe, int adapterPos) {
         if (removedRecipe == null || adapterPos == RecyclerView.NO_POSITION) return;
 
         // reference: https://m2.material.io/components/snackbars/android#theming-snackbars

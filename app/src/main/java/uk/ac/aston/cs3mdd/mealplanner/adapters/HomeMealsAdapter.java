@@ -1,6 +1,5 @@
 package uk.ac.aston.cs3mdd.mealplanner.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
@@ -23,7 +21,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
 
 //    Reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
-    private ArrayList<Recipe> localDataSet;
+    private ArrayList<? extends Recipe> localDataSet;
     private final HomeMealsOnClickInterface mInterface;
 
 
@@ -89,7 +87,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      * @param dataSet List of recipes containing the data to populate views to be used
      *                by RecyclerView
      */
-    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, ArrayList<Recipe> dataSet) {
+    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, ArrayList<? extends Recipe> dataSet) {
         mInterface = homeInterface;
         localDataSet = dataSet;
     }
@@ -110,7 +108,6 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         // contents of the view with that element
 
         Recipe currentItem = localDataSet.get(position);
-        Log.d(MainActivity.TAG, currentItem.getImage());
         Picasso.get().load(currentItem.getImage())
                 .error(R.drawable.loading_img)
                 .placeholder(R.drawable.loading_img)
@@ -132,7 +129,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         return localDataSet.size();
     }
 
-    public void updateData(ArrayList<Recipe> recipes) {
+    public void updateData(ArrayList<? extends Recipe> recipes) {
         if (recipes != null) {
             localDataSet = recipes;
             notifyDataSetChanged();

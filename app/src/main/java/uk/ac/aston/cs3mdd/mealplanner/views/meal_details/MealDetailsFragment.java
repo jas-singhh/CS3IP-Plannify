@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.squareup.picasso.Picasso;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -63,7 +61,7 @@ public class MealDetailsFragment extends Fragment {
         onClickInstructions();
         onClickTutorials();
         onClickBack();
-        onClickSave();
+        onClickSaveOrDelete();
 
         // details setup
         displayMealMainAttributes();
@@ -135,10 +133,10 @@ public class MealDetailsFragment extends Fragment {
     private void displayMealMainAttributes() {
         if (selectedRecipe == null) return;
 
-        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
-        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getLabel()));
-        binding.detailsCuisine.setText(Utilities.capitaliseString(selectedRecipe.getCuisineType().get(0)));
-        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
+//        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
+//        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getLabel()));
+//        binding.detailsCuisine.setText(Utilities.capitaliseString(selectedRecipe.getCuisineType().get(0)));
+//        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
 
         String servings = selectedRecipe.getYield() + " servings";
         binding.detailsServings.setText(servings);
@@ -199,31 +197,38 @@ public class MealDetailsFragment extends Fragment {
      * Saves or removes the workout in the Room Database depending on
      * whether it is already saved or not.
      */
-    private void onClickSave() {
-        // save the workout
-        binding.btnSave.setOnClickListener(v -> {
-            if (!isRecipeAlreadySaved) {
+    private void onClickSaveOrDelete() {
+//        binding.btnSave.setOnClickListener(v -> {
 
-                // recipe is not already saved - save it
-                mDisposable.add(recipeViewModel.insert(selectedRecipe)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            Toast.makeText(requireContext(), "Recipe Saved", Toast.LENGTH_LONG).show();
-                            binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
-                        }, throwable -> Utilities.showErrorToast(requireContext())));
-            } else {
-                // recipe is already saved - remove it
-                mDisposable.add(recipeViewModel.delete(selectedRecipe)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            Toast.makeText(requireContext(), "Recipe Removed", Toast.LENGTH_LONG).show();
-                            binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_filled));
-                        }, throwable -> Utilities.showErrorToast(requireContext())));
-            }
-        });
+//            if (!isRecipeAlreadySaved) {
+//                // recipe is not already saved, therefore
+//                // show the dialog box for the date and meal type
+//                new DialogSaveRecipe(requireContext(), (date, mealType) -> {
+//                    selectedRecipe.setDateSavedFor(date);
+//                    selectedRecipe.setMealTypeSavedFor(mealType);
+
+//                    mDisposable.add(recipeViewModel.insert(selectedRecipe)
+//                            .subscribeOn(Schedulers.io())
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribe(() -> {
+//                                Toast.makeText(requireContext(), "Recipe Saved", Toast.LENGTH_LONG).show();
+//                                binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
+//                            }, throwable -> Utilities.showErrorToast(requireContext())));
+//                });
+
+//            } else {
+//                // recipe is already saved - remove it
+//                mDisposable.add(recipeViewModel.delete(selectedRecipe)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(() -> {
+//                            Toast.makeText(requireContext(), "Recipe Removed", Toast.LENGTH_LONG).show();
+//                            binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_filled));
+//                        }, throwable -> Utilities.showErrorToast(requireContext())));
+//            }
+//        });
     }
+
 
     /**
      * Gets the list of nutrients for the given recipe and displays it in the layout.

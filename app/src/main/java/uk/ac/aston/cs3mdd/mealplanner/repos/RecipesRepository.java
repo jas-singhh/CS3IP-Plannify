@@ -12,7 +12,7 @@ import retrofit2.Call;
 import uk.ac.aston.cs3mdd.mealplanner.BuildConfig;
 import uk.ac.aston.cs3mdd.mealplanner.api.RecipeService;
 import uk.ac.aston.cs3mdd.mealplanner.api.RetrofitClient;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumDiet;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
@@ -53,7 +53,7 @@ public class RecipesRepository {
      * Local database related queries
      */
 
-    public Completable insert(Recipe recipe) {
+    public Completable insert(LocalRecipe recipe) {
         if (recipe != null) {
             return database.recipeDao().insert(recipe);
         }
@@ -61,7 +61,7 @@ public class RecipesRepository {
         return null;
     }
 
-    public Completable delete(Recipe recipe) {
+    public Completable delete(LocalRecipe recipe) {
         if (recipe != null) {
             return database.recipeDao().delete(recipe);
         }
@@ -69,7 +69,7 @@ public class RecipesRepository {
         return null;
     }
 
-    public Completable update(Recipe recipe) {
+    public Completable update(LocalRecipe recipe) {
         if (recipe != null) {
             return database.recipeDao().update(recipe);
         }
@@ -77,7 +77,7 @@ public class RecipesRepository {
         return null;
     }
 
-    public Flowable<List<Recipe>> getAllLocalRecipes() {
+    public Flowable<List<LocalRecipe>> getAllLocalRecipes() {
         return database.recipeDao().getAll();
     }
 
@@ -85,7 +85,7 @@ public class RecipesRepository {
         return database.recipeDao().existsByUri(uri);
     }
 
-    public Flowable<List<Recipe>> getRecipesForDate(LocalDate date) {
+    public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {
         return database.recipeDao().getRecipesForDate(date);
     }
 

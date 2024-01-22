@@ -78,4 +78,19 @@ public class CalendarUtils {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("MMMM yyyy");
         return df.format(date);
     }
+
+    /**
+     * Returns a different version of the given date in the format of "Mon 01 January 2024".
+     *
+     * @param date date to format.
+     * @return formatted version of the date in the format of EEE dd MMMM yyyy.
+     */
+    public static String getFormattedDayMonthYearFromDate(LocalDate date) {
+        if (date != null) {
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("EEE dd MMMM yyyy");
+            return df.format(date);
+        }
+
+        return null;
+    }
 }

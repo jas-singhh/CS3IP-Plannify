@@ -2,26 +2,15 @@ package uk.ac.aston.cs3mdd.mealplanner.data.recipe;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumImageType;
 
-@Entity
 public class Recipe implements Serializable {
 
-    public Recipe() {
-        uri = "null";
-    }
-
-    private LocalDate dateSavedFor;
-    @PrimaryKey
-    @NonNull
     private String uri;
     private String label;
     private String image;
@@ -58,14 +47,6 @@ public class Recipe implements Serializable {
     private List<Digest> digest;
 
     private Map<EnumImageType, Image> images;
-
-    public LocalDate getDateSavedFor() {
-        return dateSavedFor;
-    }
-
-    public void setDateSavedFor(LocalDate dateSavedFor) {
-        this.dateSavedFor = dateSavedFor;
-    }
 
     @NonNull
     public String getUri() {

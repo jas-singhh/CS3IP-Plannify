@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -33,6 +31,7 @@ import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.api.QuoteService;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentContentMainHomeBinding;
@@ -41,6 +40,7 @@ import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.QuoteViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogLottie;
+import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogSaveRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.views.meal_details.MealDetailsFragment;
 
 public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClickInterface {
@@ -202,6 +202,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      */
     private void setupSwipeToSave() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -213,21 +214,28 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
                 if (direction == ItemTouchHelper.RIGHT) {
                     int pos = viewHolder.getAbsoluteAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        // save the recipe for the given date
-                        LocalDate date = LocalDate.now().minusDays(1);
-                        mAdapter.getRecipeAt(pos).setDateSavedFor(date);
 
-                        // reference: https://developer.android.com/training/data-storage/room/async-queries
-                        mDisposable.add(recipeViewModel.insert(mAdapter.getRecipeAt(pos))
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    // update adapter
-                                    if (mAdapter != null) {
-                                        mAdapter.notifyItemChanged(pos);
-                                        showSnackBarWithUndo(mAdapter.getRecipeAt(pos), pos);
-                                    }
-                                }));
+                        // display popup to request date and meal type for the recipe
+                        new DialogSaveRecipe(requireContext(), (date, mealType) -> {
+                            Recipe selectedRecipe = mAdapter.getRecipeAt(pos);
+                            LocalRecipe recipeToSave = new LocalRecipe(selectedRecipe, date, mealType);
+                            recipeToSave.setDateSavedFor(date);
+                            recipeToSave.setMealTypeSavedFor(mealType);
+
+                            // reference: https://developer.android.com/training/data-storage/room/async-queries
+                            mDisposable.add(recipeViewModel.insert(recipeToSave)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(() -> {
+                                        // update adapter
+                                        if (mAdapter != null) {
+                                            showSnackBarWithUndo(mAdapter.getRecipeAt(pos), pos);
+                                        }
+                                    }));
+                        });
+
+                        if (mAdapter != null)
+                            mAdapter.notifyItemChanged(pos);
                     }
                 }
             }
@@ -256,19 +264,19 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      * the action - aligns with Nielsen's error prevention principle.
      *
      * @param recipeToUndo recipe that was initially saved.
-     * @param adapterPos recycler view adapter position which needs to be updated.
+     * @param adapterPos   recycler view adapter position which needs to be updated.
      */
     private void showSnackBarWithUndo(Recipe recipeToUndo, int adapterPos) {
         // reference: https://m2.material.io/components/snackbars/android#theming-snackbars
-        Snackbar.make(requireView(), "Recipe Saved", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
-            // undo - delete the saved recipe
-            mDisposable.add(recipeViewModel.delete(recipeToUndo)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
-                            throwable -> Utilities.showErrorToast(requireContext())));
-
-        }).show();
+//        Snackbar.make(requireView(), "Recipe Saved", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+//            // undo - delete the saved recipe
+//            mDisposable.add(recipeViewModel.delete(recipeToUndo)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
+//                            throwable -> Utilities.showErrorToast(requireContext())));
+//
+//        }).show();
     }
 
     @Override

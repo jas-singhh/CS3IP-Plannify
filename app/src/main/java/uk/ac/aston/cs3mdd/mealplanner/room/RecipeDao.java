@@ -13,7 +13,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 
 @Dao
 public interface RecipeDao {
@@ -22,24 +22,24 @@ public interface RecipeDao {
     // reference: https://developer.android.com/training/data-storage/room/async-queries#java
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(Recipe recipe);
+    Completable insert(LocalRecipe recipe);
 
     @Delete
-    Completable delete(Recipe recipe);
+    Completable delete(LocalRecipe recipe);
 
     @Update
-    Completable update(Recipe updatedRecipe);
+    Completable update(LocalRecipe updatedRecipe);
 
-    @Query("SELECT * FROM Recipe")
-    Flowable<List<Recipe>> getAll();
+    @Query("SELECT * FROM recipes")
+    Flowable<List<LocalRecipe>> getAll();
 
-    @Query("DELETE FROM Recipe")
+    @Query("DELETE FROM recipes")
     Completable deleteAll();
 
-    @Query("SELECT EXISTS (SELECT 1 FROM Recipe WHERE uri = :uri)")
+    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE uri = :uri)")
     Single<Integer> existsByUri(String uri);
 
-    @Query("SELECT * FROM Recipe WHERE dateSavedFor = :date")
-    Flowable<List<Recipe>> getRecipesForDate(LocalDate date);
+    @Query("SELECT * FROM recipes WHERE dateSavedFor = :date")
+    Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date);
 
 }
