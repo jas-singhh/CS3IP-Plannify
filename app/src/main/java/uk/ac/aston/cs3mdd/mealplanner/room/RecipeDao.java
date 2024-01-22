@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
+import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
 
 @Dao
 public interface RecipeDao {
@@ -41,5 +42,8 @@ public interface RecipeDao {
 
     @Query("SELECT * FROM recipes WHERE dateSavedFor = :date")
     Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date);
+
+    @Query("SELECT * FROM recipes WHERE mealTypeSavedFor = :mealTypeSavedFor AND dateSavedFor = :dateSavedFor")
+    Flowable<List<LocalRecipe>> getRecipesOfTypeForDate(EnumMealType mealTypeSavedFor, LocalDate dateSavedFor);
 
 }

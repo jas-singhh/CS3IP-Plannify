@@ -1,29 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.my_meals.MyMealsSavedFragment">
 
-<!--    STATUS TEXT -->
+    <!--    STATUS TEXT -->
     <TextView
         android:id="@+id/saved_meals_status_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:text="No Saved Meals"
         android:textSize="@dimen/text_headings"
-        android:visibility="gone"
-        android:gravity="center"/>
+        android:visibility="gone" />
 
-<!--    LIST OF SAVED RECIPES -->
+
+    <!--    HORIZONTAL CHIP GROUP -->
+    <HorizontalScrollView
+        android:id="@+id/horizontal_chipgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedChip="@+id/chip_default"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_default"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                android:text="Breakfast"
+                android:textAlignment="center"
+                app:chipBackgroundColor="@color/cards"
+                app:chipIcon="@drawable/ic_breakfast"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:chipMinTouchTargetSize="0dp"
+                app:iconStartPadding="7dp" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                android:text="Brunch"
+                android:textAlignment="center"
+                app:chipBackgroundColor="@color/cards"
+                app:chipIcon="@drawable/ic_brunch"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:chipMinTouchTargetSize="0dp"
+                app:iconStartPadding="7dp"
+
+                />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                android:text="Lunch"
+                android:textAlignment="center"
+                app:chipBackgroundColor="@color/cards"
+                app:chipIcon="@drawable/ic_lunch"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:chipMinTouchTargetSize="0dp"
+                app:iconStartPadding="7dp"
+
+                />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                android:text="Snack"
+                android:textAlignment="center"
+                app:chipBackgroundColor="@color/cards"
+                app:chipIcon="@drawable/ic_snack"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:chipMinTouchTargetSize="0dp"
+                app:iconStartPadding="7dp"
+
+                />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="7dp"
+                android:paddingVertical="15dp"
+                android:text="Tea-time"
+                android:textAlignment="center"
+                app:chipBackgroundColor="@color/cards"
+                app:chipIcon="@drawable/ic_tea_time"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:chipMinTouchTargetSize="0dp"
+                app:iconStartPadding="7dp"
+
+                />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                android:text="Dinner"
+                android:textAlignment="center"
+                app:chipBackgroundColor="@color/cards"
+                app:chipIcon="@drawable/ic_dinner"
+                app:chipIconTint="@color/white"
+                app:chipIconVisible="true"
+                app:chipMinTouchTargetSize="0dp"
+                app:iconStartPadding="7dp"
+
+                />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+    <!--    HORIZONTAL CHIP GROUP -->
+
+    <!--    LIST OF SAVED RECIPES -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_saved_recipes"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="@dimen/margin"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_chipgroup" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

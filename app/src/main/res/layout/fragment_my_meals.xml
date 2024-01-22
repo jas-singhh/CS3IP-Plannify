@@ -7,6 +7,7 @@
     android:background="@color/background"
     tools:context=".views.my_meals.MyMealsFragment">
 
+
 <!--    HEADER BACKGROUND -->
 <View
     android:id="@+id/header_bg"
@@ -114,5 +115,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/my_meals_fragment_container">
+    </androidx.fragment.app.FragmentContainerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

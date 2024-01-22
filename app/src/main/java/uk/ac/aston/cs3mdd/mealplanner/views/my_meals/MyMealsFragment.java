@@ -16,12 +16,14 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsCalendarAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsCalendarOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsViewPagerAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.views.home.ContentMainHomeFragment;
 
 public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickInterface {
 

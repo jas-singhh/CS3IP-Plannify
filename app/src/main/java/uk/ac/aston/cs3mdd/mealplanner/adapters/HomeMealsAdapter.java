@@ -108,13 +108,13 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         // contents of the view with that element
 
         Recipe currentItem = localDataSet.get(position);
+
         Picasso.get().load(currentItem.getImage())
                 .error(R.drawable.loading_img)
                 .placeholder(R.drawable.loading_img)
                 .into(holder.getMealImage());
         holder.getMealName().setText(currentItem.getLabel());
         holder.getMealHealthRating().setText(Utilities.getMealHealthRating(currentItem));
-
         String calories = Math.round(currentItem.getCalories()) + " Calories";
         String time = Utilities.getHoursFromMinutes(Math.round(currentItem.getTotalTime()));
         holder.getMealCalories().setText(calories);

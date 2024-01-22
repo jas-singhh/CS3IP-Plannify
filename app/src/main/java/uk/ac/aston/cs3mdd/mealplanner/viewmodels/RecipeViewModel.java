@@ -180,7 +180,7 @@ public class RecipeViewModel extends ViewModel {
      * Checks whether the recipe already exists in the database and returns 1 if it exists
      * and 0 if it doesn't.
      *
-     * @param uri unique identifier of the recipe.
+     * @param id unique identifier of the recipe.
      * @return 1 if it exists - 0 if it doesn't.
      */
     public Single<Integer> existsById(String id) {
@@ -195,5 +195,16 @@ public class RecipeViewModel extends ViewModel {
      */
     public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {
         return recipeRepository.getRecipesForDate(date);
+    }
+
+    /**
+     * Returns a list of local recipes of the given meal type and for the specified date.
+     *
+     * @param mealTypeSavedFor meal type of which to retrieve the recipes.
+     * @param dateSavedFor date for which to retrieve the recipes.
+     * @return a list of local recipes of the given meal type and for the speicified date.
+     */
+    public Flowable<List<LocalRecipe>> getRecipesOfTypeForDate(EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
+        return recipeRepository.getRecipesOfTypeForDate(mealTypeSavedFor, dateSavedFor);
     }
 }

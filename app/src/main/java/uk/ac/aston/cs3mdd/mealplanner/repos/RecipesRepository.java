@@ -89,4 +89,9 @@ public class RecipesRepository {
         return database.recipeDao().getRecipesForDate(date);
     }
 
+    public Flowable<List<LocalRecipe>> getRecipesOfTypeForDate(EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
+        return database.recipeDao().getRecipesOfTypeForDate(mealTypeSavedFor, dateSavedFor);
+    }
+
+
 }

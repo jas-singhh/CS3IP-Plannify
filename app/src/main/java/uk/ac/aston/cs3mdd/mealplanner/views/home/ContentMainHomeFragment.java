@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -229,7 +230,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
                                     .subscribe(() -> {
                                         // update adapter
                                         if (mAdapter != null) {
-                                            showSnackBarWithUndo(mAdapter.getRecipeAt(pos), pos);
+                                            showSnackBarWithUndo(recipeToSave, pos);
                                         }
                                     }));
                         });
@@ -266,17 +267,17 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      * @param recipeToUndo recipe that was initially saved.
      * @param adapterPos   recycler view adapter position which needs to be updated.
      */
-    private void showSnackBarWithUndo(Recipe recipeToUndo, int adapterPos) {
+    private void showSnackBarWithUndo(LocalRecipe recipeToUndo, int adapterPos) {
         // reference: https://m2.material.io/components/snackbars/android#theming-snackbars
-//        Snackbar.make(requireView(), "Recipe Saved", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
-//            // undo - delete the saved recipe
-//            mDisposable.add(recipeViewModel.delete(recipeToUndo)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
-//                            throwable -> Utilities.showErrorToast(requireContext())));
-//
-//        }).show();
+        Snackbar.make(requireView(), "Recipe Saved", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+            // undo - delete the saved recipe
+            mDisposable.add(recipeViewModel.delete(recipeToUndo)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
+                            throwable -> Utilities.showErrorToast(requireContext())));
+
+        }).show();
     }
 
     @Override
@@ -284,6 +285,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         // set arguments
         Bundle args = new Bundle();
         args.putSerializable("Recipe", recipe);
+        args.putString("Source", "content_main_home_fragment");//flag to manage back stack
         MealDetailsFragment destinationFragment = new MealDetailsFragment();
         destinationFragment.setArguments(args);
 
@@ -291,9 +293,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container_view, destinationFragment, null)
                 .setReorderingAllowed(true)
-                .addToBackStack(null).
-                commit();
-
+                .addToBackStack("content_main_home_fragment")
+                .commit();
     }
 
     @Override
