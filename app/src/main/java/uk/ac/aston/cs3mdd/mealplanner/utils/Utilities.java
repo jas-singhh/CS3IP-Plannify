@@ -5,14 +5,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Digest;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Hit;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Nutrient;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Sub;
 
 public class Utilities {
 
@@ -126,6 +123,18 @@ public class Utilities {
         }
     }
 
+    public static String getMealHealthRating(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
+        String rating = "n/a";
+        int healthScore = Math.round(recipe.getHealthScore());
+        if (healthScore >= 0 && healthScore <= 20) rating = "Very Unhealthy";
+        else if (healthScore > 20 && healthScore <= 40) rating = "Unhealthy";
+        else if (healthScore > 40 && healthScore <= 60) rating = "A Little Healthy";
+        else if (healthScore > 60 && healthScore <= 80) rating = "Healthy";
+        else if (healthScore > 80 && healthScore <= 100) rating = "Very Healthy";
+
+        return rating;
+    }
+
     public static String capitaliseString(String value) {
         if (value != null && !value.isEmpty()) {
             return value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase();
@@ -142,34 +151,34 @@ public class Utilities {
         return minutes + "m";
     }
 
-    public static String getListOfNutrientsFromRecipe(Recipe recipe) {
-        if (recipe==null) return "";
-
-        StringBuilder result = new StringBuilder();
-
-        StringBuilder fatSubs = new StringBuilder();
-
-        for (Sub fatSub: recipe.getDigest().get(0).getSub()) {
-            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", fatSub.getTotal());
-            fatSubs.append(fatSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
-        }
-
-        StringBuilder carbsSubs = new StringBuilder();
-
-        for (Sub carbsSub: recipe.getDigest().get(1).getSub()) {
-            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", carbsSub.getTotal());
-            carbsSubs.append(carbsSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
-        }
-
-        for (Digest nutrient: recipe.getDigest()) {
-            result.append(nutrient.getLabel()).append(": ").append(String.format(Locale.getDefault(),
-                    "%.2f", nutrient.getTotal())).append("g\n");
-        }
-
-        result = new StringBuilder(result + fatSubs.toString() + carbsSubs);
-
-        return result.toString();
-    }
+//    public static String getListOfNutrientsFromRecipe(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
+//        if (recipe==null) return "";
+//
+//        StringBuilder result = new StringBuilder();
+//
+//        StringBuilder fatSubs = new StringBuilder();
+//
+//        for (Sub fatSub: recipe.getDigest().get(0).getSub()) {
+//            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", fatSub.getTotal());
+//            fatSubs.append(fatSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
+//        }
+//
+//        StringBuilder carbsSubs = new StringBuilder();
+//
+//        for (Sub carbsSub: recipe.getDigest().get(1).getSub()) {
+//            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", carbsSub.getTotal());
+//            carbsSubs.append(carbsSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
+//        }
+//
+//        for (Digest nutrient: recipe.getDigest()) {
+//            result.append(nutrient.getLabel()).append(": ").append(String.format(Locale.getDefault(),
+//                    "%.2f", nutrient.getTotal())).append("g\n");
+//        }
+//
+//        result = new StringBuilder(result + fatSubs.toString() + carbsSubs);
+//
+//        return result.toString();
+//    }
 
     /**
      * Displays an error toast message indicating that an error occurred.

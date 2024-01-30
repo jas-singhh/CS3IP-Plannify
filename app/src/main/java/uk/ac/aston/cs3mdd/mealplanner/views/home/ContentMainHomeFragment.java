@@ -32,10 +32,10 @@ import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.api.QuoteService;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentContentMainHomeBinding;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.QuotesRepository;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.QuoteViewModel;
@@ -69,8 +69,8 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
         mDisposable = new CompositeDisposable();
 
         // Perform Retrofit call to request the quote from the API
-        requestQuote();
-        requestBreakfastMeals();
+//        requestQuote();
+//        requestBreakfastMeals();
     }
 
 
@@ -83,16 +83,15 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
 //        animatedLoading.show();
 
         // setup UI elements
-        setupChipGroupOnClickListeners();
-        setupRecyclerView();
-        setupOnClickForExpandMinimiseMotivationalQuote();
+        initChipGroupOnClickListeners();
+        initRecyclerView();
+        initOnClickForExpandMinimiseMotivationalQuote();
 
         // Observe the quote data requested from the API
         quoteViewModel.getQuote().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
 
         recipeViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponse -> {
-            ArrayList<Recipe> recipes = Utilities.fromHitsToRecipes(recipeResponse.getHits());
-            mAdapter.updateData(recipes);
+            mAdapter.updateData((ArrayList<uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe>) recipeResponse.getResults());
 //            animatedLoading.dismiss();
         });
 
@@ -103,7 +102,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      * Sets up the on click listener for the expand/minimise button in the
      * motivational quote container.
      */
-    private void setupOnClickForExpandMinimiseMotivationalQuote() {
+    private void initOnClickForExpandMinimiseMotivationalQuote() {
 //        binding.motivationalQuoteExpandMinimise.setOnClickListener(click -> {
 //            expandOrMinimiseMotivationalQuote();
 //        });
@@ -113,16 +112,16 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      * Sets up the recycler view with the appropriate layout manger
      * and sets its adapter.
      */
-    private void setupRecyclerView() {
+    private void initRecyclerView() {
         binding.rvHomeMeals.setLayoutManager(new LinearLayoutManager(requireContext()));
         if (mAdapter != null) binding.rvHomeMeals.setAdapter(mAdapter);
-        setupSwipeToSave();
+        initSwipeToSave();
     }
 
     /**
      * Sets up on click listeners for each chip in the chip group.
      */
-    private void setupChipGroupOnClickListeners() {
+    private void initChipGroupOnClickListeners() {
         binding.chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
             // show loading screen
             animatedLoading.show();
@@ -177,7 +176,6 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      */
     private void requestBreakfastMeals() {
         recipeViewModel.requestRecipesByMealType(EnumMealType.BREAKFAST);
-        Log.d(MainActivity.TAG, "breakfast meals requested");
     }
 
 
@@ -201,7 +199,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
      * Sets up the swipe to save gesture for efficiently saving the recipe
      * by swiping right.
      */
-    private void setupSwipeToSave() {
+    private void initSwipeToSave() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
             @Override
@@ -281,7 +279,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
     }
 
     @Override
-    public void onClickMeal(Recipe recipe) {
+    public void onClickMeal(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
         // set arguments
         Bundle args = new Bundle();
         args.putSerializable("Recipe", recipe);

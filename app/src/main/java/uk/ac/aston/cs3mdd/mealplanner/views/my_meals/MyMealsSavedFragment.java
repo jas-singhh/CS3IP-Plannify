@@ -2,7 +2,6 @@ package uk.ac.aston.cs3mdd.mealplanner.views.my_meals;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,14 +25,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsSavedBinding;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
@@ -72,8 +69,8 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         binding = FragmentMyMealsSavedBinding.inflate(inflater, container, false);
         animatedLoading.show();
 
-        setupRecyclerView();
-        setupChipGroupOnClickListeners();
+        initRecyclerView();
+        initChipGroupOnClickListeners();
 
         subscribeToChangesInTheSelectedDate();
 
@@ -111,10 +108,6 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                     if (list.isEmpty()) binding.savedMealsStatusText.setVisibility(View.VISIBLE);
                     else binding.savedMealsStatusText.setVisibility(View.GONE);
 
-                    for (LocalRecipe recipe : list) {
-                        Log.d(MainActivity.TAG, "local recipe meal type: " + recipe.getMealTypeSavedFor());
-                    }
-
                     // update the adapter
                     if (mAdapter != null)
                         mAdapter.updateData((ArrayList<? extends Recipe>) list);
@@ -124,17 +117,17 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     /**
      * Sets up the recycler view and its adapter.
      */
-    private void setupRecyclerView() {
+    private void initRecyclerView() {
         binding.rvSavedRecipes.setLayoutManager(new LinearLayoutManager(requireContext()));
         if (mAdapter != null) binding.rvSavedRecipes.setAdapter(mAdapter);
-        setupSwipeToDelete();
+        initSwipeToDelete();
     }
 
     /**
      * Sets up on click listeners for each chip in the chip group and refreshes recipes
      * when the user selects a different chip.
      */
-    private void setupChipGroupOnClickListeners() {
+    private void initChipGroupOnClickListeners() {
         binding.chipGroup.setOnCheckedStateChangeListener(((group, checkedIds) -> {
             // find the selected chip
             Chip selectedChip = null;
@@ -177,7 +170,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     /**
      * Sets up the "swipe to delete" feature for individual saved recipes.
      */
-    private void setupSwipeToDelete() {
+    private void initSwipeToDelete() {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -247,7 +240,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     }
 
     @Override
-    public void onClickMeal(Recipe recipe) {
+    public void onClickMeal(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
         // set arguments
         Bundle args = new Bundle();
         args.putSerializable("Recipe", recipe);

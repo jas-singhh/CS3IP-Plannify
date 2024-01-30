@@ -13,8 +13,8 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 
 @Dao
 public interface RecipeDao {
@@ -37,8 +37,8 @@ public interface RecipeDao {
     @Query("DELETE FROM recipes")
     Completable deleteAll();
 
-    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE uri = :uri)")
-    Single<Integer> existsByUri(String uri);
+    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE primaryId = :id)")
+    Single<Integer> existsById(int id);
 
     @Query("SELECT * FROM recipes WHERE dateSavedFor = :date")
     Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date);
@@ -46,4 +46,7 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE mealTypeSavedFor = :mealTypeSavedFor AND dateSavedFor = :dateSavedFor")
     Flowable<List<LocalRecipe>> getRecipesOfTypeForDate(EnumMealType mealTypeSavedFor, LocalDate dateSavedFor);
 
+
+    @Query("SELECT * FROM recipes WHERE dateSavedFor BETWEEN :from AND :to")
+    Flowable<List<LocalRecipe>> getRecipesWithinDates(LocalDate from, LocalDate to);
 }

@@ -6,7 +6,7 @@ public enum EnumMealType {
     BRUNCH("Brunch"),
     LUNCH("Lunch"),
     SNACK("Snack"),
-    TEA_TIME("Teatime"),
+    TEA_TIME("Beverage"),
     DINNER("Dinner");
 
 

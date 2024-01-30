@@ -17,6 +17,7 @@ import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
 
 public class MyMealsCalendarAdapter extends RecyclerView.Adapter<MyMealsCalendarAdapter.MyViewHolder> {
+    // reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
     private ArrayList<LocalDate> localDataSet;
 
@@ -115,9 +116,14 @@ public class MyMealsCalendarAdapter extends RecyclerView.Adapter<MyMealsCalendar
         return localDataSet.size();
     }
 
-    public void updateData(ArrayList<LocalDate> updatedData) {
-        if (updatedData != null) {
-            localDataSet = updatedData;
+    /**
+     * Updates the current data with the given one.
+     *
+     * @param dataSet list containing the data to update the current one with.
+     */
+    public void updateData(ArrayList<LocalDate> dataSet) {
+        if (dataSet != null) {
+            localDataSet = dataSet;
             notifyDataSetChanged();
         }
     }

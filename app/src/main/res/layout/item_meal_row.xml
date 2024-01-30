@@ -39,23 +39,46 @@
             <!--            MEAL NAME -->
 
             <!--            MEAL HEALTH RATING -->
-            <TextView
-                android:id="@+id/meal_health_rating"
-                android:layout_width="0dp"
+
+            <LinearLayout
+                android:id="@+id/meal_health_rating_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:drawablePadding="5dp"
-                android:gravity="start"
-                android:text="Very Healthy"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/text_medium"
-                app:drawableStartCompat="@drawable/ic_healthy"
-                app:drawableTint="@color/white"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/meal_name" />
+                app:layout_constraintTop_toBottomOf="@id/meal_name"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+            >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Health Rating: "
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_medium"
+                    />
+
+            </LinearLayout>
             <!--            MEAL HEALTH RATING -->
+            <!--            <TextView-->
+<!--                android:id="@+id/meal_health_rating"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:drawablePadding="5dp"-->
+<!--                android:gravity="start"-->
+<!--                android:text="Very Healthy"-->
+<!--                android:textColor="@color/text_white"-->
+<!--                android:textSize="@dimen/text_medium"-->
+<!--                app:drawableStartCompat="@drawable/ic_healthy"-->
+<!--                app:drawableTint="@color/white"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/meal_name" />-->
 
 
             <!--            ATTRIBUTES' CARDS -->

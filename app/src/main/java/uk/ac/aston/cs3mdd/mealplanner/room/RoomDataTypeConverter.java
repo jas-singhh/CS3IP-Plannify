@@ -8,13 +8,10 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Digest;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Image;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Nutrient;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumImageType;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.AnalyzedInstruction;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Nutrition;
 
 /**
  * This class provides type converters to tell Room how to
@@ -66,85 +63,149 @@ public class RoomDataTypeConverter {
 
     /** For list of Ingredients */
     @TypeConverter
-    public String fromIngredientsList(List<Ingredient> value) {
+    public String fromExtendedIngredientsList(List<ExtendedIngredient> value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Ingredient>>() {}.getType();
+        Type type = new TypeToken<List<ExtendedIngredient>>() {}.getType();
         return gson.toJson(value, type);
     }
 
     @TypeConverter
-    public List<Ingredient> toIngredientsList(String value) {
+    public List<ExtendedIngredient> toExtendedIngredientsList(String value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Ingredient>>() {}.getType();
+        Type type = new TypeToken<List<ExtendedIngredient>>() {}.getType();
         return gson.fromJson(value, type);
     }
 
-    /** For map of String and Nutrient */
+    /** For list of analyzed instructions */
     @TypeConverter
-    public String fromTotalNutrientsMap(Map<String, Nutrient> value) {
+    public String fromAnalyzedInstructionsList(List<AnalyzedInstruction> value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<Map<String, Nutrient>>() {}.getType();
+        Type type = new TypeToken<List<AnalyzedInstruction>>() {}.getType();
         return gson.toJson(value, type);
     }
 
     @TypeConverter
-    public Map<String, Nutrient> toTotalNutrientsMap(String value) {
+    public List<AnalyzedInstruction> toAnalyzedInstructionsList(String value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<Map<String, Nutrient>>() {}.getType();
+        Type type = new TypeToken<List<AnalyzedInstruction>>() {}.getType();
         return gson.fromJson(value, type);
     }
 
-    /** For list of Digest */
+    /** For list of nutrients */
     @TypeConverter
-    public String fromDigestList(List<Digest> value) {
+    public String fromNutrition(Nutrition value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Digest>>() {}.getType();
+        Type type = new TypeToken<Nutrition>() {}.getType();
         return gson.toJson(value, type);
     }
 
     @TypeConverter
-    public List<Digest> toDigestList(String value) {
+    public Nutrition toNutrition(String value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Digest>>() {}.getType();
+        Type type = new TypeToken<Nutrition>() {}.getType();
         return gson.fromJson(value, type);
     }
 
-    /** For map of EnumImageType and Image */
+    /** For list of occasions */
     @TypeConverter
-    public String fromImagesMap(Map<EnumImageType, Image> value) {
+    public String fromOccasionsList(List<Object> value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<Map<EnumImageType, Image>>() {}.getType();
+        Type type = new TypeToken<List<Object>>() {}.getType();
         return gson.toJson(value, type);
     }
 
     @TypeConverter
-    public Map<EnumImageType, Image> toImagesMap(String value) {
+    public List<Object> toOccasionsList(String value) {
         if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
-        Type type = new TypeToken<Map<EnumImageType, Image>>() {}.getType();
+        Type type = new TypeToken<List<Object>>() {}.getType();
         return gson.fromJson(value, type);
     }
+
+//
+//    /** For map of String and Nutrient */
+//    @TypeConverter
+//    public String fromTotalNutrientsMap(Map<String, Nutrient> value) {
+//        if (value == null) {
+//            return (null);
+//        }
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<Map<String, Nutrient>>() {}.getType();
+//        return gson.toJson(value, type);
+//    }
+//
+//    @TypeConverter
+//    public Map<String, Nutrient> toTotalNutrientsMap(String value) {
+//        if (value == null) {
+//            return (null);
+//        }
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<Map<String, Nutrient>>() {}.getType();
+//        return gson.fromJson(value, type);
+//    }
+//
+//    /** For list of Digest */
+//    @TypeConverter
+//    public String fromDigestList(List<Digest> value) {
+//        if (value == null) {
+//            return (null);
+//        }
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<List<Digest>>() {}.getType();
+//        return gson.toJson(value, type);
+//    }
+//
+//    @TypeConverter
+//    public List<Digest> toDigestList(String value) {
+//        if (value == null) {
+//            return (null);
+//        }
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<List<Digest>>() {}.getType();
+//        return gson.fromJson(value, type);
+//    }
+//
+//    /** For map of EnumImageType and Image */
+//    @TypeConverter
+//    public String fromImagesMap(Map<EnumImageType, Image> value) {
+//        if (value == null) {
+//            return (null);
+//        }
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<Map<EnumImageType, Image>>() {}.getType();
+//        return gson.toJson(value, type);
+//    }
+//
+//    @TypeConverter
+//    public Map<EnumImageType, Image> toImagesMap(String value) {
+//        if (value == null) {
+//            return (null);
+//        }
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<Map<EnumImageType, Image>>() {}.getType();
+//        return gson.fromJson(value, type);
+//    }
 }

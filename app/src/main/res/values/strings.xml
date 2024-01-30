@@ -23,6 +23,9 @@
     <string name="teatime_subtext">Tea Time placeholder</string>
     <string name="dinner_subtext">Dinner placeholder</string>
 
+    <!--    TEXT INPUT PROPERTIES -->
+    <dimen name="input_radius">50dp</dimen>
+
     <!--    CARD PROPERTIES -->
     <dimen name="radius_card">20dp</dimen>
     <dimen name="radius_small_card">5dp</dimen>

@@ -1,7 +1,6 @@
 package uk.ac.aston.cs3mdd.mealplanner.views.meal_details;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +18,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MealDetailsIngredientsAdapter;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMealDetailsBinding;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Step;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogSaveRecipe;
@@ -53,7 +55,7 @@ public class MealDetailsFragment extends Fragment {
 
         // retrieve the received arguments
         assert getArguments() != null;
-        selectedRecipe = (Recipe) getArguments().getSerializable("Recipe");
+        selectedRecipe = (uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe) getArguments().getSerializable("Recipe");
         source = getArguments().getString("Source");
     }
 
@@ -64,19 +66,19 @@ public class MealDetailsFragment extends Fragment {
         binding = FragmentMealDetailsBinding.inflate(inflater, container, false);
 
         // on clicks
-        onClickInstructions();
         onClickTutorials();
         onClickBack();
         onClickSave();
 
         // details setup
         displayMealMainAttributes();
-        setupIngredients();
-        setupNutrients();
+        initIngredients();
+        initInstructions();
+        initNutrients();
 
         // store layouts' parents for easier switching in the order they appear
         tabLayouts = new ConstraintLayout[]{binding.ingredientsParent, binding.instructionsParent, binding.nutrientsParent};
-        setupTabSwitching();
+        initTabSwitching();
 
         return binding.getRoot();
     }
@@ -85,7 +87,7 @@ public class MealDetailsFragment extends Fragment {
     /**
      * Handles the tab switches.
      */
-    private void setupTabSwitching() {
+    private void initTabSwitching() {
         binding.detailsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -120,12 +122,13 @@ public class MealDetailsFragment extends Fragment {
     private void displayMealMainAttributes() {
         if (selectedRecipe == null) return;
 
-        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
-        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getLabel()));
-        binding.detailsCuisine.setText(Utilities.capitaliseString(selectedRecipe.getCuisineType().get(0)));
-        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
+        String time = selectedRecipe.getReadyInMinutes() + "m";
 
-        String servings = selectedRecipe.getYield() + " servings";
+        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
+        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getTitle()));
+        binding.detailsTime.setText(time);
+        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
+        String servings = selectedRecipe.getServings() + " servings";
         binding.detailsServings.setText(servings);
     }
 
@@ -133,24 +136,38 @@ public class MealDetailsFragment extends Fragment {
     /**
      * Sets up the recycler view to show the ingredients required for the meal.
      */
-    private void setupIngredients() {
+    private void initIngredients() {
         binding.detailsIngredientsRv.setHasFixedSize(true);
         LinearLayoutManager rvLayout = new LinearLayoutManager(requireContext());
         rvLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.detailsIngredientsRv.setLayoutManager(rvLayout);
-        binding.detailsIngredientsRv.setAdapter(new MealDetailsIngredientsAdapter(selectedRecipe.getIngredients().toArray(new Ingredient[0])));
+        if (selectedRecipe.getExtendedIngredients() != null)
+            binding.detailsIngredientsRv.setAdapter(new MealDetailsIngredientsAdapter(selectedRecipe.getExtendedIngredients().toArray(new ExtendedIngredient[0])));
     }
 
     /**
-     * Sets up the on click listener for the instructions button and navigates
-     * the user to the meal's instructions' list in the device's browser.
+     * Sets up the instructions for the specific recipe.
      */
-    private void onClickInstructions() {
-        binding.btnDetailsInstructions.setOnClickListener(v -> {
-            // open browser with the link of the recipe
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(selectedRecipe.getUrl()));
-            requireActivity().startActivity(browserIntent);
-        });
+    private void initInstructions() {
+        if (selectedRecipe.getAnalyzedInstructions() == null) return;
+        if (selectedRecipe.getAnalyzedInstructions().isEmpty() ||
+                selectedRecipe.getAnalyzedInstructions().get(0).getSteps() == null) return;
+
+        List<Step> steps = selectedRecipe.getAnalyzedInstructions().get(0).getSteps();
+        StringBuilder mealInstructions = new StringBuilder();
+        for (Step step : steps) {
+            mealInstructions.append(step.getNumber()).append(". ").append(step.getStep()).append("\n");
+        }
+        binding.mealDetailsInstructions.setText(mealInstructions.toString());
+    }
+
+
+    /**
+     * Gets the list of nutrients for the given recipe and displays it in the layout.
+     */
+    private void initNutrients() {
+//        binding.tvNutrients.setText(Utilities.getListOfNutrientsFromRecipe(selectedRecipe));
+
     }
 
 
@@ -164,7 +181,7 @@ public class MealDetailsFragment extends Fragment {
             // reference: https://stackoverflow.com/questions/9860456/search-a-specific-string-in-youtube-application-from-my-app
             Intent intent = new Intent(Intent.ACTION_SEARCH);
             intent.setPackage("com.google.android.youtube");
-            intent.putExtra("query", selectedRecipe.getLabel());
+            intent.putExtra("query", selectedRecipe.getTitle());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             requireActivity().startActivity(intent);
         });
@@ -205,15 +222,6 @@ public class MealDetailsFragment extends Fragment {
             });
         });
     }
-
-
-    /**
-     * Gets the list of nutrients for the given recipe and displays it in the layout.
-     */
-    private void setupNutrients() {
-        binding.tvNutrients.setText(Utilities.getListOfNutrientsFromRecipe(selectedRecipe));
-    }
-
 
     @Override
     public void onStop() {

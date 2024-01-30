@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
 public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDetailsIngredientsAdapter.MyViewHolder> {
+    // reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
     // using array as the size of the ingredients will be known and
     // it can save some memory.
-    private final Ingredient[] localDataSet;
+    private final ExtendedIngredient[] localDataSet;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -59,7 +60,7 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public MealDetailsIngredientsAdapter(Ingredient[] dataSet) {
+    public MealDetailsIngredientsAdapter(ExtendedIngredient[] dataSet) {
         localDataSet = dataSet;
     }
 
@@ -77,13 +78,18 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, final int position) {
-
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Picasso.get().load(localDataSet[position].getImage()).into(viewHolder.getIngredientImage());
-        String quantity = localDataSet[position].getQuantity() + " " + localDataSet[position].getMeasure();
+
+        // get image using the URL provided by the API docs
+        String url = "https://spoonacular.com/cdn/ingredients_100x100/" + localDataSet[position].getImage();
+        Picasso.get().load(url).into(viewHolder.getIngredientImage());
+
+        int roundedQuantity = Math.round(localDataSet[position].getMeasures().getMetric().getAmount());
+        String quantity = roundedQuantity + " " + localDataSet[position].getMeasures().getMetric().getUnitShort();
+
         viewHolder.getIngredientQuantity().setText(quantity);
-        viewHolder.getIngredientName().setText(Utilities.capitaliseString(localDataSet[position].getFood()));
+        viewHolder.getIngredientName().setText(Utilities.capitaliseString(localDataSet[position].getName()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

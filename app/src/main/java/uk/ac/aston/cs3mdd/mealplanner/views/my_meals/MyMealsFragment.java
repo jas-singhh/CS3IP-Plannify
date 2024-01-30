@@ -16,14 +16,12 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsCalendarAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsCalendarOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MyMealsViewPagerAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
-import uk.ac.aston.cs3mdd.mealplanner.views.home.ContentMainHomeFragment;
 
 public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickInterface {
 
@@ -48,10 +46,10 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
                              Bundle savedInstanceState) {
         binding = FragmentMyMealsBinding.inflate(inflater, container, false);
 
-        setupViewPager();
-        setupRecyclerView();
-        setupOnClickNextWeek();
-        setupOnClickPreviousWeek();
+        initViewPager();
+        initRecyclerView();
+        initOnClickNextWeek();
+        initOnClickPreviousWeek();
 
         subscribeToViewingDateChanges();
 
@@ -70,7 +68,7 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
     /**
      * Sets up the recycler view and its adapter.
      */
-    private void setupRecyclerView() {
+    private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.rvWeekDays.setLayoutManager(layoutManager);
@@ -80,7 +78,7 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
     /**
      * Sets up the view pager to allow tab switching.
      */
-    private void setupViewPager() {
+    private void initViewPager() {
         binding.viewPager.setAdapter(new MyMealsViewPagerAdapter(this));
 
         // reference: https://developer.android.com/guide/navigation/navigation-swipe-view-2
@@ -95,7 +93,7 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
      * Sets up the on click listener for the previous week button
      * by fetching the previous week from the Calendar Utils.
      */
-    private void setupOnClickPreviousWeek() {
+    private void initOnClickPreviousWeek() {
         binding.btnPreviousWeek.setOnClickListener(v -> {
             if (calendarViewModel.getViewingDate().getValue() != null)
                 calendarViewModel.setViewingDate(calendarViewModel.getViewingDate().getValue().minusWeeks(1));
@@ -111,7 +109,7 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
      * Sets up the on click listener for the next week button
      * by fetching the next week from the Calendar Utils.
      */
-    private void setupOnClickNextWeek() {
+    private void initOnClickNextWeek() {
         binding.btnNextWeek.setOnClickListener(v -> {
             if (calendarViewModel.getViewingDate().getValue() != null)
                 calendarViewModel.setViewingDate(calendarViewModel.getViewingDate().getValue().plusWeeks(1));

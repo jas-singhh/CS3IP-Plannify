@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--    PARENT CONTAINER -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--        CONTENT PARENT CONTAINER -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin">
+
+            <!--    MEAL NAME -->
+            <EditText
+                android:id="@+id/custom_meal_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:autofillHints=""
+                android:background="@drawable/input_rounded"
+                android:backgroundTint="@color/card_bg"
+                android:drawableStart="@drawable/ic_meal"
+                android:drawablePadding="7dp"
+                android:drawableTint="@color/white"
+                android:hint="Meal Name"
+                android:padding="20dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_grey"
+                android:textSize="@dimen/text_important"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--    MEAL TYPE -->
+            <!--            REFERENCE:https://stackoverflow.com/questions/54004976/in-android-how-to-create-an-outlined-dropdown-menu-spinner-as-specified-by-th -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/custom_meal_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_weight="3"
+                android:hint="Meal type"
+                android:textColorHint="@color/text_grey"
+                app:boxCornerRadiusBottomEnd="@dimen/input_radius"
+                app:boxCornerRadiusBottomStart="@dimen/input_radius"
+                app:boxCornerRadiusTopEnd="@dimen/input_radius"
+                app:boxCornerRadiusTopStart="@dimen/input_radius"
+                app:boxStrokeWidthFocused="0dp"
+                app:boxStrokeWidth="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/custom_meal_name">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/custom_meal_type_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_rounded"
+                    android:backgroundTint="@color/card_bg"
+                    android:drawableStart="@drawable/ic_meal_type"
+                    android:drawablePadding="7dp"
+                    android:drawableTint="@color/white"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:inputType="none"
+                    android:padding="20dp"
+                    android:textSize="@dimen/text_important" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--    MEAL DATE -->
+            <TextView
+                android:focusable="true"
+                android:id="@+id/custom_meal_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:background="@drawable/input_rounded"
+                android:backgroundTint="@color/card_bg"
+                android:drawablePadding="7dp"
+                app:drawableTint="@color/white"
+                android:hint="Meal Date"
+                android:padding="20dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_grey"
+                android:textSize="@dimen/text_important"
+                app:layout_constraintTop_toBottomOf="@+id/custom_meal_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:drawableStartCompat="@drawable/ic_calendar" />
+
+            <!--            MEAL TIME AND SERVINGS PARENT -->
+            <LinearLayout
+                android:id="@+id/custom_meal_time_and_servings_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/custom_meal_date">
+
+                <!--    TIME -->
+                <!--            REFERENCE:https://stackoverflow.com/questions/54004976/in-android-how-to-create-an-outlined-dropdown-menu-spinner-as-specified-by-th -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/custom_meal_time"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1.3"
+                    android:hint="Time"
+                    android:textColorHint="@color/text_grey"
+                    app:boxCornerRadiusBottomEnd="@dimen/input_radius"
+                    app:boxCornerRadiusBottomStart="@dimen/input_radius"
+                    app:boxCornerRadiusTopEnd="@dimen/input_radius"
+                    app:boxCornerRadiusTopStart="@dimen/input_radius"
+                    app:boxStrokeWidth="0dp">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/custom_meal_time_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_rounded"
+                        android:backgroundTint="@color/card_bg"
+                        android:drawableStart="@drawable/ic_time_filled"
+                        android:drawablePadding="7dp"
+                        android:drawableTint="@color/white"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        android:inputType="none"
+                        android:padding="20dp"
+                        android:textSize="@dimen/text_important" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--    SERVINGS -->
+                <!--            REFERENCE:https://stackoverflow.com/questions/54004976/in-android-how-to-create-an-outlined-dropdown-menu-spinner-as-specified-by-th -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/custom_meal_servings"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1.5"
+                    android:hint="Servings"
+                    android:textColorHint="@color/text_grey"
+                    app:boxCornerRadiusBottomEnd="@dimen/input_radius"
+                    app:boxCornerRadiusBottomStart="@dimen/input_radius"
+                    app:boxCornerRadiusTopEnd="@dimen/input_radius"
+                    app:boxCornerRadiusTopStart="@dimen/input_radius"
+                    app:boxStrokeWidth="0dp">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/custom_meal_servings_dropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_rounded"
+                        android:backgroundTint="@color/card_bg"
+                        android:drawableStart="@drawable/ic_servings"
+                        android:drawablePadding="7dp"
+                        android:drawableTint="@color/white"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        android:inputType="none"
+                        android:padding="20dp"
+                        android:textSize="@dimen/text_important" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <!--    INSTRUCTIONS -->
+            <EditText
+                android:id="@+id/custom_meal_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/margin"
+                android:autofillHints=""
+                android:background="@drawable/input_rounded"
+                android:backgroundTint="@color/card_bg"
+                android:drawableStart="@drawable/ic_instructions"
+                android:drawablePadding="7dp"
+                android:drawableTint="@color/white"
+                android:hint="Add Instructions"
+                android:padding="20dp"
+                android:textColor="@color/text_white"
+                android:textColorHint="@color/text_grey"
+                android:textSize="@dimen/text_important"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/custom_meal_time_and_servings_parent" />
+
+
+            <!--    INGREDIENTS PARENT CONTAINER -->
+            <LinearLayout
+                android:id="@+id/ingredients_parent_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/custom_meal_instructions">
+
+                <!--                    INGREDIENT NAME -->
+                <EditText
+                    android:id="@+id/custom_meal_ingredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:background="@drawable/input_rounded"
+                    android:backgroundTint="@color/card_bg"
+                    android:drawableStart="@drawable/ic_ingredients"
+                    android:drawablePadding="7dp"
+                    android:drawableTint="@color/white"
+                    android:hint="Ingredient Name"
+                    android:padding="20dp"
+                    android:textColor="@color/text_white"
+                    android:textColorHint="@color/text_grey"
+                    android:textSize="@dimen/text_important" />
+
+                <!--            INGREDIENTS EDIT TEXT AND ADD BUTTON -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:orientation="horizontal">
+
+                    <!--                    INGREDIENT QUANTITY -->
+                    <EditText
+                        android:id="@+id/custom_meal_ingredient_quantity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="2"
+                        android:autofillHints=""
+                        android:background="@drawable/input_rounded"
+                        android:backgroundTint="@color/card_bg"
+                        android:drawableStart="@drawable/ic_quantity_scale"
+                        android:drawablePadding="7dp"
+                        android:drawableTint="@color/white"
+                        android:hint="Quantity"
+                        android:inputType="numberSigned"
+                        android:padding="20dp"
+                        android:textColor="@color/text_white"
+                        android:textColorHint="@color/text_grey"
+                        android:textSize="@dimen/text_important" />
+
+                    <!--                    INGREDIENT UNIT -->
+                    <EditText
+                        android:id="@+id/custom_meal_ingredient_unit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="2"
+                        android:autofillHints=""
+                        android:background="@drawable/input_rounded"
+                        android:backgroundTint="@color/card_bg"
+                        android:drawableStart="@drawable/ic_unit"
+                        android:drawablePadding="7dp"
+                        android:drawableTint="@color/white"
+                        android:hint="Unit"
+                        android:inputType="text"
+                        android:padding="20dp"
+                        android:textColor="@color/text_white"
+                        android:textColorHint="@color/text_grey"
+                        android:textSize="@dimen/text_important" />
+
+                    <!--                    ADD BUTTON -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/add_ingredient"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/complementary"
+                        app:cardCornerRadius="@dimen/radius_card">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_add_filled" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:paddingVertical="5dp"
+                    android:text="Added Ingredients"
+                    android:textSize="@dimen/text_headings"
+                    android:textStyle="bold" />
+
+                <!--                INGREDIENTS LIST -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <!--    INGREDIENTS PARENT CONTAINER -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/custom_meal_save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:background="@drawable/input_rounded"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_important"
+                app:backgroundTint="@color/complementary"
+                app:layout_constraintTop_toBottomOf="@id/ingredients_parent_container" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--        CONTENT PARENT CONTAINER -->
+
+    </androidx.core.widget.NestedScrollView>
+    <!--    PARENT CONTAINER -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

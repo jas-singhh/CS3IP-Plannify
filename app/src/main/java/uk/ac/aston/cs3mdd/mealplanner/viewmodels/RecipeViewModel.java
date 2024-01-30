@@ -19,17 +19,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumDiet;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.RecipeResponseList;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
 
 public class RecipeViewModel extends ViewModel {
 
     private final RecipesRepository recipeRepository;
-    private final MutableLiveData<RecipeResponse> allRecipes;
-
+    private final MutableLiveData<RecipeResponseList> allRecipes;
 
     public RecipeViewModel(Application application) {
         super();
@@ -51,10 +49,9 @@ public class RecipeViewModel extends ViewModel {
      *
      * @return requested recipes.
      */
-    public MutableLiveData<RecipeResponse> getRequestedRecipes() {
+    public MutableLiveData<RecipeResponseList> getRequestedRecipes() {
         return allRecipes;
     }
-
 
     /**
      * Requests recipes by searching for the provided query.
@@ -62,12 +59,13 @@ public class RecipeViewModel extends ViewModel {
      * @param query query to search the recipes.
      */
     public void requestRecipesByQuery(String query) {
-        Call<RecipeResponse> request = recipeRepository.getRecipesByQuery(query);
-        request.enqueue(new Callback<RecipeResponse>() {
+        Call<RecipeResponseList> request = recipeRepository.getRecipesByQuery(query);
+        request.enqueue(new Callback<RecipeResponseList>() {
             @Override
-            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
+            public void onResponse(@NonNull Call<RecipeResponseList> call, @NonNull Response<RecipeResponseList> response) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
+
                     storeData(response.body());
                 } else {
                     assert response.errorBody() != null;
@@ -76,48 +74,74 @@ public class RecipeViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<RecipeResponseList> call, @NonNull Throwable t) {
                 Log.i(MainActivity.TAG, "Error in requestRecipesByQuery: " + t);
             }
         });
     }
 
-    /**
-     * Requests recipes according to the specified diet type.
-     *
-     * @param diet diet for which to fetch recipes.
-     */
-    public void requestRecipesByDiet(EnumDiet diet) {
-        Call<RecipeResponse> request = recipeRepository.getRecipesByDiet(diet);
-        request.enqueue(new Callback<RecipeResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
-                    storeData(response.body());
-                } else {
-                    assert response.errorBody() != null;
-                    Log.i(MainActivity.TAG, response.errorBody().toString());
-                }
-            }
+//    /**
+//     * Requests recipes by searching for the provided query.
+//     *
+//     * @param query query to search the recipes.
+//     */
+//    public void requestRecipesByQuery(String query) {
+//        Call<RecipeResponse> request = recipeRepository.getRecipesByQuery(query);
+//        request.enqueue(new Callback<RecipeResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
+//                if (response.isSuccessful()) {
+//                    assert response.body() != null;
+//                    storeData(response.body());
+//                } else {
+//                    assert response.errorBody() != null;
+//                    Log.i(MainActivity.TAG, response.errorBody().toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
+//                Log.i(MainActivity.TAG, "Error in requestRecipesByQuery: " + t);
+//            }
+//        });
+//    }
 
-            @Override
-            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
-                Log.i(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
-            }
-        });
-    }
-
+//    /**
+//     * Requests recipes according to the specified diet type.
+//     *
+//     * @param diet diet for which to fetch recipes.
+//     */
+//    public void requestRecipesByDiet(EnumDiet diet) {
+//        Call<RecipeResponse> request = recipeRepository.getRecipesByDiet(diet);
+//        request.enqueue(new Callback<RecipeResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
+//                if (response.isSuccessful()) {
+//                    assert response.body() != null;
+//                    storeData(response.body());
+//                } else {
+//                    assert response.errorBody() != null;
+//                    Log.i(MainActivity.TAG, response.errorBody().toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
+//                Log.i(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
+//            }
+//        });
+//    }
+//
     /**
      * Requests the recipes by the specified meal type.
      *
      * @param mealType meal type for which recipes are requested.
      */
     public void requestRecipesByMealType(EnumMealType mealType) {
-        Call<RecipeResponse> request = recipeRepository.getRecipesByMealType(mealType);
-        request.enqueue(new Callback<RecipeResponse>() {
+        Call<RecipeResponseList> request = recipeRepository.getRecipesByMealType(mealType);
+        request.enqueue(new Callback<RecipeResponseList>() {
             @Override
-            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
+            public void onResponse(@NonNull Call<RecipeResponseList> call, @NonNull Response<RecipeResponseList> response) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     storeData(response.body());
@@ -128,7 +152,7 @@ public class RecipeViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<RecipeResponseList> call, @NonNull Throwable t) {
                 Log.i(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
             }
         });
@@ -139,7 +163,7 @@ public class RecipeViewModel extends ViewModel {
      *
      * @param recipeResponse response to store.
      */
-    private void storeData(RecipeResponse recipeResponse) {
+    private void storeData(RecipeResponseList recipeResponse) {
         this.allRecipes.setValue(recipeResponse);
     }
 
@@ -183,7 +207,7 @@ public class RecipeViewModel extends ViewModel {
      * @param id unique identifier of the recipe.
      * @return 1 if it exists - 0 if it doesn't.
      */
-    public Single<Integer> existsById(String id) {
+    public Single<Integer> existsById(int id) {
         return recipeRepository.existsById(id);
     }
 
@@ -206,5 +230,16 @@ public class RecipeViewModel extends ViewModel {
      */
     public Flowable<List<LocalRecipe>> getRecipesOfTypeForDate(EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
         return recipeRepository.getRecipesOfTypeForDate(mealTypeSavedFor, dateSavedFor);
+    }
+
+    /**
+     * Returns a list fo local recipes saved for the dates within the specified range.
+     *
+     * @param from date from which to fetch recipes.
+     * @param to date to which to fetch recipes.
+     * @return returns a list of local recipes within the specified dates.
+     */
+    public Flowable<List<LocalRecipe>> getRecipesWithinDates(LocalDate from, LocalDate to) {
+        return recipeRepository.getRecipesWithinDates(from, to);
     }
 }

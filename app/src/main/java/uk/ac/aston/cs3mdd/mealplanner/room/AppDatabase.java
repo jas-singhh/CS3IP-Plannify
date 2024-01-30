@@ -7,7 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.LocalRecipe;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
+
 
 @Database(entities = LocalRecipe.class, version = 1)
 @TypeConverters({RoomDataTypeConverter.class})
