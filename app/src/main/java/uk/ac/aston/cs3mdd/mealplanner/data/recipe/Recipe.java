@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumImageType;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumImageType;
 
 public class Recipe implements Serializable {
 

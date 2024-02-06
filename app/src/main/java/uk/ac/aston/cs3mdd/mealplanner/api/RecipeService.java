@@ -4,9 +4,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import uk.ac.aston.cs3mdd.mealplanner.data.recipe.RecipeResponse;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumCuisine;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumDiet;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumHealthLabel;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumCuisine;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumDiet;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumHealthLabel;
 
 public interface RecipeService {
 

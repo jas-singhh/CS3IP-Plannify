@@ -2,6 +2,17 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-    <corners android:radius="@dimen/radius_card"/>
+    <solid android:color="@color/cards"/>
 
+    <corners
+        android:topLeftRadius="50dp"
+        android:topRightRadius="50dp"
+        android:bottomLeftRadius="50dp"
+        android:bottomRightRadius="50dp"
+        />
+
+    <padding android:bottom="10dp"
+        android:top="10dp"
+        android:left="10dp"
+        android:right="10dp"/>
 </shape>

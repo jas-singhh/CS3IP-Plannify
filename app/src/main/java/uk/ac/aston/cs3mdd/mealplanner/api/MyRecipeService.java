@@ -11,16 +11,19 @@ public interface MyRecipeService {
 
     // Reference: Mobile Design and Development Lab 4
     @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
-    @GET("recipes/complexSearch")
-    Call<RecipeResponseList> getRecipesBySearch(@Query("query") String query,
-                                                @Query("addRecipeInformation") boolean addRecipeInformation,
-                                                @Query("addRecipeNutrition") boolean addRecipeNutrition,
-                                                @Query("fillIngredients") boolean fillIngredients);
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true")
+    Call<RecipeResponseList> getRecipesBySearch(@Query("query") String query);
 
     @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
-    @GET("recipes/complexSearch")
-    Call<RecipeResponseList> getRecipesByMealType(@Query("type") String type,
-                                                  @Query("addRecipeInformation") boolean addRecipeInformation,
-                                                  @Query("addRecipeNutrition") boolean addRecipeNutrition,
-                                                  @Query("fillIngredients") boolean fillIngredients);
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true")
+    Call<RecipeResponseList> getRecipesByMealType(@Query("type") String type);
+
+    @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true")
+    Call<RecipeResponseList> getRecipesByQueryAndFilters(@Query("query") String query,
+                                                         @Query("type") String mealTypes,
+                                                         @Query("cuisine") String cuisines,
+                                                         @Query("diet") String diets,
+                                                         @Query("maxReadyTime")int maxReadyTime);
+
 }

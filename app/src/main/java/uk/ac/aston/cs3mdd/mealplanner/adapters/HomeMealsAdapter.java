@@ -115,7 +115,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
                 .into(holder.getMealImage());
         holder.getMealName().setText(currentItem.getTitle());
         String calories = "N/A";
-        if (currentItem.getNutrition() != null)
+        if (currentItem.getNutrition() != null && currentItem.getNutrition().getNutrients() != null)
             calories = Math.round(currentItem.getNutrition().getNutrients().get(0).getAmount()) + " Calories";
         String time = currentItem.getReadyInMinutes() + "m";
         holder.getMealCalories().setText(calories);

@@ -31,7 +31,7 @@ import java.util.stream.IntStream;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.CustomMealIngredientsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.DialogSaveCustomRecipeOnClickInterface;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.AnalyzedInstruction;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Measures;
@@ -60,8 +60,8 @@ public class DialogCustomMeal extends Dialog {
     private final CustomMealIngredientsAdapter mAdapter;
     private DatePickerDialog datePickerDialog;
     private LocalDate selectedDate;
-    private DialogSaveCustomRecipeOnClickInterface mListener;
-    private HashMap<Integer, String> timeMap;
+    private final DialogSaveCustomRecipeOnClickInterface mListener;
+    private final HashMap<Integer, String> timeMap;
 
     public DialogCustomMeal(@NonNull Context context, DialogSaveCustomRecipeOnClickInterface listener) {
         super(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);

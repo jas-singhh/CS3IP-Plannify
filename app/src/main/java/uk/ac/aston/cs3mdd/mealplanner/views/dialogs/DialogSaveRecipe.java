@@ -19,7 +19,7 @@ import java.util.Locale;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.DialogSaveRecipeOnClickInterface;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
 
 public class DialogSaveRecipe extends Dialog {
@@ -51,8 +51,7 @@ public class DialogSaveRecipe extends Dialog {
     }
 
     /**
-     * Creates an alert dialog for requesting the user for the date to save it for,
-     * and for the meal type.
+     * Creates an alert dialog for allowing the user to enter details of the recipe to save.
      *
      * @param context context required to create the alert dialog.
      * @param view    custom view contained in the alert dialog.

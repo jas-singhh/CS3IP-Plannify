@@ -19,12 +19,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
 
 public class RecipeViewModel extends ViewModel {
+    // Google recommends using 1 ViewModel per View
+    // reference: https://www.youtube.com/watch?v=Ts-uxYiBEQ8&t=520s
 
     private final RecipesRepository recipeRepository;
     private final MutableLiveData<RecipeResponseList> allRecipes;
@@ -153,7 +155,7 @@ public class RecipeViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<RecipeResponseList> call, @NonNull Throwable t) {
-                Log.i(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
+                Log.e(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
             }
         });
     }

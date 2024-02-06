@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 import java.time.LocalDate;
 
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 
 @Entity(tableName = "recipes")

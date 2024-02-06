@@ -16,6 +16,7 @@ import uk.ac.aston.cs3mdd.mealplanner.databinding.ActivityMainBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogCustomMeal;
+import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogFindMealsFilters;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         recipeViewModel = new ViewModelProvider(this,
                 ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
         mDisposable = new CompositeDisposable();
+
+        new DialogFindMealsFilters(this, MainActivity.this);
 
         // initialises the floating action button
         initFab();

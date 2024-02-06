@@ -1,16 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".views.find_meals.FindMealsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--    HEADER CONTAINER -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/find_meals_header_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Find meals"
-        android:textSize="40sp" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <!--    SEARCH BAR -->
+        <AutoCompleteTextView
+            android:id="@+id/custom_meal_auto_complete_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@drawable/input_rounded"
+            android:backgroundTint="@color/cards"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="7dp"
+            android:drawableTint="@color/white"
+            android:hint="Search for a meal"
+            android:padding="15dp"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_grey"
+            android:layout_weight="6"
+            android:textSize="@dimen/text_important"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/find_meals_filters"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:elevation="5dp"
+            android:background="@drawable/input_rounded"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/complementary"
+            android:layout_marginStart="10dp"
+            >
+
+            <ImageView
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_filter"
+                android:layout_gravity="center"
+                app:tint="@color/white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--    LIST OF RESULTS -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_find_meals"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/find_meals_header_parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

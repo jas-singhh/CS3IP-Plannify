@@ -13,7 +13,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 
 @Dao

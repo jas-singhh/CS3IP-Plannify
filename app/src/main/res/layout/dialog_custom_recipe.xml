@@ -37,7 +37,8 @@
                 android:textSize="@dimen/text_important"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:inputType="text" />
 
             <!--    MEAL TYPE -->
             <!--            REFERENCE:https://stackoverflow.com/questions/54004976/in-android-how-to-create-an-outlined-dropdown-menu-spinner-as-specified-by-th -->
@@ -47,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
-                android:layout_weight="3"
                 android:hint="Meal type"
                 android:textColorHint="@color/text_grey"
                 app:boxCornerRadiusBottomEnd="@dimen/input_radius"
@@ -106,7 +106,8 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/custom_meal_date">
+                app:layout_constraintTop_toBottomOf="@id/custom_meal_date"
+                android:baselineAligned="false">
 
                 <!--    TIME -->
                 <!--            REFERENCE:https://stackoverflow.com/questions/54004976/in-android-how-to-create-an-outlined-dropdown-menu-spinner-as-specified-by-th -->
@@ -195,7 +196,8 @@
                 android:textSize="@dimen/text_important"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/custom_meal_time_and_servings_parent" />
+                app:layout_constraintTop_toBottomOf="@+id/custom_meal_time_and_servings_parent"
+                android:inputType="text" />
 
 
             <!--    INGREDIENTS PARENT CONTAINER -->
@@ -224,7 +226,8 @@
                     android:padding="20dp"
                     android:textColor="@color/text_white"
                     android:textColorHint="@color/text_grey"
-                    android:textSize="@dimen/text_important" />
+                    android:textSize="@dimen/text_important"
+                    android:inputType="text" />
 
                 <!--            INGREDIENTS EDIT TEXT AND ADD BUTTON -->
                 <LinearLayout

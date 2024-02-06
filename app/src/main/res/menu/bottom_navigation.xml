@@ -4,13 +4,13 @@
     <item
         android:id="@+id/homeFragment"
         android:title="Home"
-        android:icon="@drawable/ic_home_filled"
+        android:icon="@drawable/ic_home"
         />
 
     <item
         android:id="@+id/findMealsFragment"
         android:title="Find Meals"
-        android:icon="@drawable/ic_search_filled"
+        android:icon="@drawable/ic_search"
         />
 
     <item
@@ -21,13 +21,13 @@
     <item
         android:id="@+id/myMealsFragment"
         android:title="My Meals"
-        android:icon="@drawable/ic_my_meals_filled"
+        android:icon="@drawable/ic_saved"
         />
 
     <item
         android:id="@+id/settingsFragment"
         android:title="Settings"
-        android:icon="@drawable/ic_settings_filled"
+        android:icon="@drawable/ic_settings"
         />
 
 </menu>

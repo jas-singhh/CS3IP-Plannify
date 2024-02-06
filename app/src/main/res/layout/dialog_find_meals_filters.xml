@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/input_rounded"
+    android:backgroundTint="#232323"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!--    MEAL TYPES -->
+    <TextView
+        android:id="@+id/dialog_filter_meal_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/input_rounded"
+        android:backgroundTint="@color/cards"
+        android:hint="Filter By Meal Types"
+        android:padding="15dp"
+        android:textSize="@dimen/text_important"
+        app:drawableEndCompat="@drawable/ic_arrow_down"
+        app:drawableTint="@color/white" />
+
+    <!--    MEAL TYPES LIST -->
+    <ListView
+        android:id="@+id/dialog_filter_meal_types_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <!--    CUISINES -->
+    <TextView
+        android:id="@+id/dialog_filter_cuisines"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/input_rounded"
+        android:backgroundTint="@color/cards"
+        android:hint="Filter By Cuisines"
+        android:padding="15dp"
+        android:textSize="@dimen/text_important"
+        app:drawableEndCompat="@drawable/ic_arrow_down"
+        app:drawableTint="@color/white" />
+
+    <!--    CUISINES LIST -->
+    <ListView
+        android:id="@+id/dialog_filter_cuisines_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <!--    DIETS -->
+    <TextView
+        android:id="@+id/dialog_filter_diets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/input_rounded"
+        android:backgroundTint="@color/cards"
+        android:hint="Filter By Diets"
+        android:padding="15dp"
+        android:textSize="@dimen/text_important"
+        app:drawableEndCompat="@drawable/ic_arrow_down"
+        app:drawableTint="@color/white" />
+
+    <!--    DIETS LIST -->
+    <ListView
+        android:id="@+id/dialog_filter_diets_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_weight="1"
+        android:visibility="gone"/>
+
+    <!--    MAX READY TIME -->
+    <TextView
+        android:id="@+id/dialog_filter_max_ready_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/input_rounded"
+        android:backgroundTint="@color/cards"
+        android:hint="Filter By Max Ready Time"
+        android:padding="15dp"
+        android:textSize="@dimen/text_important"
+        app:drawableEndCompat="@drawable/ic_arrow_down"
+        app:drawableTint="@color/white" />
+
+    <!--    MAX READY TIME LIST -->
+    <ListView
+        android:id="@+id/dialog_filter_max_ready_time_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+
+    <!--    BUTTONS PARENT -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin">
+
+        <!--        RESET BUTTON -->
+        <TextView
+            android:id="@+id/dialog_filter_reset_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:padding="15dp"
+            android:text="Reset"
+            android:textAllCaps="false"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/text_important"
+            android:gravity="center"
+            android:textStyle="bold" />
+
+        <!--        CANCEL BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_filter_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/dialog_filter_save_btn"
+            android:background="@drawable/input_rounded"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_important"
+            android:textStyle="bold"
+            app:backgroundTint="@color/semi_transparent_white" />
+
+        <!--        SAVE BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_filter_save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="7dp"
+            android:background="@drawable/input_rounded"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_important"
+            android:textStyle="bold"
+            app:backgroundTint="@color/complementary" />
+
+    </RelativeLayout>
+
+</LinearLayout>

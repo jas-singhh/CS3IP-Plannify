@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums;
+package uk.ac.aston.cs3mdd.mealplanner.enums;
 
 public enum EnumHealthLabel {
 

@@ -28,8 +28,8 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsSavedBinding;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;

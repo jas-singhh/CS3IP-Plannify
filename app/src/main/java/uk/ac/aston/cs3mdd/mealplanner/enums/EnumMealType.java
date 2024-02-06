@@ -1,4 +1,6 @@
-package uk.ac.aston.cs3mdd.mealplanner.data.recipe.enums;
+package uk.ac.aston.cs3mdd.mealplanner.enums;
+
+import androidx.annotation.NonNull;
 
 public enum EnumMealType {
 
@@ -18,5 +20,11 @@ public enum EnumMealType {
 
     public String getMealType() {
         return mealType;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.getMealType();
     }
 }
