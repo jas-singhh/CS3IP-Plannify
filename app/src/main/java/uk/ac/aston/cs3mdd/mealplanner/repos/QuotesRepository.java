@@ -11,7 +11,7 @@ public class QuotesRepository {
     // This class will store the data retrieved by the API request
     // Reference: CS3MDD Lab 4
 
-    private QuoteService request;
+    private final QuoteService request;
 
     public QuotesRepository(QuoteService request) {this.request = request;}
 

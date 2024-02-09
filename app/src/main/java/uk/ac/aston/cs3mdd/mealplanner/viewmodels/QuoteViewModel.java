@@ -19,7 +19,7 @@ public class QuoteViewModel extends ViewModel {
     // Reference: Mobile Design and Development lab 2
     // Mutable data = data that can be changed
     // Live data = read-only data
-    private MutableLiveData<Quote> quote;
+    private final MutableLiveData<Quote> quote;
 
     public QuoteViewModel() {
         super();
