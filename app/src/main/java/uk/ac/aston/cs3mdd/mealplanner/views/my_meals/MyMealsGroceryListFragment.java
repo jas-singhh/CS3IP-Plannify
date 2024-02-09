@@ -119,7 +119,7 @@ public class MyMealsGroceryListFragment extends Fragment {
 
                         if (mAdapter != null) {
                             // map to list
-                            ArrayList<ExtendedIngredient> ingredients = new ArrayList<ExtendedIngredient>(ingredientsMap.values());
+                            ArrayList<ExtendedIngredient> ingredients = new ArrayList<>(ingredientsMap.values());
                             mAdapter.updateData(ingredients);
                         }
                     }

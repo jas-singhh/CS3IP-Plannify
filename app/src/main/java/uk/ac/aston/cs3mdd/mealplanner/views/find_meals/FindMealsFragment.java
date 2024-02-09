@@ -189,12 +189,9 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
      * Subscribes to changes in the random healthy meals live data.
      */
     private void subscribeToRandomHealthyRecipes() {
-        mViewModel.getRandomHealthyRecipes().observe(getViewLifecycleOwner(), new Observer<RecipeResponseList>() {
-            @Override
-            public void onChanged(RecipeResponseList recipeResponseList) {
-                if (mAdapter != null && mViewModel.getRequestedRecipes().getValue() == null) {
-                    mAdapter.updateData((ArrayList<? extends Recipe>) recipeResponseList.getResults());
-                }
+        mViewModel.getRandomHealthyRecipes().observe(getViewLifecycleOwner(), recipeResponseList -> {
+            if (mAdapter != null && mViewModel.getRequestedRecipes().getValue() == null) {
+                mAdapter.updateData((ArrayList<? extends Recipe>) recipeResponseList.getResults());
             }
         });
     }
