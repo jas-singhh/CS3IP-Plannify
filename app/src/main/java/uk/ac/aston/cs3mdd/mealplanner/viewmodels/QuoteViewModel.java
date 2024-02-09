@@ -11,7 +11,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.ac.aston.cs3mdd.mealplanner.data.quote.Quote;
+import uk.ac.aston.cs3mdd.mealplanner.models.quote.Quote;
 import uk.ac.aston.cs3mdd.mealplanner.repos.QuotesRepository;
 
 public class QuoteViewModel extends ViewModel {

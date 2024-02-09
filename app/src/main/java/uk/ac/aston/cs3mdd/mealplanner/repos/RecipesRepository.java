@@ -17,13 +17,14 @@ import uk.ac.aston.cs3mdd.mealplanner.api.MyRecipeService;
 import uk.ac.aston.cs3mdd.mealplanner.api.RetrofitClient;
 import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMaxReadyTime;
 import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.AutoCompleteResult;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.room.AppDatabase;
+import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 
 public class RecipesRepository {
     // MVVM architecture
-    private static final String TYPE = "public";
     private final MyRecipeService request;
     private final AppDatabase database;
 
@@ -72,9 +73,9 @@ public class RecipesRepository {
 
         // transform the max ready time list into an integer
         if (maxReadyTime != null && !maxReadyTime.isEmpty()) {
-                if (maxReadyTime.get(0) != null) {
-                    EnumMaxReadyTime maxReadyTimeEnum = EnumMaxReadyTime.fromValue(maxReadyTime.get(0));
-                    _maxReadyTime = maxReadyTimeEnum.getMaxReadyTimeInMinutesFromEnum();
+            if (maxReadyTime.get(0) != null) {
+                EnumMaxReadyTime maxReadyTimeEnum = EnumMaxReadyTime.fromValue(maxReadyTime.get(0));
+                _maxReadyTime = maxReadyTimeEnum.getMaxReadyTimeInMinutesFromEnum();
             }
         }
 
@@ -84,6 +85,14 @@ public class RecipesRepository {
         Log.d(MainActivity.TAG, "max ready time: " + _maxReadyTime);
 
         return request.getRecipesByQueryAndFilters(query, _mealTypes, _cuisines, _diets, _maxReadyTime);
+    }
+
+    public Call<List<AutoCompleteResult>> getAutoCompleteForQuery(String query) {
+        return request.getAutoCompleteForQuery(query);
+    }
+
+    public Call<RecipeResponseList> getRandomHealthyRecipes() {
+        return request.getRandomHealthyRecipes(Utilities.getRecommendedNutrientsMap());
     }
 
     /**

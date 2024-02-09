@@ -3,13 +3,9 @@ package uk.ac.aston.cs3mdd.mealplanner.utils;
 import android.content.Context;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Hit;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Nutrient;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Recipe;
 
 public class Utilities {
 
@@ -28,9 +24,23 @@ public class Utilities {
 
 //    Nutrients recommended quantity per 100g by NHS
 //    Reference: https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/how-to-read-food-labels/
-    private static final double MAX_TOTAL_FAT_PER_100G = 17.5;
+    private static final float MAX_TOTAL_FAT_PER_100G = 17.5f;
     private static final int MAX_SATURATED_FAT_PER_100G = 5;
-    private static final double MAX_SUGARS_PER_100G = 22.5;
+    private static final float MAX_SUGARS_PER_100G = 22.5f;
+    private static final float MAX_SALT_PER_100G = 1.5f;
+
+    public static HashMap<String, Float> getRecommendedNutrientsMap() {
+        // these values are taken from the API docs to match the endpoint parameters
+        HashMap<String, Float> result = new HashMap<>(4);
+        result.put("maxFat", MAX_TOTAL_FAT_PER_100G);
+        result.put("maxSaturatedFat", (float) MAX_SATURATED_FAT_PER_100G);
+        result.put("maxSugar", MAX_SUGARS_PER_100G);
+
+        float sodium = saltToSodiumInMilligrams(MAX_SALT_PER_100G);
+        result.put("maxSodium", sodium);
+
+        return result;
+    }
 
 
     /**
@@ -67,60 +77,68 @@ public class Utilities {
      * based on the guidelines set by NHS.
      * Guidelines can be found at: <a href="https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/how-to-read-food-labels/#:~:text=If%20you">...</a>'re%20buying%20pre,saturated%20fat%2C%20sugars%20and%20salt.
      *
-     * @param recipe recipe to analyse.
      * @return the health rating for the given meal.
      */
-    public static String getMealHealthRating(Recipe recipe) {
-        // fat content is the first element in the array
-        // according to the API documentation https://developer.edamam.com/edamam-docs-recipe-api#/
+//    public static String getMealHealthRating(Recipe recipe) {
+//        // fat content is the first element in the array
+//        // according to the API documentation https://developer.edamam.com/edamam-docs-recipe-api#/
+//
+//        int rating = 0;
+//
+//        // get the nutrients required for comparison
+//        float totalFat = 0;
+//        float sugar = 0;
+//        double saturatedFat = recipe.getDigest().get(0).getSub().get(0).getTotal();
+//        double weight = recipe.getTotalWeight();
+//
+//        Nutrient fatNutrient = recipe.getTotalNutrients().get(FAT);
+//        Nutrient sugarNutrient = recipe.getTotalNutrients().get(SUGAR);
+//
+//        if (fatNutrient != null)
+//             totalFat = fatNutrient.getQuantity();
+//
+//        if (sugarNutrient != null)
+//            sugar = sugarNutrient.getQuantity();
+//
+//
+//        // calculate the nutrients for 100g portions, as NHS guidelines reference 100g portions
+//        // Reference: https://www.ifsqn.com/forum/index.php/topic/42843-how-to-convert-per-serving-nutritionals-to-100-gram-nutritionals/#:~:text=Say%2C%20you%20have%20175%20g,100%20g%20is%201.15%20g.
+//        double totalFatPer100g = (totalFat/weight) * 100;
+//        double sugarPer100g = (sugar/weight) * 100;
+//        double saturatedFatPer100g = (saturatedFat/weight) * 100;
+//
+//        // NHS Guidelines
+//        double maxTotalFatPer100g = 17.5;
+//        double maxSaturatedFatPer100g = 5;
+//        double maxSugarPer100g = 22.5;
+//
+//        // compare values
+//        if (totalFatPer100g < maxTotalFatPer100g) rating++;
+//        if (sugarPer100g < maxSugarPer100g) rating++;
+//        if (saturatedFatPer100g < maxSaturatedFatPer100g) rating++;
+//
+//        // calculate rating
+//        switch (rating) {
+//            case 0:
+//                return "Very Unhealthy";
+//            case 1:
+//                return "Unhealthy";
+//            case 2:
+//                return "Healthy";
+//            case 3:
+//                return "Very Healthy";
+//            default:
+//                return "n/a";
+//        }
+//    }
 
-        int rating = 0;
+    public static float sodiumToSaltInGrams(float sodium) {
+        // conversion formula is sodium / 400 to get salt in grams
+        return sodium / 400;
+    }
 
-        // get the nutrients required for comparison
-        float totalFat = 0;
-        float sugar = 0;
-        double saturatedFat = recipe.getDigest().get(0).getSub().get(0).getTotal();
-        double weight = recipe.getTotalWeight();
-
-        Nutrient fatNutrient = recipe.getTotalNutrients().get(FAT);
-        Nutrient sugarNutrient = recipe.getTotalNutrients().get(SUGAR);
-
-        if (fatNutrient != null)
-             totalFat = fatNutrient.getQuantity();
-
-        if (sugarNutrient != null)
-            sugar = sugarNutrient.getQuantity();
-
-
-        // calculate the nutrients for 100g portions, as NHS guidelines reference 100g portions
-        // Reference: https://www.ifsqn.com/forum/index.php/topic/42843-how-to-convert-per-serving-nutritionals-to-100-gram-nutritionals/#:~:text=Say%2C%20you%20have%20175%20g,100%20g%20is%201.15%20g.
-        double totalFatPer100g = (totalFat/weight) * 100;
-        double sugarPer100g = (sugar/weight) * 100;
-        double saturatedFatPer100g = (saturatedFat/weight) * 100;
-
-        // NHS Guidelines
-        double maxTotalFatPer100g = 17.5;
-        double maxSaturatedFatPer100g = 5;
-        double maxSugarPer100g = 22.5;
-
-        // compare values
-        if (totalFatPer100g < maxTotalFatPer100g) rating++;
-        if (sugarPer100g < maxSugarPer100g) rating++;
-        if (saturatedFatPer100g < maxSaturatedFatPer100g) rating++;
-
-        // calculate rating
-        switch (rating) {
-            case 0:
-                return "Very Unhealthy";
-            case 1:
-                return "Unhealthy";
-            case 2:
-                return "Healthy";
-            case 3:
-                return "Very Healthy";
-            default:
-                return "n/a";
-        }
+    public static float saltToSodiumInMilligrams(float salt) {
+        return salt * 400;
     }
 
     public static String getMealHealthRating(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
@@ -151,34 +169,6 @@ public class Utilities {
         return minutes + "m";
     }
 
-//    public static String getListOfNutrientsFromRecipe(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
-//        if (recipe==null) return "";
-//
-//        StringBuilder result = new StringBuilder();
-//
-//        StringBuilder fatSubs = new StringBuilder();
-//
-//        for (Sub fatSub: recipe.getDigest().get(0).getSub()) {
-//            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", fatSub.getTotal());
-//            fatSubs.append(fatSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
-//        }
-//
-//        StringBuilder carbsSubs = new StringBuilder();
-//
-//        for (Sub carbsSub: recipe.getDigest().get(1).getSub()) {
-//            String formattedQuantity = String.format(Locale.getDefault(),"%.2f", carbsSub.getTotal());
-//            carbsSubs.append(carbsSub.getLabel()).append(": ").append(formattedQuantity).append("g\n");
-//        }
-//
-//        for (Digest nutrient: recipe.getDigest()) {
-//            result.append(nutrient.getLabel()).append(": ").append(String.format(Locale.getDefault(),
-//                    "%.2f", nutrient.getTotal())).append("g\n");
-//        }
-//
-//        result = new StringBuilder(result + fatSubs.toString() + carbsSubs);
-//
-//        return result.toString();
-//    }
 
     /**
      * Displays an error toast message indicating that an error occurred.
@@ -189,16 +179,5 @@ public class Utilities {
         if (context != null) {
             Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG).show();
         }
-    }
-
-    public static ArrayList<Recipe> fromHitsToRecipes(List<Hit> hits) {
-        if (hits == null || hits.isEmpty()) return null;
-
-        ArrayList<Recipe> result = new ArrayList<>(hits.size());
-        for (int i = 0; i < hits.size(); i++) {
-            result.add(hits.get(i).getRecipe());
-        }
-
-        return result;
     }
 }

@@ -16,6 +16,7 @@
     <item
         android:id="@+id/placeholder"
         android:title=""
+        android:icon="@drawable/ic_add_filled"
         />
 
     <item

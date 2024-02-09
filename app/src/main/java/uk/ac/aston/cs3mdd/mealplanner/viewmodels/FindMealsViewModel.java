@@ -18,6 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.enums.EnumFilterId;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.AutoCompleteResult;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
@@ -26,13 +27,17 @@ public class FindMealsViewModel extends ViewModel {
 
     private final RecipesRepository recipeRepository;
     private final MutableLiveData<RecipeResponseList> requestedRecipes;
+    private final MutableLiveData<RecipeResponseList> randomHealthyRecipes;
     private final MutableLiveData<HashMap<EnumFilterId, List<String>>> filtersMap;
+    private final MutableLiveData<List<AutoCompleteResult>> autoCompleteResult;
 
     public FindMealsViewModel(Application application) {
         super();
         this.recipeRepository = new RecipesRepository(application);
         requestedRecipes = new MutableLiveData<>();
+        randomHealthyRecipes = new MutableLiveData<>();
         filtersMap = new MutableLiveData<>();
+        autoCompleteResult = new MutableLiveData<>();
     }
 
     // reference: https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#:~:text=If%20a%20ViewModel%20class%20receives,new%20instance%20of%20the%20ViewModel.&text=Provides%20access%20to%20the%20custom%20key%20you%20passed%20to%20ViewModelProvider.
@@ -45,7 +50,7 @@ public class FindMealsViewModel extends ViewModel {
     );
 
     /**
-     * Requests the recipes for the specified query and filters.
+     * Requests the recipes for the specified query and the current filters.
      *
      * @param query query specified for the recipes.
      */
@@ -79,35 +84,87 @@ public class FindMealsViewModel extends ViewModel {
                         Log.d(MainActivity.TAG, "response empty");
                     }
 
-                    storeData(response.body());
+                    storeRecipeResponse(response.body());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<RecipeResponseList> call, @NonNull Throwable t) {
-                Log.e(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
+                Log.e(MainActivity.TAG, "Error in requestRecipesByQueryAndFilters: " + t);
             }
         });
     }
 
     /**
-     * Inserts the given recipe into the database.
+     * Requests the auto complete results for the specified query.
      *
-     * @param recipe recipe to insert.
-     * @return whether the operation succeeded or not.
+     * @param query query specified for the auto complete results.
      */
+    public void requestAutoCompleteForQuery(String query) {
+        if (query == null || query.isEmpty()) return;
+
+        Call<List<AutoCompleteResult>> request = recipeRepository.getAutoCompleteForQuery(query);
+        request.enqueue(new Callback<List<AutoCompleteResult>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<AutoCompleteResult>> call, @NonNull Response<List<AutoCompleteResult>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    storeAutoCompleteResultResponse(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<AutoCompleteResult>> call, @NonNull Throwable t) {
+                Log.e(MainActivity.TAG, "Error in requestAutoCompleteForQuery: " + t);
+            }
+        });
+    }
+
+    public void requestRandomHealthyRecipes() {
+        Call<RecipeResponseList> request = recipeRepository.getRandomHealthyRecipes();
+
+        request.enqueue(new Callback<RecipeResponseList>() {
+            @Override
+            public void onResponse(@NonNull Call<RecipeResponseList> call, @NonNull Response<RecipeResponseList> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    randomHealthyRecipes.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<RecipeResponseList> call, @NonNull Throwable t) {
+                Log.e(MainActivity.TAG, "Error in requestRandomHealthyRecipes: " + t);
+            }
+        });
+    }
+
+        /**
+         * Inserts the given recipe into the database.
+         *
+         * @param recipe recipe to insert.
+         * @return whether the operation succeeded or not.
+         */
     public Completable insert(LocalRecipe recipe) {
         return recipeRepository.insert(recipe);
     }
 
 
     /**
-     * Stores the given response in the live data.
+     * Stores the given response in the corresponding live data.
      *
      * @param recipeResponse response to store.
      */
-    private void storeData(RecipeResponseList recipeResponse) {
+    private void storeRecipeResponse(RecipeResponseList recipeResponse) {
         this.requestedRecipes.setValue(recipeResponse);
+    }
+
+
+    /**
+     * Stores the given response in the corresponding live data.
+     *
+     * @param autoCompleteResultResponse response to store.
+     */
+    private void storeAutoCompleteResultResponse(List<AutoCompleteResult> autoCompleteResultResponse) {
+        this.autoCompleteResult.setValue(autoCompleteResultResponse);
     }
 
 
@@ -118,6 +175,10 @@ public class FindMealsViewModel extends ViewModel {
      */
     public MutableLiveData<RecipeResponseList> getRequestedRecipes() {
         return requestedRecipes;
+    }
+
+    public void setRequestedRecipes(RecipeResponseList recipeResponseList) {
+        this.requestedRecipes.setValue(recipeResponseList);
     }
 
     /**
@@ -136,5 +197,18 @@ public class FindMealsViewModel extends ViewModel {
      */
     public void setFiltersMap(HashMap<EnumFilterId, List<String>> filtersMap) {
         this.filtersMap.setValue(filtersMap);
+    }
+
+    /**
+     * Returns the auto complete result.
+     *
+     * @return auto complete result.
+     */
+    public MutableLiveData<List<AutoCompleteResult>> getAutoCompleteResult() {
+        return autoCompleteResult;
+    }
+
+    public MutableLiveData<RecipeResponseList> getRandomHealthyRecipes() {
+        return randomHealthyRecipes;
     }
 }

@@ -257,7 +257,7 @@ public class DialogCustomMeal extends Dialog {
                 if (mListener != null)
                     mListener.onClick(getLocalRecipeFromThisCustomRecipe());
 
-                if (dialog!=null)
+                if (dialog != null)
                     dialog.dismiss();
             }
         });

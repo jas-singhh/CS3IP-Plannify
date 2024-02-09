@@ -1,4 +1,4 @@
-package uk.ac.aston.cs3mdd.mealplanner.data.quote;
+package uk.ac.aston.cs3mdd.mealplanner.models.quote;
 
 import java.io.Serializable;
 

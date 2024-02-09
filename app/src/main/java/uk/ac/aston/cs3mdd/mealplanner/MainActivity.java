@@ -1,13 +1,13 @@
 package uk.ac.aston.cs3mdd.mealplanner;
 
 import android.os.Bundle;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -16,7 +16,6 @@ import uk.ac.aston.cs3mdd.mealplanner.databinding.ActivityMainBinding;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogCustomMeal;
-import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogFindMealsFilters;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,20 +31,27 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Reference: https://stackoverflow.com/questions/65170700/activity-does-not-have-a-navcontroller-set-on
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        assert navHostFragment != null;
-        NavController navController = navHostFragment.getNavController();
-        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
+        initNavigation();
+        initFab();
 
         recipeViewModel = new ViewModelProvider(this,
                 ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
         mDisposable = new CompositeDisposable();
+    }
 
-        new DialogFindMealsFilters(this, MainActivity.this);
+    /**
+     * Sets up the navigation bar.
+     */
+    private void initNavigation() {
+        // Reference: https://stackoverflow.com/questions/65170700/activity-does-not-have-a-navcontroller-set-on
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
+        NavController navController = navHostFragment.getNavController();
+//        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
 
-        // initialises the floating action button
-        initFab();
+        PopupMenu menu = new PopupMenu(this, null);
+        menu.inflate(R.menu.bottom_navigation);
+        binding.smoothNavigation.setupWithNavController(menu.getMenu(), navController);
     }
 
     /**

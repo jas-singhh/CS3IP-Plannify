@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import uk.ac.aston.cs3mdd.mealplanner.BuildConfig;
-import uk.ac.aston.cs3mdd.mealplanner.data.quote.Quote;
+import uk.ac.aston.cs3mdd.mealplanner.models.quote.Quote;
 
 public interface QuoteService {
 

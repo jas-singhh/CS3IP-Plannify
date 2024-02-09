@@ -4,7 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import uk.ac.aston.cs3mdd.mealplanner.api.QuoteService;
-import uk.ac.aston.cs3mdd.mealplanner.data.quote.Quote;
+import uk.ac.aston.cs3mdd.mealplanner.models.quote.Quote;
 
 public class QuotesRepository {
 

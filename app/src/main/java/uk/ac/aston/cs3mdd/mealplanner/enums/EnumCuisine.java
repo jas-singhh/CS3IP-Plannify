@@ -2,6 +2,8 @@ package uk.ac.aston.cs3mdd.mealplanner.enums;
 
 import androidx.annotation.NonNull;
 
+import java.util.Random;
+
 public enum EnumCuisine {
     // These cuisine types supported by the API, as mentioned in the docs
     // reference: https://spoonacular.com/food-api/docs#Cuisines
@@ -43,6 +45,11 @@ public enum EnumCuisine {
 
     public String getCuisine() {
         return cuisine;
+    }
+    public static EnumCuisine getRandomCuisine() {
+        EnumCuisine[] cuisines = EnumCuisine.values();
+        Random random = new Random();
+        return cuisines[random.nextInt(cuisines.length - 1)];
     }
 
     @NonNull

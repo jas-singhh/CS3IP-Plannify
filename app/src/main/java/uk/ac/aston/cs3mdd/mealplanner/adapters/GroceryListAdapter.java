@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
-
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
 public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.MyViewHolder> {
 
     // reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
-    private ArrayList<Ingredient> localDataSet;
+    private ArrayList<ExtendedIngredient> localDataSet;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -51,7 +50,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
         }
     }
 
-    public GroceryListAdapter(ArrayList<Ingredient> dataset) {
+    public GroceryListAdapter(ArrayList<ExtendedIngredient> dataset) {
         localDataSet = dataset;
     }
 
@@ -70,9 +69,9 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
     @Override
     public void onBindViewHolder(@NonNull GroceryListAdapter.MyViewHolder holder, int position) {
         // round the quantity amount
-        String quantity = Math.round(localDataSet.get(position).getQuantity()) + "g";
+        String quantity = Math.round(localDataSet.get(position).getAmount()) + localDataSet.get(position).getMeasures().getMetric().getUnitShort();
 
-        holder.itemName.setText(localDataSet.get(position).getFood());
+        holder.itemName.setText(localDataSet.get(position).getName());
         holder.itemQuantity.setText(quantity);
     }
 
@@ -87,7 +86,7 @@ public class GroceryListAdapter extends RecyclerView.Adapter<GroceryListAdapter.
      *
      * @param dataSet list containing the data to update the current one with.
      */
-    public void updateData(ArrayList<Ingredient> dataSet) {
+    public void updateData(ArrayList<ExtendedIngredient> dataSet) {
         if (dataSet != null) {
             localDataSet = dataSet;
             notifyDataSetChanged();

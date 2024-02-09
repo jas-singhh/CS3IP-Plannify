@@ -20,8 +20,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3mdd.mealplanner.MainActivity;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.GroceryListAdapter;
-import uk.ac.aston.cs3mdd.mealplanner.data.recipe.Ingredient;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMyMealsGroceryListBinding;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
@@ -93,32 +94,32 @@ public class MyMealsGroceryListFragment extends Fragment {
                         Log.d(MainActivity.TAG, "No saved recipes");
                     } else {
 
-                        HashMap<String, Ingredient> ingredientsMap = new HashMap<>();
+                        HashMap<Long, ExtendedIngredient> ingredientsMap = new HashMap<>();
 
-//                        for (LocalRecipe localRecipe : list) {
-//                            for (Ingredient ingredient : localRecipe.getIngredients()) {
-//
-//                                // check if the ingredient is already present
-//                                if (ingredientsMap.isEmpty()) {
-//                                    ingredientsMap.put(ingredient.getFoodId(), ingredient);
-//                                } else {
-//                                    // check if the ingredient is already present
-//                                    if (ingredientsMap.containsKey(ingredient.getFoodId())) {
-//                                        // ingredient already present, so update the quantity
-//                                        Ingredient currentIngredient = ingredientsMap.get(ingredient.getFoodId());
-//                                        float originalQuantity = ingredient.getQuantity();
-//                                        if (currentIngredient != null)
-//                                            currentIngredient.setQuantity(currentIngredient.getQuantity() + originalQuantity);
-//                                    } else {
-//                                        ingredientsMap.put(ingredient.getFoodId(), ingredient);
-//                                    }
-//                                }
-//                            }
-//                        }
+                        for (LocalRecipe localRecipe : list) {
+                            for (ExtendedIngredient ingredient : localRecipe.getExtendedIngredients()) {
+
+                                // check if the ingredient is already present
+                                if (ingredientsMap.isEmpty()) {
+                                    ingredientsMap.put(ingredient.getId(), ingredient);
+                                } else {
+                                    // check if the ingredient is already present
+                                    if (ingredientsMap.containsKey(ingredient.getId())) {
+                                        // ingredient already present, so update the quantity
+                                        ExtendedIngredient currentIngredient = ingredientsMap.get(ingredient.getId());
+                                        double originalQuantity = ingredient.getAmount();
+                                        if (currentIngredient != null)
+                                            currentIngredient.setAmount(currentIngredient.getAmount() + originalQuantity);
+                                    } else {
+                                        ingredientsMap.put(ingredient.getId(), ingredient);
+                                    }
+                                }
+                            }
+                        }
 
                         if (mAdapter != null) {
                             // map to list
-                            ArrayList<Ingredient> ingredients = new ArrayList<>(ingredientsMap.values());
+                            ArrayList<ExtendedIngredient> ingredients = new ArrayList<ExtendedIngredient>(ingredientsMap.values());
                             mAdapter.updateData(ingredients);
                         }
                     }
