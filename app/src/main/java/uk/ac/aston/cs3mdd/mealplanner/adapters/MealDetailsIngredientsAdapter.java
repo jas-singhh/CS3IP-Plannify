@@ -31,12 +31,14 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
         private final AppCompatImageView ingredientImage;
         private final TextView ingredientQuantity;
         private final TextView ingredientName;
+        private final TextView ingredientAisle;
 
         public MyViewHolder(View view) {
             super(view);
             ingredientImage = view.findViewById(R.id.ingredient_image);
             ingredientQuantity = view.findViewById(R.id.ingredient_quantity);
             ingredientName = view.findViewById(R.id.ingredient_name);
+            ingredientAisle = view.findViewById(R.id.ingredient_aisle);
 
             // Define click listener for the ViewHolder's View
         }
@@ -52,6 +54,8 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
         public TextView getIngredientName() {
             return ingredientName;
         }
+
+        public TextView getIngredientAisle() {return ingredientAisle;}
     }
 
     /**
@@ -70,7 +74,7 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_ingredient_column, viewGroup, false);
+                .inflate(R.layout.item_ingredient_row, viewGroup, false);
 
         return new MyViewHolder(view);
     }
@@ -85,11 +89,14 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
         String url = "https://spoonacular.com/cdn/ingredients_100x100/" + localDataSet[position].getImage();
         Picasso.get().load(url).into(viewHolder.getIngredientImage());
 
+        String name = "Name: " + Utilities.capitaliseString(localDataSet[position].getName());
         int roundedQuantity = Math.round(localDataSet[position].getMeasures().getMetric().getAmount());
-        String quantity = roundedQuantity + " " + localDataSet[position].getMeasures().getMetric().getUnitShort();
+        String quantity = "Quantity: " + roundedQuantity + " " + localDataSet[position].getMeasures().getMetric().getUnitShort();
+        String aisle = "Aisle: " + Utilities.capitaliseString(localDataSet[position].getAisle());
 
         viewHolder.getIngredientQuantity().setText(quantity);
-        viewHolder.getIngredientName().setText(Utilities.capitaliseString(localDataSet[position].getName()));
+        viewHolder.getIngredientName().setText(name);
+        viewHolder.getIngredientAisle().setText(aisle);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

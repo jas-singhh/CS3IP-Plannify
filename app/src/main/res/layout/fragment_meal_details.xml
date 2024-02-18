@@ -232,7 +232,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="visible"
-                        android:layout_margin="@dimen/margin"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/details_tab_layout">
@@ -242,7 +241,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:orientation="horizontal"
+                            android:orientation="vertical"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -303,14 +302,50 @@
                         app:layout_constraintTop_toBottomOf="@+id/details_tab_layout">
 
                         <TextView
-                            android:id="@+id/tv_nutrients"
+                            android:id="@+id/meal_nutrients_limit_these_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:text="Placeholder"
-                            android:textSize="@dimen/text_medium"
+                            android:padding="2dp"
+                            android:text="Limit These"
+                            android:textSize="@dimen/text_headings"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginHorizontal="@dimen/margin"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/details_nutrients_limit_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/meal_nutrients_limit_these_title" />
+
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/meal_nutrients_get_enough_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="Get Enough of These"
+                            android:textSize="@dimen/text_headings"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/details_nutrients_limit_rv" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/details_nutrients_get_enough_rv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/meal_nutrients_get_enough_title" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

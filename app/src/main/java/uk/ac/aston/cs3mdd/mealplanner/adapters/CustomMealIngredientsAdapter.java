@@ -59,7 +59,7 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
     public CustomMealIngredientsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_ingredient_column, parent, false);
+                .inflate(R.layout.item_ingredient_row, parent, false);
 
         return new CustomMealIngredientsAdapter.MyViewHolder(view);
     }

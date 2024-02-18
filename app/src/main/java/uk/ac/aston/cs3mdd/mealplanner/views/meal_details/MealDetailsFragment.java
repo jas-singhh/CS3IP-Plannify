@@ -3,7 +3,6 @@ package uk.ac.aston.cs3mdd.mealplanner.views.meal_details;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -27,8 +27,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3mdd.mealplanner.R;
 import uk.ac.aston.cs3mdd.mealplanner.adapters.MealDetailsIngredientsAdapter;
+import uk.ac.aston.cs3mdd.mealplanner.adapters.MealDetailsNutrientsAdapter;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentMealDetailsBinding;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Nutrient;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Step;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
@@ -140,11 +142,14 @@ public class MealDetailsFragment extends Fragment {
     private void initIngredients() {
         binding.detailsIngredientsRv.setHasFixedSize(true);
         LinearLayoutManager rvLayout = new LinearLayoutManager(requireContext());
-        rvLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvLayout.setOrientation(LinearLayoutManager.VERTICAL);
         binding.detailsIngredientsRv.setLayoutManager(rvLayout);
 
         if (selectedRecipe.getExtendedIngredients() != null)
-            binding.detailsIngredientsRv.setAdapter(new MealDetailsIngredientsAdapter(selectedRecipe.getExtendedIngredients().toArray(new ExtendedIngredient[0])));
+            binding.detailsIngredientsRv.setAdapter(
+                    new MealDetailsIngredientsAdapter(selectedRecipe.
+                            getExtendedIngredients().
+                            toArray(new ExtendedIngredient[0])));
     }
 
     /**
@@ -159,13 +164,12 @@ public class MealDetailsFragment extends Fragment {
 
         // html formatting for readability
         StringBuilder mealInstructions = new StringBuilder();
-        for (Step step: steps) {
+        for (Step step : steps) {
             mealInstructions.append("<h5>Step ").append(step.getNumber()).append("</h5>");
             mealInstructions.append(step.getStep()).append("<br>");
         }
 
         binding.mealDetailsInstructions.setText(Html.fromHtml(mealInstructions.toString(), Html.FROM_HTML_MODE_LEGACY));
-        binding.mealDetailsInstructions.setMovementMethod(new ScrollingMovementMethod());
     }
 
 
@@ -173,8 +177,38 @@ public class MealDetailsFragment extends Fragment {
      * Gets the list of nutrients for the given recipe and displays it in the layout.
      */
     private void initNutrients() {
-//        binding.tvNutrients.setText(Utilities.getListOfNutrientsFromRecipe(selectedRecipe));
+        // nutrients to limit
+        binding.detailsNutrientsLimitRv.setHasFixedSize(true);
+        binding.detailsNutrientsLimitRv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        // nutrients to get enough
+        binding.detailsNutrientsGetEnoughRv.setHasFixedSize(true);
+        binding.detailsNutrientsGetEnoughRv.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        if (selectedRecipe.getNutrition() != null) {
+            binding.detailsNutrientsLimitRv.setAdapter(new MealDetailsNutrientsAdapter(getNutrientsToLimit()));
+            binding.detailsNutrientsGetEnoughRv.setAdapter(new MealDetailsNutrientsAdapter(getNuteintsToGetEnough()));
+        }
+    }
+
+    private Nutrient[] getNutrientsToLimit() {
+        if (selectedRecipe.getNutrition() != null) {
+            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
+                    getNutrients().toArray(new Nutrient[0]);
+            return Arrays.copyOfRange(nutrientsArray, 0, 8);
+        }
+
+        return null;
+    }
+
+    private Nutrient[] getNuteintsToGetEnough() {
+        if (selectedRecipe.getNutrition() != null) {
+            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
+                    getNutrients().toArray(new Nutrient[0]);
+            return Arrays.copyOfRange(nutrientsArray, 8, nutrientsArray.length);
+        }
+
+        return null;
     }
 
 
