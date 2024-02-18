@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import java.util.Calendar;
 
@@ -143,11 +144,7 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
-//        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
-
-        PopupMenu menu = new PopupMenu(this, null);
-        menu.inflate(R.menu.bottom_navigation);
-        binding.smoothNavigation.setupWithNavController(menu.getMenu(), navController);
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
     }
 
     /**

@@ -3,6 +3,7 @@ package uk.ac.aston.cs3mdd.mealplanner.views.meal_details;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,6 +165,7 @@ public class MealDetailsFragment extends Fragment {
         }
 
         binding.mealDetailsInstructions.setText(Html.fromHtml(mealInstructions.toString(), Html.FROM_HTML_MODE_LEGACY));
+        binding.mealDetailsInstructions.setMovementMethod(new ScrollingMovementMethod());
     }
 
 

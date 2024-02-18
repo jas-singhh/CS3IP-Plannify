@@ -7,76 +7,18 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
-    <!--    Reference: https://www.youtube.com/watch?v=1cOjcXwpQts -->
-
-
+    <!--    Reference 1: https://www.youtube.com/watch?v=x6-_va1R788 -->
+    <!--    Reference 2: https://www.youtube.com/watch?v=DX8PZTpnudg -->
     <include
         android:id="@+id/main_content"
         layout="@layout/content_main"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cl_navigation_container"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!--    REFERENCE: https://github.com/ibrahimsn98/SmoothBottomBar -->
-    <!--    <me.ibrahimsn.lib.SmoothBottomBar-->
-    <!--        android:id="@+id/smooth_navigation"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="70dp"-->
-    <!--        app:backgroundColor="@color/black"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:menu="@menu/bottom_navigation"-->
-    <!--        />-->
-
-    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-    <!--            android:id="@+id/cl_navigation_container"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent">-->
-
-    <!--            <com.google.android.material.bottomappbar.BottomAppBar-->
-    <!--                android:id="@+id/bottom_app_bar"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_gravity="bottom"-->
-    <!--                app:fabCradleMargin="0dp"-->
-    <!--                app:fabCradleRoundedCornerRadius="0dp">-->
-
-    <!--                <com.google.android.material.bottomnavigation.BottomNavigationView-->
-    <!--                    android:id="@+id/bottom_navigation"-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    android:layout_gravity="bottom"-->
-    <!--                    android:layout_marginEnd="16dp"-->
-    <!--                    android:background="@drawable/transparent_bg"-->
-    <!--                    android:elevation="0dp"-->
-    <!--                    app:labelVisibilityMode="unlabeled"-->
-    <!--                    app:menu="@menu/bottom_navigation" />-->
-
-    <!--            </com.google.android.material.bottomappbar.BottomAppBar>-->
-
-    <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--                android:id="@+id/fab"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_gravity="center"-->
-    <!--                android:contentDescription="Add"-->
-    <!--                android:src="@drawable/ic_add_filled"-->
-    <!--                app:backgroundTint="@color/primary"-->
-    <!--                app:fabSize="normal"-->
-    <!--                app:maxImageSize="30dp" />-->
-
-    <!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/cl_navigation_container"
@@ -88,39 +30,43 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
+            app:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:backgroundTint="@color/black"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/black"
-            app:fabAlignmentMode="center"
             app:fabCradleMargin="0dp"
-            app:fabCradleVerticalOffset="0dp"
             app:fabCradleRoundedCornerRadius="0dp">
 
-            <!--    REFERENCE: https://github.com/ibrahimsn98/SmoothBottomBar -->
-            <me.ibrahimsn.lib.SmoothBottomBar
-                android:id="@+id/smooth_navigation"
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginEnd="@dimen/margin"
-                app:backgroundColor="@android:color/transparent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginEnd="16dp"
+                app:itemIconTint="@drawable/navigation_bar_selector"
+                app:itemTextColor="@drawable/navigation_bar_selector"
+                android:elevation="0dp"
+                android:background="@drawable/transparent_bg"
+                app:itemIconSize="20dp"
+                app:labelVisibilityMode="labeled"
                 app:menu="@menu/bottom_navigation" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:contentDescription="Add"
-                            android:src="@drawable/ic_add_filled"
-                            app:backgroundTint="@color/primary"
-                            app:fabSize="normal"
-                            app:maxImageSize="30dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_add"
+            app:tint="@android:color/darker_gray"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="Add"
+            app:backgroundTint="@android:color/darker_gray"
+            app:borderWidth="1dp"
+            android:backgroundTint="@color/black"
+            app:fabSize="mini"
+            app:maxImageSize="25dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -73,7 +73,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:padding="16dp"
-                        app:srcCompat="@drawable/ic_add_filled" />
+                        app:srcCompat="@drawable/ic_add" />
 
                 </com.google.android.material.card.MaterialCardView>
                 <!-- SAVE BUTTON -->
@@ -231,6 +231,7 @@
                         android:id="@+id/ingredients_parent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:visibility="visible"
                         android:layout_margin="@dimen/margin"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -250,49 +251,45 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <!--            INGREDIENTS CONTAINER  -->
 
-                    <androidx.core.widget.NestedScrollView
+                    <!--            INSTRUCTIONS CONTAINER  -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/instructions_parent"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="visible"
-                        android:fillViewport="true"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout"
-                        >
-                        <!--            INSTRUCTIONS CONTAINER  -->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/instructions_parent"
+                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout">
+
+                        <TextView
+                            android:id="@+id/meal_details_instructions"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="@dimen/margin"
-                            android:visibility="visible">
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="Placeholder text"
+                            android:textSize="@dimen/text_medium"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/meal_details_instructions"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="2dp"
-                                android:textSize="@dimen/text_medium"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_details_tutorials"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin"
+                            android:padding="15dp"
+                            android:paddingBottom="25dp"
+                            android:text="View Tutorials"
+                            android:textAllCaps="false"
+                            android:textSize="@dimen/text_important"
+                            app:backgroundTint="@color/complementary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/meal_details_instructions" />
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btn_details_tutorials"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="15dp"
-                                android:text="View Tutorials"
-                                android:textAllCaps="false"
-                                android:textSize="@dimen/text_important"
-                                app:backgroundTint="@color/complementary"
-                                app:layout_constraintTop_toBottomOf="@+id/meal_details_instructions"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                        <!--            INSTRUCTIONS CONTAINER  -->
-                    </androidx.core.widget.NestedScrollView>
-
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--            INSTRUCTIONS CONTAINER  -->
 
 
                     <!--            NUTRIENTS CONTAINER  -->

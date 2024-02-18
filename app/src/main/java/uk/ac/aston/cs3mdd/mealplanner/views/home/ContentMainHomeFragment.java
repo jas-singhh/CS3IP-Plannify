@@ -244,7 +244,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
                 // reference: https://github.com/xabaras/RecyclerViewSwipeDecorator
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                         .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
-                        .addActionIcon(R.drawable.ic_add_filled)
+                        .addActionIcon(R.drawable.ic_add)
                         .setActionIconTint(ContextCompat.getColor(requireContext(), R.color.white))
                         .addSwipeRightLabel("Save")
                         .setSwipeRightLabelColor(ContextCompat.getColor(requireContext(), R.color.white))

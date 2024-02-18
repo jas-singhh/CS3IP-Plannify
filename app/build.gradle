@@ -108,8 +108,4 @@ dependencies {
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     // If you want to additionally use the CameraX Lifecycle library
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
-
-    // smooth navigation bar
-    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
-
 }
