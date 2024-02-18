@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,7 +23,6 @@ import uk.ac.aston.cs3mdd.mealplanner.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentFindMealsBinding;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.AutoCompleteResult;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
-import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.FindMealsViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogFindMealsFilters;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogLottie;

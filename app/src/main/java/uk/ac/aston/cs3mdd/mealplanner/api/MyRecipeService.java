@@ -16,15 +16,15 @@ public interface MyRecipeService {
 
     // Reference: Mobile Design and Development Lab 4
     @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
-    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true")
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true&fillIngredients=true")
     Call<RecipeResponseList> getRecipesBySearch(@Query("query") String query);
 
     @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
-    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true")
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true&fillIngredients=true")
     Call<RecipeResponseList> getRecipesByMealType(@Query("type") String type);
 
     @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
-    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true")
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true&fillIngredients=true")
     Call<RecipeResponseList> getRecipesByQueryAndFilters(@Query("query") String query,
                                                          @Query("type") String mealTypes,
                                                          @Query("cuisine") String cuisines,
@@ -37,6 +37,6 @@ public interface MyRecipeService {
 
 
     @Headers("x-api-key: " + BuildConfig.SPOONACULAR_API_KEY)
-    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true&number=10")
+    @GET("recipes/complexSearch?addRecipeInformation=true&addRecipeNutrition=true&number=10&fillIngredients=true")
     Call<RecipeResponseList> getRandomHealthyRecipes(@QueryMap HashMap<String, Float> nutrientsMap);
 }

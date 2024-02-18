@@ -62,7 +62,7 @@ public class DialogSaveRecipe extends Dialog {
         builder.setView(view);
         builder.setCancelable(false);
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        builder.setPositiveButton("Save", (dialog, which) -> mListener.onClickSave(selectedDate, Enum.valueOf(EnumMealType.class, mealTypeSpinner.getText().toString())));
+        builder.setPositiveButton("Save", (dialog, which) -> mListener.onClickSave(selectedDate, EnumMealType.getEnumMealTypeFromValue(mealTypeSpinner.getText().toString())));
         builder.show();
     }
 

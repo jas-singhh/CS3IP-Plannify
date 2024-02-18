@@ -6,6 +6,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
+import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 
 public class Utilities {
 
@@ -179,5 +180,41 @@ public class Utilities {
         if (context != null) {
             Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public static EnumMealType getMealTypeFromTime(int hour) {
+        if (hour > 6 && hour < 10) {
+            return EnumMealType.BREAKFAST;
+        } else if (hour == 10 || hour == 11) {
+            return EnumMealType.BRUNCH;
+        } else if (hour == 12 || hour == 13) {
+            return  EnumMealType.LUNCH;
+        } else if (hour == 15 || hour == 16) {
+            return EnumMealType.SNACK;
+        } else if (hour > 16 && hour < 19) {
+            return EnumMealType.DINNER;
+        }
+
+        return EnumMealType.LUNCH;//default
+    }
+
+    public static int getTimeHourFromMealType(EnumMealType mealType) {
+        if (mealType == null) return -1;
+
+        switch (mealType) {
+            case BREAKFAST:
+                return 8;
+            case BRUNCH:
+                return 10;
+            case LUNCH:
+                return 12;
+            case SNACK:
+            case TEA_TIME:
+                return 15;
+            case DINNER:
+                return 18;
+        }
+
+        return -1;//default
     }
 }

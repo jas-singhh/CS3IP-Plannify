@@ -63,10 +63,11 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/motivational_quote_img"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/img_motivational_quote"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_motivation"
+                            android:tint="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

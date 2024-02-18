@@ -20,7 +20,6 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
 
     private final ArrayList<ExtendedIngredient> localDataSet;
 
-
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)

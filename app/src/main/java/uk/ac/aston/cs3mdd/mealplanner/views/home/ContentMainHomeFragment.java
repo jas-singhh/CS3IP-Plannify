@@ -124,7 +124,7 @@ public class ContentMainHomeFragment extends Fragment implements HomeMealsOnClic
     private void initChipGroupOnClickListeners() {
         binding.chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
             // show loading screen
-            animatedLoading.show();
+//            animatedLoading.show();
 
             // find the selected chip
             Chip selectedChip = null;

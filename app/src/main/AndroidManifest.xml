@@ -6,8 +6,12 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -32,6 +36,20 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+<!--        <receiver android:name=".notifications.NotificationPublisher" android:enabled="true" />-->
+
+        <receiver
+            android:name="uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationPublisher"
+            android:exported="true"
+            android:permission="">
+        <intent-filter>
+            <action android:name="uk.ac.aston.cs3mdd.mealplanner.START_ALARM" >
+            </action>
+        </intent-filter>
+        </receiver>
+
     </application>
+
 
 </manifest>

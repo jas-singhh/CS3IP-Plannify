@@ -2,6 +2,7 @@ package uk.ac.aston.cs3mdd.mealplanner.views.meal_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,6 @@ import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogSaveRecipe;
 
 public class MealDetailsFragment extends Fragment {
-
 
     private FragmentMealDetailsBinding binding;
     private Recipe selectedRecipe;
@@ -141,6 +141,7 @@ public class MealDetailsFragment extends Fragment {
         LinearLayoutManager rvLayout = new LinearLayoutManager(requireContext());
         rvLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.detailsIngredientsRv.setLayoutManager(rvLayout);
+
         if (selectedRecipe.getExtendedIngredients() != null)
             binding.detailsIngredientsRv.setAdapter(new MealDetailsIngredientsAdapter(selectedRecipe.getExtendedIngredients().toArray(new ExtendedIngredient[0])));
     }
@@ -154,11 +155,15 @@ public class MealDetailsFragment extends Fragment {
                 selectedRecipe.getAnalyzedInstructions().get(0).getSteps() == null) return;
 
         List<Step> steps = selectedRecipe.getAnalyzedInstructions().get(0).getSteps();
+
+        // html formatting for readability
         StringBuilder mealInstructions = new StringBuilder();
-        for (Step step : steps) {
-            mealInstructions.append(step.getNumber()).append(". ").append(step.getStep()).append("\n");
+        for (Step step: steps) {
+            mealInstructions.append("<h5>Step ").append(step.getNumber()).append("</h5>");
+            mealInstructions.append(step.getStep()).append("<br>");
         }
-        binding.mealDetailsInstructions.setText(mealInstructions.toString());
+
+        binding.mealDetailsInstructions.setText(Html.fromHtml(mealInstructions.toString(), Html.FROM_HTML_MODE_LEGACY));
     }
 
 

@@ -22,6 +22,16 @@ public enum EnumMealType {
         return mealType;
     }
 
+    public static EnumMealType getEnumMealTypeFromValue(String value) {
+        value = value.toLowerCase();
+        for (EnumMealType enumValue: EnumMealType.values()) {
+            if(enumValue.toString().toLowerCase().equals(value)) {
+                return enumValue;
+            }
+        }
+        return null;
+    }
+
     @NonNull
     @Override
     public String toString() {
