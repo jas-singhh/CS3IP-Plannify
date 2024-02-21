@@ -59,7 +59,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
 
         requestRandomHealthyMeals();
 
-        subscribeToRequestedRecipes();
+        subscribeToSearchedRecipes();
         subscribeToRandomHealthyRecipes();
         subscribeToRequestedAutoCompleteResults();
 
@@ -83,12 +83,14 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
             // request the data only if we do not already have it stored in the view model
             if (mViewModel.getRandomHealthyRecipes().getValue() == null)
                 mViewModel.requestRandomHealthyRecipes();
-            else
-                if (mAdapter != null) mAdapter.updateData((ArrayList<? extends Recipe>) mViewModel.getRandomHealthyRecipes().getValue().getResults());
+            else {
+                if (mAdapter != null)
+                    mAdapter.updateData((ArrayList<? extends Recipe>) mViewModel.getRandomHealthyRecipes().getValue().getResults());
+            }
         }
     }
 
-    private void requestQueriedMeals(String query) {
+    private void requestSearchedRecipes(String query) {
         // request the meals with the specified params
         String resultsTitle = "Results";
         binding.tvFindMealsResults.setText(resultsTitle);
@@ -159,11 +161,20 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
     /**
      * Subscribes to changes in the requested recipes live data.
      */
-    private void subscribeToRequestedRecipes() {
+    private void subscribeToSearchedRecipes() {
         mViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponseList -> {
-            if (mAdapter != null && recipeResponseList != null)
-                mAdapter.updateData((ArrayList<? extends Recipe>) recipeResponseList.getResults());
-            
+            if (mAdapter != null && recipeResponseList != null) {
+
+                if (recipeResponseList.getResults().isEmpty()) {
+                    // no results - show feedback
+                    binding.noResultsMessageParent.setVisibility(View.VISIBLE);
+                    mAdapter.clearData();
+                } else {
+                    mAdapter.updateData((ArrayList<? extends Recipe>) recipeResponseList.getResults());
+                }
+
+            }
+
             if (animatedLoading != null) animatedLoading.dismiss();
         });
     }
@@ -213,7 +224,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 animatedLoading.show();
                 // user clicked search
-                requestQueriedMeals(v.getText().toString());
+                requestSearchedRecipes(v.getText().toString());
                 return true;
             }
             return false;
@@ -227,34 +238,53 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
     private void onClickClearResults() {
         binding.textBtnClearResults.setOnClickListener(v -> {
 
+            // clear search results
             if (mViewModel.getRequestedRecipes().getValue() != null) {
-                // clear search results
                 mViewModel.setRequestedRecipes(null);
-
-                // change title heading
-                String suggestedTitle = "Top Suggested";
-                binding.tvFindMealsResults.setText(suggestedTitle);
-
-                // clear the edit text
-                binding.customMealAutoCompleteSearch.setText("");
-
-                // display top suggested data
-                if (mViewModel.getRandomHealthyRecipes().getValue() != null) {
-                    // we already have the data
-                    if (mAdapter != null) mAdapter.updateData((ArrayList<? extends Recipe>) mViewModel.getRandomHealthyRecipes().getValue().getResults());
-                } else {
-                    // we do not already have the data, so request new one
-                    requestRandomHealthyMeals();
-                }
-
-                // hide button itself
-                binding.textBtnClearResults.setVisibility(View.GONE);
             }
+
+            // change title heading
+            String suggestedTitle = "Top Suggested";
+            binding.tvFindMealsResults.setText(suggestedTitle);
+
+            // clear the edit text
+            binding.customMealAutoCompleteSearch.setText("");
+
+            // display top suggested data again
+            if (mViewModel.getRandomHealthyRecipes().getValue() != null) {
+                // we already have the data
+                if (mAdapter != null) {
+                    mAdapter.updateData((ArrayList<? extends Recipe>)
+                            mViewModel.getRandomHealthyRecipes().getValue().getResults());
+                    // hide the no results parent if it is visible
+                    if (binding.noResultsMessageParent.getVisibility() == View.VISIBLE)
+                        binding.noResultsMessageParent.setVisibility(View.GONE);
+                }
+            } else {
+                // we do not already have the data, so request new one
+                requestRandomHealthyMeals();
+            }
+
+            // hide button itself
+            binding.textBtnClearResults.setVisibility(View.GONE);
+
         });
     }
 
     @Override
     public void onClickMeal(Recipe recipe) {
-
+//        // set arguments
+//        Bundle args = new Bundle();
+//        args.putSerializable("Recipe", recipe);
+//        args.putString("Source", "find_meals_fragment");//flat to manage back stack
+//        MealDetailsFragment destinationFragment = new MealDetailsFragment();
+//        destinationFragment.setArguments(args);
+//
+//        // navigate to the destination fragment
+//        requireActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.findMealsFragment, destinationFragment, null)
+//                .setReorderingAllowed(true)
+//                .addToBackStack("find_meals_fragment")
+//                .commit();
     }
 }

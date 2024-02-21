@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import uk.ac.aston.cs3mdd.mealplanner.R;
+import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 
 public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyViewHolder> {
 
@@ -123,7 +124,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
 
         // health rating
         holder.getMealHealthRatingParent().removeAllViews();//clear all views to avoid duplicates
-        int healthRating = Math.round(currentItem.getHealthScore());
+        int healthRating = currentItem.getHealthScore();
         int numStars = getStarRatingFromHealthScore(healthRating);
         ImageView[] stars = new ImageView[numStars];
 
@@ -149,12 +150,25 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      *
      * @param dataSet list containing the data to update the current one with.
      */
-    public void updateData(ArrayList<? extends uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe> dataSet) {
+    public void updateData(ArrayList<? extends Recipe> dataSet) {
         if (dataSet != null) {
-            localDataSet = dataSet;
+            // creating a new arraylist instead of using the parameter
+            // avoids making any unexpected changes in the original data
+            // passed in the parameter - e.g. prevents deleting data in the view model.
+            localDataSet = new ArrayList<>(dataSet);
+
             notifyDataSetChanged();
         }
     }
+
+    /**
+     * Clears the contents of the local data set.
+     */
+    public void clearData() {
+        if (localDataSet != null)
+            localDataSet.clear();
+    }
+
 
     /**
      * Returns the recipe at the given position (if present).
@@ -162,7 +176,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      * @param pos index where to find the recipe.
      * @return the recipe at the given index.
      */
-    public uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe getRecipeAt(int pos) {
+    public Recipe getRecipeAt(int pos) {
         if (pos == RecyclerView.NO_POSITION || localDataSet.size() == 0) return null;
 
         return localDataSet.get(pos);

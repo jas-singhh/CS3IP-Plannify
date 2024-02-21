@@ -15,5 +15,10 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-    
+<!--   Reference 1 : https://stackoverflow.com/questions/33015652/tablayout-tab-title-text-in-lower-case -->
+<!--   Reference 2 : https://github.com/Andy671/Dachshund-Tab-Layout/issues/2 -->
+    <style name="CustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>
