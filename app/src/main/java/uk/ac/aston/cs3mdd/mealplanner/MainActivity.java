@@ -1,14 +1,9 @@
 package uk.ac.aston.cs3mdd.mealplanner;
 
 import static uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationPublisher.CHANNEL_ID;
-import static uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationPublisher.TITLE;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,15 +16,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Calendar;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3mdd.mealplanner.databinding.ActivityMainBinding;
-import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationHelper;
-import uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationPublisher;
+import uk.ac.aston.cs3mdd.mealplanner.shared_prefs.SharedPreferencesManager;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogCustomMeal;
@@ -43,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private HomeViewModel homeViewModel;
     private CompositeDisposable mDisposable;
-    private SharedPreferences mPreferences;
     private DialogGetNotified notificationsDialog;
 
     @Override
@@ -57,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         initNavigation();
         initFab();
 
+        // set up the notifications if they are enabled but not set
+        if (areNotificationsEnabled()) {
+            startNotificationsIfNotAlreadySet();
+        }
+
         // show notification dialog only on first access
         showNotificationsDialogOnFirstAccess();
 
@@ -67,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initVariables() {
-        mPreferences = getPreferences(Context.MODE_PRIVATE);
         homeViewModel = new ViewModelProvider(this,
                 ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mDisposable = new CompositeDisposable();
@@ -78,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
      * for the first time.
      */
     private void showNotificationsDialogOnFirstAccess() {
-        if (mPreferences.getBoolean("firstAccess", true)) {
+        if (SharedPreferencesManager.readBoolean(MainActivity.this,
+                SharedPreferencesManager.IS_FIRST_ACCESS)) {
             // it is first time access - update value
-            SharedPreferences.Editor editor = mPreferences.edit();
-            editor.putBoolean("firstAccess", false);
-            editor.apply();
+            SharedPreferencesManager.writeBoolean(MainActivity.this,
+                    SharedPreferencesManager.IS_FIRST_ACCESS, false);
 
             // display notifications dialog
             notificationsDialog = new DialogGetNotified(MainActivity.this);
@@ -95,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
      * @return true if the notifications are enabled, false otherwise.
      */
     private boolean areNotificationsEnabled() {
-        return mPreferences.getBoolean("notificationsEnabled", false);
+        return SharedPreferencesManager.readBoolean(
+                MainActivity.this,
+                SharedPreferencesManager.ARE_NOTIFICATIONS_ENABLED
+        );
     }
 
     /**
@@ -104,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
      * @return true if they are set up, false otherwise.
      */
     private boolean areNotificationsSetup() {
-        return mPreferences.getBoolean("areNotificationsSetup", false);
+        return SharedPreferencesManager.readBoolean(
+                MainActivity.this,
+                SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP
+        );
     }
 
     @Override
@@ -117,12 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // notifications permission granted
                 // so update the shared preferences value
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putBoolean("notificationsEnabled", true);
-                editor.apply();
+                SharedPreferencesManager.writeBoolean(MainActivity.this,
+                        SharedPreferencesManager.ARE_NOTIFICATIONS_ENABLED, true);
 
                 // setup the notifications as the user granted the permission
-                setupNotificationsIfNotAlreadySet();
+                startNotificationsIfNotAlreadySet();
             } else {
                 Log.d(TAG, "permission not granted");
 
@@ -196,49 +196,54 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.createNotificationChannel(channel);
     }
 
-    private void setupNotificationsIfNotAlreadySet() {
-
-        // check if notifications have already been set
-        // return if they have been already set up as we do not want to set them multiple times
-        if (mPreferences.getBoolean("areNotificationsSetup", false)) return;
-
-
-        for (EnumMealType mealType: EnumMealType.values()) {
-            // set up the intent for the specific meal type
-            Intent intent = new Intent(MainActivity.this, NotificationPublisher.class);
-            intent.putExtra(TITLE, mealType.getMealType());
-            intent.setAction("uk.ac.aston.cs3mdd.mealplanner.START_ALARM");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    MainActivity.this,
-                    mealType.hashCode(),
-                    intent,
-                    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-            );
-
-            // set up the appropriate time for each meal notification
-            int mealHour = Utilities.getTimeHourFromMealType(mealType);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-            // check if meal time has already passed
-            // if meal time has passed - schedule it for the next day
-            if (currentHour >= mealHour) {
-                calendar.add(Calendar.DAY_OF_MONTH, 1);// schedule starting from tomorrow
-            }
-            calendar.set(Calendar.HOUR_OF_DAY, mealHour);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-
-            // schedule the notification
-            NotificationHelper.scheduleRTCNotification(MainActivity.this, calendar, pendingIntent);
-        }
-
+    private void startNotificationsIfNotAlreadySet() {
+        NotificationHelper.startNotificationsIfNotAlreadySet(MainActivity.this);
         // update the shared preferences to indicate that the notifications have been set
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean("areNotificationsSetup", true);
-        editor.apply();
-}
+        SharedPreferencesManager.writeBoolean(MainActivity.this,
+                SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP, true);
+    }
+
+//    private void setupNotificationsIfNotAlreadySet() {
+//
+//        // check if notifications have already been set
+//        // return if they have been already set up as we do not want to set them multiple times
+//        if (SharedPreferencesManager.readBoolean(MainActivity.this, SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP)) return;
+//
+//        for (EnumMealType mealType: EnumMealType.values()) {
+//            // set up the intent for the specific meal type
+//            Intent intent = new Intent(MainActivity.this, NotificationPublisher.class);
+//            intent.putExtra(TITLE, mealType.getMealType());
+//            intent.setAction("uk.ac.aston.cs3mdd.mealplanner.START_ALARM");
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+//                    MainActivity.this,
+//                    mealType.hashCode(),
+//                    intent,
+//                    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
+//            );
+//
+//            // set up the appropriate time for each meal notification
+//            int mealHour = Utilities.getTimeHourFromMealType(mealType);
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTimeInMillis(System.currentTimeMillis());
+//            int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+//
+//            // check if meal time has already passed
+//            // if meal time has passed - schedule it for the next day
+//            if (currentHour >= mealHour) {
+//                calendar.add(Calendar.DAY_OF_MONTH, 1);// schedule starting from tomorrow
+//            }
+//            calendar.set(Calendar.HOUR_OF_DAY, mealHour);
+//            calendar.set(Calendar.MINUTE, 0);
+//            calendar.set(Calendar.SECOND, 0);
+//
+//            // schedule the notification
+//            NotificationHelper.scheduleRTCNotification(MainActivity.this, calendar, pendingIntent);
+//        }
+//
+//        // update the shared preferences to indicate that the notifications have been set
+//        SharedPreferencesManager.writeBoolean(MainActivity.this,
+//                SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP, true);
+//}
 
     @Override
     protected void onStop() {

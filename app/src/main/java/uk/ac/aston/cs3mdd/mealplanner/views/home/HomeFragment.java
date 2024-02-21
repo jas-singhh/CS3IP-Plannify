@@ -1,7 +1,5 @@
 package uk.ac.aston.cs3mdd.mealplanner.views.home;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +38,7 @@ import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.QuotesRepository;
+import uk.ac.aston.cs3mdd.mealplanner.shared_prefs.SharedPreferencesManager;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.QuoteViewModel;
@@ -57,7 +56,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
 
     private FragmentHomeBinding binding;
     private CompositeDisposable mDisposable;
-    private SharedPreferences mSharedPrefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,10 +68,8 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         homeViewModel = new ViewModelProvider(requireActivity(),
                 ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mDisposable = new CompositeDisposable();
-        mSharedPrefs = requireActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // Perform Retrofit call to request the quote from the API
-//        requestQuote();
+
 //        requestBreakfastMeals();
     }
 
@@ -86,6 +82,7 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
 
 //        animatedLoading.show();
 
+        setupMotivationalQuoteBasedOnPreferences();
         restoreCheckedChip();
 
         // setup UI elements
@@ -102,6 +99,21 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         });
 
         return binding.getRoot();
+    }
+
+    /**
+     * Displays the motivational quote depending on whether it is enabled or disabled.
+     */
+    private void setupMotivationalQuoteBasedOnPreferences() {
+        // check if motivational quote is enabled
+        if (!SharedPreferencesManager.readBoolean(requireContext(), SharedPreferencesManager.IS_MOTIVATIONAL_QUOTE_DISABLED)) {
+            // enabled - fetch and display the quote
+            requestQuote();
+            binding.motivationalQuoteParent.setVisibility(View.VISIBLE);
+        } else {
+            // disabled - hide the container
+            binding.motivationalQuoteParent.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -130,14 +142,15 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
      */
     private void restoreCheckedChip() {
 
-        String checkedChipTag = mSharedPrefs.getString("checkedChipTag", null);
-        Log.d(MainActivity.TAG, "sharedPrefs Id: " + checkedChipTag);
+        String checkedChipTag = SharedPreferencesManager.readString(requireContext(), SharedPreferencesManager.HOME_SELECTED_CHIP_TAG);
+
         if (checkedChipTag != null) {
             for (int i =0 ; i< binding.chipGroup.getChildCount(); i++) {
                 Chip chip = (Chip) binding.chipGroup.getChildAt(i);
                 if (chip!= null) {
                     if (chip.getTag().equals(checkedChipTag)) {
                         chip.setChecked(true);
+                        requestMealsBasedOnSelectedChip(chip);
                     }
                 }
             }
@@ -164,9 +177,12 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
             // each selected chip has a unique tag, declared in the xml file
             if (selectedChip != null) {
                 if (selectedChip.getTag()!= null) {
-                    SharedPreferences.Editor editor = mSharedPrefs.edit();
-                    editor.putString("checkedChipTag", selectedChip.getTag().toString());
-                    editor.apply();
+                    // update the shared preferences value
+                    SharedPreferencesManager.writeString(
+                            requireContext(),
+                            SharedPreferencesManager.HOME_SELECTED_CHIP_TAG,
+                            selectedChip.getTag().toString()
+                    );
                 }
             }
 

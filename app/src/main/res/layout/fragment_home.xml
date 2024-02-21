@@ -19,11 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- MOTIVATIONAL QUOTE CONTAINER -->
+            <!-- MOTIVATIONAL QUOTE PARENT -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/motivational_quote_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 android:layout_margin="@dimen/margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +89,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!-- MOTIVATIONAL QUOTE CONTAINER -->
+            <!-- MOTIVATIONAL QUOTE PARENT -->
 
 
             <!-- MEAL FILTERS CONTAINER -->

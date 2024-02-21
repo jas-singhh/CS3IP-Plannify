@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import uk.ac.aston.cs3mdd.mealplanner.databinding.FragmentSettingsBinding;
+import uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationHelper;
+import uk.ac.aston.cs3mdd.mealplanner.shared_prefs.SharedPreferencesManager;
 
 
 public class SettingsFragment extends Fragment {
@@ -20,6 +22,7 @@ public class SettingsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
 
@@ -29,7 +32,62 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
 
+        setupSwitches();
+
+        initSwitchesListeners();
+
+
         return binding.getRoot();
+    }
+
+    /**
+     * Sets up the switches based on the saved settings stored in the shared
+     * preferences.
+     */
+    private void setupSwitches() {
+        // notifications toggle setup
+        binding.switchNotifications.setChecked(SharedPreferencesManager.readBoolean(
+                requireContext(), SharedPreferencesManager.ARE_NOTIFICATIONS_ENABLED
+        ));
+
+        // motivational quote toggle setup
+        binding.switchMotivationalQuote.setChecked(!SharedPreferencesManager.readBoolean(
+                requireContext(), SharedPreferencesManager.IS_MOTIVATIONAL_QUOTE_DISABLED
+        ));
+
+    }
+
+    /**
+     * Initialises the listeners for the switches to update the values stored
+     * in the persistent storage through the shared preferences
+     */
+    private void initSwitchesListeners() {
+        // notifications switch
+        binding.switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // update shared preferences
+            SharedPreferencesManager.writeBoolean(
+                    requireContext(),
+                    SharedPreferencesManager.ARE_NOTIFICATIONS_ENABLED,
+                    isChecked
+            );
+
+            // start or stop alarms based on the checked state
+            if (isChecked) {
+                NotificationHelper.startNotificationsIfNotAlreadySet(requireContext());
+            } else {
+                NotificationHelper.cancelAllNotifications(requireContext());
+            }
+        });
+
+
+        // motivational quote switch
+        binding.switchMotivationalQuote.setOnCheckedChangeListener((buttonView, isChecked) ->  {
+            SharedPreferencesManager.writeBoolean(
+                    requireContext(),
+                    SharedPreferencesManager.IS_MOTIVATIONAL_QUOTE_DISABLED,
+                    !isChecked
+            );
+        });
     }
 
 }

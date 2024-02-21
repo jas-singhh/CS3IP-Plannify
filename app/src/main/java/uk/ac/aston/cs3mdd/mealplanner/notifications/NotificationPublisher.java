@@ -77,7 +77,7 @@ public class NotificationPublisher extends BroadcastReceiver {
      * based on whether there are pre-planned meals or not.
      *
      * @param context context required to build the notification.
-     * @param intent intent which holds the title.
+     * @param intent  intent which holds the title.
      * @return the notification with the appropriate title and message body.
      */
     @NonNull
@@ -113,7 +113,7 @@ public class NotificationPublisher extends BroadcastReceiver {
      * pre-planned meals, it builds a message with a reminder.
      *
      * @param context context required to access the database to check for pre-planned meals.
-     * @param intent intent required to get the specified meal type for this notification.
+     * @param intent  intent required to get the specified meal type for this notification.
      * @return a message reminding the user about their pre-planned meals, or a generic
      * reminder if there are no pre-planned meals.
      */
@@ -134,7 +134,7 @@ public class NotificationPublisher extends BroadcastReceiver {
 
                 message.append("Time to prepare your planned recipes: ").append("\n");
 
-                for (int i = 0 ; i < savedRecipes.size(); i++) {
+                for (int i = 0; i < savedRecipes.size(); i++) {
                     message.append(savedRecipes.get(i).getTitle());
 
                     // this ensures that the & sign is not added at the last element in the list
