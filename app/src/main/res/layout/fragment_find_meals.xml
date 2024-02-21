@@ -65,46 +65,6 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-    <!--    RECOMMENDED RECIPES PARENT -->
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:visibility="gone"-->
-    <!--        android:id="@+id/recommended_recipes_parent"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginHorizontal="@dimen/margin"-->
-    <!--        android:layout_marginTop="@dimen/margin"-->
-    <!--        android:orientation="vertical"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/find_meals_header_parent">-->
-
-    <!--        <TextView-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            android:id="@+id/recommended_recipes_title"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:paddingHorizontal="5dp"-->
-    <!--            android:text="Recommended"-->
-    <!--            android:textSize="@dimen/text_headings"-->
-    <!--            android:textStyle="bold" />-->
-
-
-    <!--        &lt;!&ndash;    LIST OF MOST HEALTHY MEALS &ndash;&gt;-->
-    <!--        <androidx.recyclerview.widget.RecyclerView-->
-    <!--            app:layout_constraintTop_toBottomOf="@id/recommended_recipes_title"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            android:id="@+id/rv_recommended_recipes"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginTop="@dimen/margin"-->
-    <!--            android:orientation="vertical" />-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
     <!--    SEARCH RESULTS PARENT -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_results_parent"

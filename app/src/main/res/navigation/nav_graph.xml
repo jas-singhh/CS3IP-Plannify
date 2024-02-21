@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="uk.ac.aston.cs3mdd.mealplanner.views.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_findMealsFragment"
             app:destination="@id/findMealsFragment" />
@@ -19,12 +19,15 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/findMealsFragment"
         android:name="uk.ac.aston.cs3mdd.mealplanner.views.find_meals.FindMealsFragment"
         android:label="fragment_find_meals"
-        tools:layout="@layout/fragment_find_meals" >
+        tools:layout="@layout/fragment_find_meals">
         <action
             android:id="@+id/action_findMealsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -34,12 +37,16 @@
         <action
             android:id="@+id/action_findMealsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_findMealsFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/myMealsFragment"
         android:name="uk.ac.aston.cs3mdd.mealplanner.views.my_meals.MyMealsFragment"
         android:label="fragment_my_meals"
-        tools:layout="@layout/fragment_my_meals" >
+        tools:layout="@layout/fragment_my_meals">
         <action
             android:id="@+id/action_myMealsFragment_to_findMealsFragment"
             app:destination="@id/findMealsFragment" />
@@ -49,12 +56,15 @@
         <action
             android:id="@+id/action_myMealsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_myMealsFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="uk.ac.aston.cs3mdd.mealplanner.views.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -63,6 +73,25 @@
             app:destination="@id/findMealsFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_myMealsFragment"
+            app:destination="@id/myMealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="uk.ac.aston.cs3mdd.mealplanner.views.meal_details.MealDetailsFragment"
+        android:label="fragment_meal_details"
+        tools:layout="@layout/fragment_meal_details">
+        <action
+            android:id="@+id/action_mealDetailsFragment_to_findMealsFragment"
+            app:destination="@id/findMealsFragment"
+            />
+        <action
+            android:id="@+id/action_mealDetailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="myRecipe"
+            app:argType="uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe" />
+        <action
+            android:id="@+id/action_mealDetailsFragment_to_myMealsFragment"
             app:destination="@id/myMealsFragment" />
     </fragment>
 </navigation>

@@ -24,7 +24,8 @@ import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
 
 public class FindMealsViewModel extends ViewModel {
-
+    // Google recommends using 1 ViewModel per View
+    // reference: https://www.youtube.com/watch?v=Ts-uxYiBEQ8&t=520s
     private final RecipesRepository recipeRepository;
     private final MutableLiveData<RecipeResponseList> requestedRecipes;
     private final MutableLiveData<RecipeResponseList> randomHealthyRecipes;

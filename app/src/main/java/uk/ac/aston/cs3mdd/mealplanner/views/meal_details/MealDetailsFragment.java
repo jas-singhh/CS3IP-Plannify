@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -35,31 +35,27 @@ import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Step;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
-import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogSaveRecipe;
 
 public class MealDetailsFragment extends Fragment {
 
     private FragmentMealDetailsBinding binding;
     private Recipe selectedRecipe;
-    private String source;
-
     private ConstraintLayout[] tabLayouts;
-    private RecipeViewModel recipeViewModel;
+    private HomeViewModel homeViewModel;
     private CompositeDisposable mDisposable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // initialisation
-        recipeViewModel = new ViewModelProvider(requireActivity(),
-                ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
+        homeViewModel = new ViewModelProvider(requireActivity(),
+                ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mDisposable = new CompositeDisposable();
 
-        // retrieve the received arguments
-        assert getArguments() != null;
-        selectedRecipe = (uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe) getArguments().getSerializable("Recipe");
-        source = getArguments().getString("Source");
+        // safe args
+        selectedRecipe = MealDetailsFragmentArgs.fromBundle(getArguments()).getMyRecipe();
     }
 
     @Override
@@ -234,11 +230,11 @@ public class MealDetailsFragment extends Fragment {
      */
     private void onClickBack() {
         binding.btnBack.setOnClickListener(v -> {
-            // reference: https://stackoverflow.com/questions/10863572/programmatically-go-back-to-the-previous-fragment-in-the-backstack
-            if (source.equals("my_meals_saved_fragment"))
-                requireActivity().getSupportFragmentManager().popBackStack("my_meals_saved_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            if (source.equals("content_main_home_fragment"))
-                requireActivity().getSupportFragmentManager().popBackStack("content_main_home_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            // reference: https://developer.android.com/guide/navigation/navcontroller
+            // navigate back to the previous destination
+            NavHostFragment.findNavController(this).popBackStack();
+
         });
     }
 
@@ -253,7 +249,7 @@ public class MealDetailsFragment extends Fragment {
             new DialogSaveRecipe(requireContext(), (date, mealType) -> {
                 LocalRecipe recipeToSave = new LocalRecipe(selectedRecipe, date, mealType);
 
-                mDisposable.add(recipeViewModel.insert(recipeToSave)
+                mDisposable.add(homeViewModel.insert(recipeToSave)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(() -> {

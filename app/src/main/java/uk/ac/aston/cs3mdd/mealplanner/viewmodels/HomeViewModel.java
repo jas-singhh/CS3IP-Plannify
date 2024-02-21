@@ -24,25 +24,25 @@ import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.repos.RecipesRepository;
 
-public class RecipeViewModel extends ViewModel {
+public class HomeViewModel extends ViewModel {
     // Google recommends using 1 ViewModel per View
     // reference: https://www.youtube.com/watch?v=Ts-uxYiBEQ8&t=520s
 
     private final RecipesRepository recipeRepository;
     private final MutableLiveData<RecipeResponseList> allRecipes;
 
-    public RecipeViewModel(Application application) {
+    public HomeViewModel(Application application) {
         super();
         this.recipeRepository = new RecipesRepository(application);
         allRecipes = new MutableLiveData<>();
     }
 
     // reference: https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories#:~:text=If%20a%20ViewModel%20class%20receives,new%20instance%20of%20the%20ViewModel.&text=Provides%20access%20to%20the%20custom%20key%20you%20passed%20to%20ViewModelProvider.
-    public static final ViewModelInitializer<RecipeViewModel> initializer = new ViewModelInitializer<>(
-            RecipeViewModel.class,
+    public static final ViewModelInitializer<HomeViewModel> initializer = new ViewModelInitializer<>(
+            HomeViewModel.class,
             creationExtras -> {
                 Application app = creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY	);
-                return new RecipeViewModel(app);
+                return new HomeViewModel(app);
             }
     );
 

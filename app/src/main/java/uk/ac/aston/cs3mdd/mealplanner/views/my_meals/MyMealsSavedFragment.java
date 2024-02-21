@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,16 +35,15 @@ import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
-import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogLottie;
-import uk.ac.aston.cs3mdd.mealplanner.views.meal_details.MealDetailsFragment;
 
 
 public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickInterface {
 
     private FragmentMyMealsSavedBinding binding;
     private CompositeDisposable mDisposable;
-    private RecipeViewModel recipeViewModel;
+    private HomeViewModel homeViewModel;
     private HomeMealsAdapter mAdapter;
     private DialogLottie animatedLoading;
     private CalendarViewModel calendarViewModel;
@@ -54,8 +54,8 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         super.onCreate(savedInstanceState);
         // initialisation
         mDisposable = new CompositeDisposable();
-        recipeViewModel = new ViewModelProvider(requireActivity(),
-                ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
+        homeViewModel = new ViewModelProvider(requireActivity(),
+                ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         calendarViewModel = new ViewModelProvider(requireActivity()).get(CalendarViewModel.class);
         mAdapter = new HomeMealsAdapter(this, new ArrayList<>());
         animatedLoading = new DialogLottie(requireContext());
@@ -99,7 +99,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         if (mealType == null || date == null) return;
 
         // request the meals for the selected meal type and date
-        mDisposable.add(recipeViewModel.getRecipesOfTypeForDate(mealType, date)
+        mDisposable.add(homeViewModel.getRecipesOfTypeForDate(mealType, date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
@@ -186,7 +186,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                         LocalRecipe recipeToDelete = (LocalRecipe) mAdapter.getRecipeAt(pos);
 
                         // delete the recipe
-                        mDisposable.add(recipeViewModel.delete(recipeToDelete)
+                        mDisposable.add(homeViewModel.delete(recipeToDelete)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(() -> {
@@ -231,7 +231,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         // reference: https://m2.material.io/components/snackbars/android#theming-snackbars
         Snackbar.make(requireView(), "Recipe Removed", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
             // undo - delete the saved recipe
-            mDisposable.add(recipeViewModel.insert(removedRecipe)
+            mDisposable.add(homeViewModel.insert(removedRecipe)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
@@ -240,20 +240,13 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     }
 
     @Override
-    public void onClickMeal(uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe recipe) {
-        // set arguments
-        Bundle args = new Bundle();
-        args.putSerializable("Recipe", recipe);
-        args.putString("Source", "my_meals_saved_fragment");//flag to manage back stack
-        MealDetailsFragment destinationFragment = new MealDetailsFragment();
-        destinationFragment.setArguments(args);
+    public void onClickMeal(Recipe recipe) {
 
-        // navigate to the destination fragment
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.my_meals_fragment_container, destinationFragment, null)
-                .setReorderingAllowed(true)
-                .addToBackStack("my_meals_saved_fragment")
-                .commit();
+        MyMealsFragmentDirections.ActionMyMealsFragmentToMealDetailsFragment action =
+                MyMealsFragmentDirections.actionMyMealsFragmentToMealDetailsFragment(recipe);
+
+        // reference: https://developer.android.com/guide/navigation/navcontroller
+        NavHostFragment.findNavController(this).navigate(action);
     }
 
     @Override

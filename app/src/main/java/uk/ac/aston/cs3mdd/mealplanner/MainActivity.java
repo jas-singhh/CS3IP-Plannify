@@ -31,7 +31,7 @@ import uk.ac.aston.cs3mdd.mealplanner.enums.EnumMealType;
 import uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationHelper;
 import uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationPublisher;
 import uk.ac.aston.cs3mdd.mealplanner.utils.Utilities;
-import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogCustomMeal;
 import uk.ac.aston.cs3mdd.mealplanner.views.dialogs.DialogGetNotified;
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "WMK";
     public static final int RC_NOTIFICATIONS = 14;
 
-    private RecipeViewModel recipeViewModel;
+    private HomeViewModel homeViewModel;
     private CompositeDisposable mDisposable;
     private SharedPreferences mPreferences;
     private DialogGetNotified notificationsDialog;
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initVariables() {
         mPreferences = getPreferences(Context.MODE_PRIVATE);
-        recipeViewModel = new ViewModelProvider(this,
-                ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
+        homeViewModel = new ViewModelProvider(this,
+                ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mDisposable = new CompositeDisposable();
     }
 
@@ -141,9 +141,27 @@ public class MainActivity extends AppCompatActivity {
     private void initNavigation() {
         // Reference: https://stackoverflow.com/questions/65170700/activity-does-not-have-a-navcontroller-set-on
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        assert navHostFragment != null;
-        NavController navController = navHostFragment.getNavController();
-        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
+
+        if (navHostFragment != null) {
+            NavController navController = navHostFragment.getNavController();
+            NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
+
+            // reference 1: https://stackoverflow.com/questions/74721348/problem-to-navigate-between-fragments-in-navbar
+            // reference 2: https://stackoverflow.com/questions/71089052/android-navigation-component-bottomnavigationviews-selected-tab-icon-is-not-u
+            // this prevents an issue where when the user is viewing a nested fragment inside another
+            // fragment, and navigates to another fragment through the nav menu and comes back to the same fragment
+            // with the nested fragment opened in it, then the menu selection does not update.
+
+            // issue explanation example
+            // user opens the home fragment -> clicks on a meal and the meal details fragment is opened
+            // user navigates to a different fragment e.g. settings.
+            // user comes back to the home fragment which had meal details fragment opened.
+            // the meal details fragment is displayed, however the menu still indicates that the active fragment is settings when it should indicate home
+            binding.bottomNavigation.setOnItemSelectedListener(item -> {
+                NavigationUI.onNavDestinationSelected(item, navController);
+                return true;
+            });
+        }
     }
 
     /**
@@ -153,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
     private void initFab() {
         findViewById(R.id.fab).setOnClickListener(v -> new DialogCustomMeal(MainActivity.this, localRecipe -> {
             // save recipe once the user clicks on save
-            mDisposable.add(recipeViewModel.insert(localRecipe)
+            mDisposable.add(homeViewModel.insert(localRecipe)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> Toast.makeText(this, "Recipe Saved", Toast.LENGTH_LONG).show()

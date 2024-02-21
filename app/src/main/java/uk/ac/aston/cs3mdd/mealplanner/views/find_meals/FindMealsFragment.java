@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -273,18 +274,11 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
 
     @Override
     public void onClickMeal(Recipe recipe) {
-//        // set arguments
-//        Bundle args = new Bundle();
-//        args.putSerializable("Recipe", recipe);
-//        args.putString("Source", "find_meals_fragment");//flat to manage back stack
-//        MealDetailsFragment destinationFragment = new MealDetailsFragment();
-//        destinationFragment.setArguments(args);
-//
-//        // navigate to the destination fragment
-//        requireActivity().getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.findMealsFragment, destinationFragment, null)
-//                .setReorderingAllowed(true)
-//                .addToBackStack("find_meals_fragment")
-//                .commit();
+        FindMealsFragmentDirections.ActionFindMealsFragmentToMealDetailsFragment action =
+                FindMealsFragmentDirections.actionFindMealsFragmentToMealDetailsFragment(recipe);
+
+        // reference: https://developer.android.com/guide/navigation/navcontroller
+        NavHostFragment.findNavController(this).navigate(action);
+
     }
 }

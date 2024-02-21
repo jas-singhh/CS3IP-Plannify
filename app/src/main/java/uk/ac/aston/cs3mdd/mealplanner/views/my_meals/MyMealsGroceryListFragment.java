@@ -25,14 +25,14 @@ import uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3mdd.mealplanner.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3mdd.mealplanner.utils.CalendarUtils;
 import uk.ac.aston.cs3mdd.mealplanner.viewmodels.CalendarViewModel;
-import uk.ac.aston.cs3mdd.mealplanner.viewmodels.RecipeViewModel;
+import uk.ac.aston.cs3mdd.mealplanner.viewmodels.HomeViewModel;
 
 
 public class MyMealsGroceryListFragment extends Fragment {
 
     private FragmentMyMealsGroceryListBinding binding;
 
-    private RecipeViewModel recipeViewModel;
+    private HomeViewModel homeViewModel;
     private CalendarViewModel calendarViewModel;
     private LocalDate selectedDate;
     private CompositeDisposable mDisposable;
@@ -43,8 +43,8 @@ public class MyMealsGroceryListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // initialisation
-        recipeViewModel = new ViewModelProvider(requireActivity(),
-                ViewModelProvider.Factory.from(RecipeViewModel.initializer)).get(RecipeViewModel.class);
+        homeViewModel = new ViewModelProvider(requireActivity(),
+                ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         calendarViewModel = new ViewModelProvider(requireActivity()).get(CalendarViewModel.class);
         selectedDate = calendarViewModel.getSelectedDate().getValue();
         mDisposable = new CompositeDisposable();
@@ -82,7 +82,7 @@ public class MyMealsGroceryListFragment extends Fragment {
      * @param to date to which to fetch recipes to get the ingredients.
      */
     private void displayIngredientsForRecipesWithinDateRange(LocalDate from, LocalDate to) {
-        mDisposable.add(recipeViewModel.getRecipesWithinDates(from, to)
+        mDisposable.add(homeViewModel.getRecipesWithinDates(from, to)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
