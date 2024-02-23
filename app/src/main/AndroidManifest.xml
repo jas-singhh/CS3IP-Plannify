@@ -40,7 +40,7 @@
 <!--        <receiver android:name=".notifications.NotificationPublisher" android:enabled="true" />-->
 
         <receiver
-            android:name="uk.ac.aston.cs3mdd.mealplanner.notifications.NotificationPublisher"
+            android:name="uk.ac.aston.cs3ip.plannify.notifications.NotificationPublisher"
             android:exported="true"
             android:permission="">
         <intent-filter>

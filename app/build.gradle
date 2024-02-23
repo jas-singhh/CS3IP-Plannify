@@ -4,15 +4,22 @@ plugins {
 }
 
 android {
-    namespace 'uk.ac.aston.cs3mdd.mealplanner'
+    namespace 'uk.ac.aston.cs3ip.plannify'
     compileSdk 34
 
     defaultConfig {
-        applicationId "uk.ac.aston.cs3mdd.mealplanner"
+        applicationId "uk.ac.aston.cs3ip.plannify"
         minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+//        reference: https://stackoverflow.com/questions/44322178/room-schema-export-directory-is-not-provided-to-the-annotation-processor-so-we
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

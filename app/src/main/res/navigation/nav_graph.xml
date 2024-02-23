@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.home.HomeFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/findMealsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.find_meals.FindMealsFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.find_meals.FindMealsFragment"
         android:label="fragment_find_meals"
         tools:layout="@layout/fragment_find_meals">
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/myMealsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.my_meals.MyMealsFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.my_meals.MyMealsFragment"
         android:label="fragment_my_meals"
         tools:layout="@layout/fragment_my_meals">
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.settings.SettingsFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="uk.ac.aston.cs3mdd.mealplanner.views.meal_details.MealDetailsFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.meal_details.MealDetailsFragment"
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details">
         <action
@@ -89,7 +89,7 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="myRecipe"
-            app:argType="uk.ac.aston.cs3mdd.mealplanner.models.api_recipe.Recipe" />
+            app:argType="uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe" />
         <action
             android:id="@+id/action_mealDetailsFragment_to_myMealsFragment"
             app:destination="@id/myMealsFragment" />
