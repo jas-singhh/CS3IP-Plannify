@@ -58,7 +58,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginHorizontal="@dimen/margin"
-                    android:backgroundTint="@color/complementary"
+                    android:backgroundTint="@color/_complementary"
                     android:clickable="true"
                     android:elevation="10dp"
                     android:focusable="true"
@@ -73,7 +73,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:padding="16dp"
-                        app:srcCompat="@drawable/ic_add" />
+                        app:srcCompat="@drawable/ic_add"
+                        app:tint="@color/text_white" />
 
                 </com.google.android.material.card.MaterialCardView>
                 <!-- SAVE BUTTON -->
@@ -125,7 +126,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="Very Healthy"
-                            android:textColor="@color/text_grey"
+                            android:textColor="@color/text_white"
                             android:textSize="@dimen/text_medium"
                             android:textStyle="bold"
                             app:drawableStartCompat="@drawable/ic_star_rating"
@@ -150,7 +151,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="Time"
-                            android:textColor="@color/text_grey"
+                            android:textColor="@color/text_white"
                             android:textSize="@dimen/text_medium"
                             android:textStyle="bold"
                             app:drawableStartCompat="@drawable/ic_time_filled"
@@ -175,7 +176,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
                             android:text="X Servings"
-                            android:textColor="@color/text_grey"
+                            android:textColor="@color/text_white"
                             android:textSize="@dimen/text_medium"
                             android:textStyle="bold"
                             app:drawableStartCompat="@drawable/ic_servings"
@@ -184,50 +185,63 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
                     <!--            MAIN ATTRIBUTES CONTAINER -->
 
-                    <!--            SEPARATOR -->
-                    <View
-                        android:id="@+id/separator"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/margin"
-                        android:background="@color/gray"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/main_attributes_container" />
-
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/details_tab_layout"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/details_tab_layout_parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:tabTextAppearance="@style/CustomTextAppearance"
-                        android:padding="10dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="10dp"
+                        app:cardCornerRadius="@dimen/radius_card"
+                        app:cardElevation="@dimen/elevation_14_overlay"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:tabIndicatorColor="@color/split_complementary"
-                        app:tabSelectedTextColor="@color/split_complementary"
-                        app:layout_constraintTop_toBottomOf="@+id/separator">
+                        app:layout_constraintTop_toBottomOf="@+id/main_attributes_container"
+                        app:strokeWidth="0dp">
 
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/details_tab_layout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:tag="ingredients_tab"
-                            android:text="Ingredients" />
+                            android:background="@android:color/transparent"
+                            android:paddingVertical="2dp"
+                            app:tabGravity="fill"
+                            app:tabIndicator="@drawable/tab_indicator"
+                            app:tabIndicatorAnimationMode="elastic"
+                            app:tabIndicatorColor="@color/_secondary"
+                            app:tabIndicatorGravity="stretch"
+                            app:tabMode="fixed"
+                            app:tabInlineLabel="true"
+                            app:tabSelectedTextColor="@color/text_black"
+                            app:tabTextAppearance="@style/CustomTextAppearance"
+                            app:tabTextColor="@color/text_white"
+                            app:tabIconTint="@drawable/tab_layout_icon_selector">
 
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tag="instructions_tab"
-                            android:text="Instructions" />
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tag="ingredients_tab"
+                                android:icon="@drawable/ic_ingredients"
+                                android:text="Ingredients" />
 
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nutrients" />
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:tag="steps_tab"
+                                android:icon="@drawable/ic_steps"
+                                android:text="Steps" />
+
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:icon="@drawable/ic_nutrients"
+                                android:text="Nutrients" />
 
 
-                    </com.google.android.material.tabs.TabLayout>
+                        </com.google.android.material.tabs.TabLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
 
                     <!--            INGREDIENTS CONTAINER  -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -237,7 +251,7 @@
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout">
+                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout_parent">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/details_ingredients_rv"
@@ -253,19 +267,19 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <!--            INGREDIENTS CONTAINER  -->
 
-                    <!--            INSTRUCTIONS CONTAINER  -->
+                    <!--            STEPS CONTAINER  -->
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/instructions_parent"
+                        android:id="@+id/steps_parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout">
+                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout_parent">
 
                         <TextView
-                            android:id="@+id/meal_details_instructions"
+                            android:id="@+id/meal_details_steps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
@@ -288,10 +302,10 @@
                             app:backgroundTint="@color/complementary"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/meal_details_instructions" />
+                            app:layout_constraintTop_toBottomOf="@+id/meal_details_steps" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                    <!--            INSTRUCTIONS CONTAINER  -->
+                    <!--            STEPS CONTAINER  -->
 
 
                     <!--            NUTRIENTS CONTAINER  -->
@@ -299,21 +313,22 @@
                         android:id="@+id/nutrients_parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/margin"
+
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout">
+                        app:layout_constraintTop_toBottomOf="@+id/details_tab_layout_parent">
 
                         <TextView
-                            android:id="@+id/meal_nutrients_limit_these_title"
+                            android:id="@+id/meal_nutrients_balance_these_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/margin"
                             android:padding="2dp"
-                            android:text="Limit These"
+                            android:layout_marginTop="2dp"
+                            android:text="Balance These"
                             android:textSize="@dimen/text_headings"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_marginHorizontal="@dimen/margin"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -321,19 +336,19 @@
                             android:id="@+id/details_nutrients_limit_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
                             android:orientation="vertical"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/meal_nutrients_limit_these_title" />
+                            app:layout_constraintTop_toBottomOf="@+id/meal_nutrients_balance_these_title" />
 
                         <TextView
-                            android:layout_marginTop="10dp"
                             android:id="@+id/meal_nutrients_get_enough_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:padding="2dp"
                             android:text="Get Enough of These"
+                            android:layout_marginStart="@dimen/margin"
                             android:textSize="@dimen/text_headings"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -372,9 +387,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="15dp"
-        android:backgroundTint="@color/semi_transparent_white"
+        android:backgroundTint="@color/_complementary"
         android:clickable="true"
-        android:elevation="10dp"
+        android:elevation="@dimen/elevation_14_overlay"
         android:focusable="true"
         app:cardCornerRadius="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -385,7 +400,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="4dp"
-            app:srcCompat="@drawable/ic_back" />
+            app:srcCompat="@drawable/ic_back"
+            app:tint="@color/text_white" />
 
     </com.google.android.material.card.MaterialCardView>
     <!-- BACK BUTTON -->

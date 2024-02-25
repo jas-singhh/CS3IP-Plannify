@@ -28,7 +28,10 @@
     <!--    CARD PROPERTIES -->
     <dimen name="radius_card">20dp</dimen>
     <dimen name="radius_small_card">5dp</dimen>
-    <dimen name="elevation_card">10dp</dimen>
+<!--    REFERENCE: https://m2.material.io/design/color/dark-theme.html#properties -->
+    <dimen name="elevation_11_overlay">6dp</dimen>
+    <dimen name="elevation_14_overlay">12dp</dimen>
+    <dimen name="elevation_15_overlay">16dp</dimen>
 
     <!--    TEXT SIZES -->
     <dimen name="text_headings">24sp</dimen>

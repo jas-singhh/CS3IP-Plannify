@@ -5,7 +5,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_grey">#757575</color>
     <color name="primary">#005EB8</color>
+    <color name="primary200">#8cc6f4</color>
     <color name="complementary">#B85500</color>
+    <color name="complementary200">#d7a02e</color>
     <color name="split_complementary">#B88800</color>
     <color name="error_red">#B00020</color>
     <color name="gray">#424242</color>
@@ -14,16 +16,22 @@
 <!--    RECOMMENDED BY MATERIALS
         REFERENCE 1: https://m1.material.io/style/color.html#color-themes
          REFERENCE 2: https://m2.material.io/design/color/dark-theme.html#ui-application -->
-    <color name="background">#303030</color>
+    <color name="surface">#121212</color>
     <color name="cards">#424242</color>
     <color name="text_white">#FFFFFF</color>
     <color name="text_black">#000000</color>
 
 
+<!--    TESTING -->
+    <color name="_primary">#121212</color>
+    <color name="_secondary">#8cc6f4</color>
+    <color name="_secondary2">#1A8CC6F4</color>
+    <color name="_complementary">#B85500</color>
+
     <!--    STRESS REDUCING COLOURS -->
 <!--    Reference1: https://onlinelibrary.wiley.com/doi/full/10.1002/col.20597 -->
 <!--    Reference1: https://link.springer.com/article/10.1007/s40368-018-0403-3#Sec5 -->
-    <color name="green">#1B5E20</color>
+    <color name="green">#00E676</color>
     <color name="pink">#880E4F</color>
     <color name="purple">#4A148C</color>
     <color name="blue">#0D47A1</color>

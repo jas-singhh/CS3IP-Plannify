@@ -7,51 +7,46 @@
     tools:context=".views.my_meals.MyMealsGroceryListFragment">
 
 
-    <!--    ITEMS' TITLES CONTAINER -->
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!--        ITEM NAME -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:text="Item"
-            android:textSize="@dimen/text_headings"
-            android:textStyle="bold" />
-
-        <!--        ITEM QUANTITY -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="Quantity"
-            android:textSize="@dimen/text_headings"
-            android:textStyle="bold" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-    <!--    ITEMS' TITLES CONTAINER -->
-
-
 <!--    LIST OF GROCERY ITEMS -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_grocery_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_container" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+
+    <!--    NO RESULTS MESSAGE PARENT -->
+    <LinearLayout
+        android:id="@+id/no_grocery_items_message_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="no_results.json"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="No Grocery Items"
+            android:textSize="@dimen/text_important" />
+    </LinearLayout>
+    <!--    NO RESULTS MESSAGE PARENT -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,9 @@
 package uk.ac.aston.cs3ip.plannify.adapters;
 
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
+
 public interface HomeMealsOnClickInterface {
 
-    void onClickMeal(uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe recipe);
+    void onClickMeal(Recipe recipe);
 
 }

@@ -177,19 +177,19 @@
 
             </LinearLayout>
 
-            <!--    INSTRUCTIONS -->
+            <!--    STEPS -->
             <EditText
-                android:id="@+id/custom_meal_instructions"
+                android:id="@+id/custom_meal_steps"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/margin"
                 android:autofillHints=""
                 android:background="@drawable/input_rounded"
                 android:backgroundTint="@color/card_bg"
-                android:drawableStart="@drawable/ic_instructions"
+                android:drawableStart="@drawable/ic_steps"
                 android:drawablePadding="7dp"
                 android:drawableTint="@color/white"
-                android:hint="Add Instructions"
+                android:hint="Add Steps"
                 android:padding="20dp"
                 android:textColor="@color/text_white"
                 android:textColorHint="@color/text_grey"
@@ -209,7 +209,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/custom_meal_instructions">
+                app:layout_constraintTop_toBottomOf="@+id/custom_meal_steps">
 
                 <!--                    INGREDIENT NAME -->
                 <EditText

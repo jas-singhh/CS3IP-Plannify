@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.adapters.MyMealsCalendarAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.MyMealsCalendarOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.adapters.MyMealsViewPagerAdapter;
@@ -82,10 +84,18 @@ public class MyMealsFragment extends Fragment implements MyMealsCalendarOnClickI
         binding.viewPager.setAdapter(new MyMealsViewPagerAdapter(this));
 
         // reference: https://developer.android.com/guide/navigation/navigation-swipe-view-2
-        new TabLayoutMediator(binding.tabLayout, binding.viewPager,
-                ((tab, position) -> {
-                    if (position == 0) tab.setText("Saved Meals");
-                    if (position == 1) tab.setText("Grocery List");
+        new TabLayoutMediator(binding.myMealsTabLayout, binding.viewPager,
+                ((TabLayout.Tab tab, int position) -> {
+
+                    if (position == 0) {
+                        tab.setText("Saved Meals");
+                        tab.setIcon(R.drawable.ic_saved);
+                    }
+
+                    if (position == 1) {
+                        tab.setText("Grocery List");
+                        tab.setIcon(R.drawable.ic_grocery);
+                    }
                 })).attach();
     }
 

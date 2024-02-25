@@ -72,11 +72,11 @@ public class MealDetailsFragment extends Fragment {
         // details setup
         displayMealMainAttributes();
         initIngredients();
-        initInstructions();
+        initSteps();
         initNutrients();
 
         // store layouts' parents for easier switching in the order they appear
-        tabLayouts = new ConstraintLayout[]{binding.ingredientsParent, binding.instructionsParent, binding.nutrientsParent};
+        tabLayouts = new ConstraintLayout[]{binding.ingredientsParent, binding.stepsParent, binding.nutrientsParent};
         initTabSwitching();
 
         return binding.getRoot();
@@ -149,9 +149,9 @@ public class MealDetailsFragment extends Fragment {
     }
 
     /**
-     * Sets up the instructions for the specific recipe.
+     * Sets up the steps for the specific recipe.
      */
-    private void initInstructions() {
+    private void initSteps() {
         if (selectedRecipe.getAnalyzedInstructions() == null) return;
         if (selectedRecipe.getAnalyzedInstructions().isEmpty() ||
                 selectedRecipe.getAnalyzedInstructions().get(0).getSteps() == null) return;
@@ -159,13 +159,13 @@ public class MealDetailsFragment extends Fragment {
         List<Step> steps = selectedRecipe.getAnalyzedInstructions().get(0).getSteps();
 
         // html formatting for readability
-        StringBuilder mealInstructions = new StringBuilder();
+        StringBuilder mealSteps = new StringBuilder();
         for (Step step : steps) {
-            mealInstructions.append("<h5>Step ").append(step.getNumber()).append("</h5>");
-            mealInstructions.append(step.getStep()).append("<br>");
+            mealSteps.append("<h5>Step ").append(step.getNumber()).append("</h5>");
+            mealSteps.append(step.getStep()).append("<br>");
         }
 
-        binding.mealDetailsInstructions.setText(Html.fromHtml(mealInstructions.toString(), Html.FROM_HTML_MODE_LEGACY));
+        binding.mealDetailsSteps.setText(Html.fromHtml(mealSteps.toString(), Html.FROM_HTML_MODE_LEGACY));
     }
 
 

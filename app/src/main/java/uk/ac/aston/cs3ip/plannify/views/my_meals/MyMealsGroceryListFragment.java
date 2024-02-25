@@ -16,10 +16,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
-import uk.ac.aston.cs3ip.plannify.adapters.GroceryListAdapter;
+import uk.ac.aston.cs3ip.plannify.adapters.MyMealsGroceryListItemsAdapter;
+import uk.ac.aston.cs3ip.plannify.adapters.MyMealsGroceryListOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentMyMealsGroceryListBinding;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
@@ -28,7 +30,7 @@ import uk.ac.aston.cs3ip.plannify.viewmodels.CalendarViewModel;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
 
 
-public class MyMealsGroceryListFragment extends Fragment {
+public class MyMealsGroceryListFragment extends Fragment implements MyMealsGroceryListOnClickInterface {
 
     private FragmentMyMealsGroceryListBinding binding;
 
@@ -36,7 +38,7 @@ public class MyMealsGroceryListFragment extends Fragment {
     private CalendarViewModel calendarViewModel;
     private LocalDate selectedDate;
     private CompositeDisposable mDisposable;
-    private GroceryListAdapter mAdapter;
+    private MyMealsGroceryListItemsAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class MyMealsGroceryListFragment extends Fragment {
         calendarViewModel = new ViewModelProvider(requireActivity()).get(CalendarViewModel.class);
         selectedDate = calendarViewModel.getSelectedDate().getValue();
         mDisposable = new CompositeDisposable();
-        mAdapter = new GroceryListAdapter(new ArrayList<>());
+        mAdapter = new MyMealsGroceryListItemsAdapter(new ArrayList<>(), this);
     }
 
     @Override
@@ -66,11 +68,6 @@ public class MyMealsGroceryListFragment extends Fragment {
             displayIngredientsForRecipesWithinDateRange(from, to);
         });
 
-
-
-
-
-
         return binding.getRoot();
     }
 
@@ -79,7 +76,7 @@ public class MyMealsGroceryListFragment extends Fragment {
      * range of dates.
      *
      * @param from date from which to fetch recipes to get the ingredients.
-     * @param to date to which to fetch recipes to get the ingredients.
+     * @param to   date to which to fetch recipes to get the ingredients.
      */
     private void displayIngredientsForRecipesWithinDateRange(LocalDate from, LocalDate to) {
         mDisposable.add(homeViewModel.getRecipesWithinDates(from, to)
@@ -90,9 +87,13 @@ public class MyMealsGroceryListFragment extends Fragment {
                     Log.d(MainActivity.TAG, "recipes for dates: " + CalendarUtils.getFormattedDayMonthYearFromDate(from)
                             + " - " + CalendarUtils.getFormattedDayMonthYearFromDate(to) + "\n");
 
-                    if (list.isEmpty()) {
-                        Log.d(MainActivity.TAG, "No saved recipes");
-                    } else {
+                    // hide or show status message depending on whether there are saved recipes or not.
+                    int statusMessageVisibility = list.isEmpty() ? View.VISIBLE : View.GONE;
+                    binding.noGroceryItemsMessageParent.setVisibility(statusMessageVisibility);
+
+                    if (!list.isEmpty()) {
+                        Log.d(MainActivity.TAG, "recipe: " + list.get(0).getTitle() + "\nprimary id: " +
+                                list.get(0).getPrimaryId());
 
                         HashMap<Long, ExtendedIngredient> ingredientsMap = new HashMap<>();
 
@@ -121,6 +122,11 @@ public class MyMealsGroceryListFragment extends Fragment {
                             // map to list
                             ArrayList<ExtendedIngredient> ingredients = new ArrayList<>(ingredientsMap.values());
                             mAdapter.updateData(ingredients);
+                        }
+                    } else {
+                        // clear the adapter if there are no results
+                        if (mAdapter != null) {
+                            mAdapter.clearDataSet();
                         }
                     }
                 }));
@@ -172,5 +178,58 @@ public class MyMealsGroceryListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mDisposable.clear();
+    }
+
+    @Override
+    public void onClickGroceryItem(ExtendedIngredient groceryItem, boolean isChecked) {
+        // reference: https://stackoverflow.com/questions/56764884/nested-network-calls-using-rx-android-and-retrofit
+        mDisposable.add(homeViewModel.getRecipeById(groceryItem.getParentRecipeId())
+                .subscribeOn(Schedulers.io())
+                .flatMapCompletable(localRecipe -> {
+                    if (localRecipe == null) {
+                        return Completable.error(new Exception("No recipe with id " + groceryItem.getParentRecipeId()));
+                    }
+
+                    // find the item in the database and update its status
+                    for (ExtendedIngredient ingredient : localRecipe.getExtendedIngredients()) {
+                        if (groceryItem.getId() == ingredient.getId()) {
+                            ingredient.setCheckedInGroceryList(isChecked);
+                            break;
+                        }
+                    }
+
+                    // update the changes in the database to persist them
+                    return homeViewModel.updateIngredientsForRecipeWithId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId());
+                })
+                .subscribe(() -> {
+                    Log.d(MainActivity.TAG, "data updated for " + groceryItem.getName());
+                }, throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
+
+
+//        // find the item in the database and update its status
+//        mDisposable.add(homeViewModel.getRecipeById(groceryItem.getParentRecipeId())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(localRecipe -> {
+//                    if (localRecipe != null) {
+//                        for (ExtendedIngredient ingredient : localRecipe.getExtendedIngredients()) {
+//                            if (groceryItem.getId() == ingredient.getId()) {
+//                                ingredient.setCheckedInGroceryList(isChecked);
+//                                break;
+//                            }
+//                        }
+//
+//                        // update the changes in the database to persist them
+//                        mDisposable.add(homeViewModel.updateIngredientsForRecipeWithId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId())
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(() -> {
+//                                            Log.d(MainActivity.TAG, "data updated for " + groceryItem.getName());
+//                                        },
+//                                        throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
+//                    }
+//
+//                }, throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
+
     }
 }

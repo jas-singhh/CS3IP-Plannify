@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3ip.plannify.repos.RecipesRepository;
@@ -41,7 +42,7 @@ public class HomeViewModel extends ViewModel {
     public static final ViewModelInitializer<HomeViewModel> initializer = new ViewModelInitializer<>(
             HomeViewModel.class,
             creationExtras -> {
-                Application app = creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY	);
+                Application app = creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
                 return new HomeViewModel(app);
             }
     );
@@ -134,6 +135,7 @@ public class HomeViewModel extends ViewModel {
 //        });
 //    }
 //
+
     /**
      * Requests the recipes by the specified meal type.
      *
@@ -192,10 +194,20 @@ public class HomeViewModel extends ViewModel {
         return recipeRepository.delete(recipe);
     }
 
+    /**
+     * Updates the given recipe in the database, if present.
+     *
+     * @param recipe recipe to update.
+     * @return whether the operation succeeded or not.
+     */
+    public Completable update(LocalRecipe recipe) {
+        return recipeRepository.update(recipe);
+    }
 
 
     /**
      * Returns the local recipes present in the database.
+     *
      * @return local recipes in the database.
      */
     public Flowable<List<LocalRecipe>> getAllLocalRecipes() {
@@ -227,7 +239,7 @@ public class HomeViewModel extends ViewModel {
      * Returns a list of local recipes of the given meal type and for the specified date.
      *
      * @param mealTypeSavedFor meal type of which to retrieve the recipes.
-     * @param dateSavedFor date for which to retrieve the recipes.
+     * @param dateSavedFor     date for which to retrieve the recipes.
      * @return a list of local recipes of the given meal type and for the speicified date.
      */
     public Flowable<List<LocalRecipe>> getRecipesOfTypeForDate(EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
@@ -238,10 +250,32 @@ public class HomeViewModel extends ViewModel {
      * Returns a list fo local recipes saved for the dates within the specified range.
      *
      * @param from date from which to fetch recipes.
-     * @param to date to which to fetch recipes.
+     * @param to   date to which to fetch recipes.
      * @return returns a list of local recipes within the specified dates.
      */
     public Flowable<List<LocalRecipe>> getRecipesWithinDates(LocalDate from, LocalDate to) {
         return recipeRepository.getRecipesWithinDates(from, to);
     }
+
+    /**
+     * Returns the recipe with the given id, if it exists.
+     *
+     * @param recipeId recipe id for which to return the recipe.
+     * @return the recipe with the given id if it exists, otherwise returns null.
+     */
+    public Single<LocalRecipe> getRecipeById(long recipeId) {
+        return recipeRepository.getRecipeById(recipeId);
+    }
+
+    /**
+     * Updates the ingredients for the recipe with the given id, if it exists.
+     *
+     * @param extendedIngredients ingredients to update.
+     * @param recipeId recipe id for which to update the ingredients.
+     * @return whether the operation succeeded or not.
+     */
+    public Completable updateIngredientsForRecipeWithId(List<ExtendedIngredient> extendedIngredients, long recipeId) {
+        return recipeRepository.updateIngredientsForRecipeWithId(extendedIngredients, recipeId);
+    }
+
 }

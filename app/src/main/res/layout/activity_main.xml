@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/_primary"
     tools:context=".MainActivity">
 
     <!--    Reference 1: https://www.youtube.com/watch?v=x6-_va1R788 -->
@@ -30,10 +30,10 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
-            app:elevation="10dp"
+            app:elevation="@dimen/elevation_11_overlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backgroundTint="@color/black"
+            app:backgroundTint="@color/_primary"
             android:layout_gravity="bottom"
             app:fabCradleMargin="0dp"
             app:fabCradleRoundedCornerRadius="0dp">
@@ -45,7 +45,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginEnd="16dp"
                 app:itemIconTint="@drawable/navigation_bar_selector"
-                app:itemTextColor="@drawable/navigation_bar_selector"
+                app:itemTextColor="@color/text_white"
                 android:elevation="0dp"
                 android:background="@drawable/transparent_bg"
                 app:itemIconSize="20dp"
@@ -58,13 +58,13 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:src="@drawable/ic_add"
-            app:tint="@android:color/darker_gray"
+            app:tint="@color/text_white"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="Add"
-            app:backgroundTint="@android:color/darker_gray"
+            app:backgroundTint="@color/text_white"
             app:borderWidth="1dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/_primary"
             app:fabSize="mini"
             app:maxImageSize="25dp" />
 

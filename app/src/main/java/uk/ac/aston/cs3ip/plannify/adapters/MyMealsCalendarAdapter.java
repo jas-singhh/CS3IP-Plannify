@@ -6,9 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,20 +28,18 @@ public class MyMealsCalendarAdapter extends RecyclerView.Adapter<MyMealsCalendar
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private final ConstraintLayout dayParent;
+        private final MaterialCardView dayParent;
         private final TextView dayName;
         private final TextView day;
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             dayParent = itemView.findViewById(R.id.day_parent);
             dayName = itemView.findViewById(R.id.tv_day_name);
             day = itemView.findViewById(R.id.tv_day);
-
         }
 
-        public ConstraintLayout getDayParent() {
+        public MaterialCardView getDayParent() {
             return dayParent;
         }
 
@@ -102,12 +101,17 @@ public class MyMealsCalendarAdapter extends RecyclerView.Adapter<MyMealsCalendar
             }
         });
 
-        // update the background colour on the selected date
+        // update the background and foreground colour on the selected date
         if (localDataSet.get(position).equals(selectedDate)) {
             lastSelectedDateIndex = holder.getAbsoluteAdapterPosition();//update last selected date for efficiency
-            holder.getDayParent().setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.split_complementary));
+
+            holder.getDayParent().setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_white));
+            holder.getDay().setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_black));
+            holder.getDayName().setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_black));
         } else {
-            holder.getDayParent().setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.cards));
+            holder.getDayParent().setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.transparent));
+            holder.getDay().setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_white));
+            holder.getDayName().setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_white));
         }
     }
 

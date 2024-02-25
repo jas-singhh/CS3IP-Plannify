@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 
 @Dao
@@ -49,4 +50,10 @@ public interface RecipeDao {
 
     @Query("SELECT * FROM recipes WHERE dateSavedFor BETWEEN :from AND :to")
     Flowable<List<LocalRecipe>> getRecipesWithinDates(LocalDate from, LocalDate to);
+
+    @Query("SELECT * FROM recipes WHERE primaryId=:recipeId LIMIT 1")
+    Single<LocalRecipe> getRecipeById(long recipeId);
+
+    @Query("UPDATE recipes SET extendedIngredients=:extendedIngredients WHERE primaryId=:recipeId")
+    Completable updateIngredientsForRecipeWithId(List<ExtendedIngredient> extendedIngredients, long recipeId);
 }

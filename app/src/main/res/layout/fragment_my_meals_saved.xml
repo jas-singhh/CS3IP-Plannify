@@ -39,98 +39,87 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_default"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/ChipCustomStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="15dp"
                 android:text="Breakfast"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/cards"
+                android:elevation="@dimen/elevation_14_overlay"
                 app:chipIcon="@drawable/ic_breakfast"
-                app:chipIconTint="@color/white"
                 app:chipIconVisible="true"
                 app:chipMinTouchTargetSize="0dp"
                 app:iconStartPadding="7dp" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/ChipCustomStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="15dp"
                 android:text="Brunch"
+                android:elevation="@dimen/elevation_14_overlay"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/cards"
                 app:chipIcon="@drawable/ic_brunch"
-                app:chipIconTint="@color/white"
                 app:chipIconVisible="true"
                 app:chipMinTouchTargetSize="0dp"
                 app:iconStartPadding="7dp"
-
                 />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/ChipCustomStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="15dp"
                 android:text="Lunch"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/cards"
+                android:elevation="@dimen/elevation_14_overlay"
                 app:chipIcon="@drawable/ic_lunch"
-                app:chipIconTint="@color/white"
                 app:chipIconVisible="true"
                 app:chipMinTouchTargetSize="0dp"
                 app:iconStartPadding="7dp"
-
                 />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/ChipCustomStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="15dp"
                 android:text="Snack"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/cards"
+                android:elevation="@dimen/elevation_14_overlay"
                 app:chipIcon="@drawable/ic_snack"
-                app:chipIconTint="@color/white"
                 app:chipIconVisible="true"
                 app:chipMinTouchTargetSize="0dp"
                 app:iconStartPadding="7dp"
-
                 />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/ChipCustomStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="7dp"
                 android:paddingVertical="15dp"
                 android:text="Tea-time"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/cards"
+                android:elevation="@dimen/elevation_14_overlay"
                 app:chipIcon="@drawable/ic_tea_time"
-                app:chipIconTint="@color/white"
                 app:chipIconVisible="true"
                 app:chipMinTouchTargetSize="0dp"
                 app:iconStartPadding="7dp"
-
                 />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+                style="@style/ChipCustomStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="15dp"
                 android:text="Dinner"
                 android:textAlignment="center"
-                app:chipBackgroundColor="@color/cards"
+                android:elevation="@dimen/elevation_14_overlay"
                 app:chipIcon="@drawable/ic_dinner"
-                app:chipIconTint="@color/white"
                 app:chipIconVisible="true"
                 app:chipMinTouchTargetSize="0dp"
                 app:iconStartPadding="7dp"
-
                 />
 
         </com.google.android.material.chip.ChipGroup>
@@ -148,5 +137,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontal_chipgroup" />
 
+
+    <!--    NO RESULTS MESSAGE PARENT -->
+    <LinearLayout
+        android:id="@+id/no_saved_meals_message_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_chipgroup"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="no_results.json"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="No Saved Meals"
+            android:textSize="@dimen/text_important" />
+    </LinearLayout>
+    <!--    NO RESULTS MESSAGE PARENT -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

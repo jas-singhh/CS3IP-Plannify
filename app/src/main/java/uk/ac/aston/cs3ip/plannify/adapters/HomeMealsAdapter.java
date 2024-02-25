@@ -70,7 +70,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
             return mealHealthRatingParent;
         }
 
-        public void setOnClickListener(uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe recipe) {
+        public void setOnClickListener(Recipe recipe) {
             if (homeInterface != null) {
                 itemView.setOnClickListener(v -> {
                     int currentPos = getAbsoluteAdapterPosition();
@@ -132,7 +132,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
                 ImageView imageView = new ImageView(holder.itemView.getContext());
                 imageView.setImageResource(R.drawable.ic_star_rating);
                 imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                imageView.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.white));
+                imageView.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.semi_transparent_white));
                 holder.getMealHealthRatingParent().addView(imageView);
             }
 

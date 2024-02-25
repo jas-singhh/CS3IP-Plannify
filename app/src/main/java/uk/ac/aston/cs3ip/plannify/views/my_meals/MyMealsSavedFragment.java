@@ -105,8 +105,10 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                 .subscribe(list -> {
                     animatedLoading.dismiss();
 
-                    if (list.isEmpty()) binding.savedMealsStatusText.setVisibility(View.VISIBLE);
-                    else binding.savedMealsStatusText.setVisibility(View.GONE);
+                    // hide or show the status message depending on whether there are any
+                    // saved meals or not.
+                    int visibility = list.isEmpty() ? View.VISIBLE : View.GONE;
+                    binding.noSavedMealsMessageParent.setVisibility(visibility);
 
                     // update the adapter
                     if (mAdapter != null)

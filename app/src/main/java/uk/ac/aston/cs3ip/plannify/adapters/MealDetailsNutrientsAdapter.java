@@ -1,5 +1,6 @@
 package uk.ac.aston.cs3ip.plannify.adapters;
 
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import uk.ac.aston.cs3ip.plannify.R;
@@ -94,6 +96,19 @@ public class MealDetailsNutrientsAdapter extends RecyclerView.Adapter<MealDetail
         viewHolder.getNutrientAmount().setText(nutrientAmount);
         viewHolder.getNutrientDailyNeedsBar().setProgress(progress);
         viewHolder.getNutrientDailyNeedsPercentage().setText(percentage);
+
+        // change progress bar colour if it is 100% or above
+        if (progress >= 100) {
+            viewHolder.getNutrientDailyNeedsBar().setProgressTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(viewHolder.getNutrientDailyNeedsBar().getContext(),
+                            R.color.green))
+            );
+        } else {
+            viewHolder.getNutrientDailyNeedsBar().setProgressTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(viewHolder.getNutrientDailyNeedsBar().getContext(),
+                            R.color._secondary))
+            );
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

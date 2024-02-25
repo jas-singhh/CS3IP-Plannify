@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class ExtendedIngredient implements Serializable {
 
     private long id;
+    private long parentRecipeId;
     private String aisle;
     private String image;
     private String consistency;
@@ -17,6 +18,7 @@ public class ExtendedIngredient implements Serializable {
     private String unit;
     private ArrayList<String> meta;
     private Measures measures;
+    private boolean isCheckedInGroceryList = false;// default value
 
     public long getId() {
         return id;
@@ -24,6 +26,14 @@ public class ExtendedIngredient implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getParentRecipeId() {
+        return parentRecipeId;
+    }
+
+    public void setParentRecipeId(long parentRecipeId) {
+        this.parentRecipeId = parentRecipeId;
     }
 
     public String getAisle() {
@@ -112,5 +122,13 @@ public class ExtendedIngredient implements Serializable {
 
     public void setMeasures(Measures measures) {
         this.measures = measures;
+    }
+
+    public boolean isCheckedInGroceryList() {
+        return isCheckedInGroceryList;
+    }
+
+    public void setCheckedInGroceryList(boolean checkedInGroceryList) {
+        isCheckedInGroceryList = checkedInGroceryList;
     }
 }

@@ -49,7 +49,7 @@ public class DialogCustomMeal extends Dialog {
     private TextView mealDate;
     private MaterialAutoCompleteTextView timeDropdown;
     private MaterialAutoCompleteTextView servingsDropdown;
-    private EditText instructions;
+    private EditText steps;
 
     private EditText ingredientName;
     private EditText ingredientQuantity;
@@ -141,7 +141,7 @@ public class DialogCustomMeal extends Dialog {
         mealDate = view.findViewById(R.id.custom_meal_date);
         timeDropdown = view.findViewById(R.id.custom_meal_time_dropdown);
         servingsDropdown = view.findViewById(R.id.custom_meal_servings_dropdown);
-        instructions = view.findViewById(R.id.custom_meal_instructions);
+        steps = view.findViewById(R.id.custom_meal_steps);
         ingredientName = view.findViewById(R.id.custom_meal_ingredient);
         ingredientQuantity = view.findViewById(R.id.custom_meal_ingredient_quantity);
         ingredientUnit = view.findViewById(R.id.custom_meal_ingredient_unit);
@@ -283,13 +283,13 @@ public class DialogCustomMeal extends Dialog {
         // servings
         if (!servingsDropdown.getText().toString().isEmpty())
             localRecipe.setServings(Integer.parseInt(servingsDropdown.getText().toString()));
-        // instructions
-        if (!instructions.getText().toString().isEmpty()) {
+        // steps
+        if (!steps.getText().toString().isEmpty()) {
             AnalyzedInstruction analyzedInstruction = new AnalyzedInstruction();
-            analyzedInstruction.setName(instructions.getText().toString());
-            ArrayList<AnalyzedInstruction> instructions = new ArrayList<>();
-            instructions.add(analyzedInstruction);
-            localRecipe.setAnalyzedInstructions(instructions);
+            analyzedInstruction.setName(steps.getText().toString());
+            ArrayList<AnalyzedInstruction> steps = new ArrayList<>();
+            steps.add(analyzedInstruction);
+            localRecipe.setAnalyzedInstructions(steps);
         }
         // ingredients
         if (!mAdapter.getIngredients().isEmpty())

@@ -18,6 +18,7 @@ import uk.ac.aston.cs3ip.plannify.api.RetrofitClient;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMaxReadyTime;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.AutoCompleteResult;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3ip.plannify.room.AppDatabase;
@@ -141,6 +142,14 @@ public class RecipesRepository {
 
     public Flowable<List<LocalRecipe>> getRecipesWithinDates(LocalDate from, LocalDate to) {
         return database.recipeDao().getRecipesWithinDates(from, to);
+    }
+
+    public Single<LocalRecipe> getRecipeById(long recipeId) {
+        return database.recipeDao().getRecipeById(recipeId);
+    }
+
+    public Completable updateIngredientsForRecipeWithId(List<ExtendedIngredient> extendedIngredients, long recipeId) {
+        return database.recipeDao().updateIngredientsForRecipeWithId(extendedIngredients, recipeId);
     }
 
 }

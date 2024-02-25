@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
 
 @Entity(tableName = "recipes")
@@ -24,6 +26,8 @@ public class LocalRecipe extends Recipe {
         this.primaryId = recipe.getId();
         this.dateSavedFor = dateSavedFor;
         this.mealTypeSavedFor = mealTypeSavedFor;
+
+        setIngredientsIdsForThisRecipe(recipe.getExtendedIngredients());
 
         this.setVegetarian(recipe.isVegetarian());
         this.setVegan(recipe.isVegan());
@@ -63,6 +67,16 @@ public class LocalRecipe extends Recipe {
         this.setUsedIngredientCount(recipe.getUsedIngredientCount());
         this.setMissedIngredientCount(recipe.getMissedIngredientCount());
         this.setLikes(recipe.getLikes());
+    }
+
+    private void setIngredientsIdsForThisRecipe(List<ExtendedIngredient> extendedIngredients) {
+        if (extendedIngredients != null) {
+            if (!extendedIngredients.isEmpty()) {
+                for (ExtendedIngredient ingredient: extendedIngredients) {
+                    ingredient.setParentRecipeId(this.primaryId);
+                }
+            }
+        }
     }
 
     public int getPrimaryId() {

@@ -4,14 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="165dp">
 
+    <!--    IMAGE CONTAINER PARENT -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:background="@android:color/transparent"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            app:cardCornerRadius="@dimen/radius_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/meal_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_meal_sample" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    IMAGE CONTAINER PARENT -->
+
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginVertical="@dimen/margin"
         android:layout_marginStart="55dp"
-        app:cardBackgroundColor="@color/cards"
+        app:cardBackgroundColor="@color/_primary"
         app:cardCornerRadius="@dimen/radius_card"
-        app:cardElevation="0dp"
+        app:cardElevation="@dimen/elevation_14_overlay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -44,42 +74,24 @@
                 android:id="@+id/meal_health_rating_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/meal_name"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-            >
+                app:layout_constraintTop_toBottomOf="@id/meal_name">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Health Rating: "
                     android:gravity="center_vertical"
-                    android:textStyle="bold"
+                    android:textColor="@color/semi_transparent_white"
+                    android:text="Health Rating: "
                     android:textSize="@dimen/text_medium"
-                    />
+                    android:textStyle="bold" />
 
             </LinearLayout>
             <!--            MEAL HEALTH RATING -->
-            <!--            <TextView-->
-<!--                android:id="@+id/meal_health_rating"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:drawablePadding="5dp"-->
-<!--                android:gravity="start"-->
-<!--                android:text="Very Healthy"-->
-<!--                android:textColor="@color/text_white"-->
-<!--                android:textSize="@dimen/text_medium"-->
-<!--                app:drawableStartCompat="@drawable/ic_healthy"-->
-<!--                app:drawableTint="@color/white"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/meal_name" />-->
-
 
             <!--            ATTRIBUTES' CARDS -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,8 +108,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/split_complementary"
+                    app:cardBackgroundColor="@color/_primary"
+                    app:cardElevation="24dp"
                     app:cardCornerRadius="@dimen/radius_card"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/semi_transparent_white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
@@ -110,10 +125,10 @@
                         android:paddingHorizontal="7dp"
                         android:paddingVertical="5dp"
                         android:text="340 Calories "
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_white"
                         android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_calories"
-                        app:drawableTint="@color/white" />
+                        app:drawableTint="@color/text_white" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -123,7 +138,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/split_complementary"
+                    app:cardBackgroundColor="@color/_primary"
+                    app:cardElevation="24dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/semi_transparent_white"
                     app:cardCornerRadius="@dimen/radius_card"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/attribute_calories"
@@ -138,14 +156,13 @@
                         android:paddingHorizontal="7dp"
                         android:paddingVertical="5dp"
                         android:text="120 Min"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_white"
                         android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_time_filled"
-                        app:drawableTint="@color/white" />
+                        app:drawableTint="@color/text_white" />
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <!--            ATTRIBUTES' CARDS -->
 
@@ -154,25 +171,6 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <!--    IMAGE CONTAINER -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:elevation="10dp"
-        app:cardCornerRadius="@dimen/radius_card"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/meal_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_meal_sample" />
-
-    </com.google.android.material.card.MaterialCardView>
-    <!--    IMAGE CONTAINER -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

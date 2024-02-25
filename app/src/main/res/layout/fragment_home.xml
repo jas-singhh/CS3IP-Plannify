@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/_primary"
     tools:context=".views.home.HomeFragment">
 
     <ScrollView
@@ -50,7 +50,9 @@
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
                     android:background="@drawable/input_rounded"
-                    app:cardBackgroundColor="@color/cards"
+                    app:cardBackgroundColor="@color/_primary"
+                    app:cardCornerRadius="@dimen/radius_card"
+                    app:cardElevation="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/motivational_quote_title">
@@ -67,7 +69,7 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:src="@drawable/ic_motivation"
-                            android:tint="@color/white"
+                            android:tint="@color/semi_transparent_white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="This will contain a motivational quote"
-                            android:textColor="@color/text_white"
+                            android:textColor="@color/semi_transparent_white"
                             android:textSize="@dimen/text_medium"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -138,47 +140,43 @@
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_default"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            style="@style/ChipCustomStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingVertical="15dp"
                             android:text="Breakfast"
                             android:textAlignment="center"
-                            app:chipBackgroundColor="@color/cards"
+                            android:elevation="@dimen/elevation_14_overlay"
                             app:chipIcon="@drawable/ic_breakfast"
-                            app:chipIconTint="@color/white"
                             app:chipIconVisible="true"
                             android:tag="chip_home_breakfast"
                             app:chipMinTouchTargetSize="0dp"
                             app:iconStartPadding="7dp" />
 
                         <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            style="@style/ChipCustomStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingVertical="15dp"
                             android:text="Brunch"
                             android:textAlignment="center"
-                            app:chipBackgroundColor="@color/cards"
+                            android:elevation="@dimen/elevation_14_overlay"
                             app:chipIcon="@drawable/ic_brunch"
-                            app:chipIconTint="@color/white"
                             app:chipIconVisible="true"
                             android:tag="chip_home_brunch"
                             app:chipMinTouchTargetSize="0dp"
                             app:iconStartPadding="7dp"
-
                             />
 
                         <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            style="@style/ChipCustomStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingVertical="15dp"
                             android:text="Lunch"
                             android:textAlignment="center"
-                            app:chipBackgroundColor="@color/cards"
+                            android:elevation="@dimen/elevation_14_overlay"
                             app:chipIcon="@drawable/ic_lunch"
-                            app:chipIconTint="@color/white"
                             app:chipIconVisible="true"
                             app:chipMinTouchTargetSize="0dp"
                             app:iconStartPadding="7dp"
@@ -186,15 +184,14 @@
                             />
 
                         <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            style="@style/ChipCustomStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingVertical="15dp"
                             android:text="Snack"
                             android:textAlignment="center"
-                            app:chipBackgroundColor="@color/cards"
+                            android:elevation="@dimen/elevation_14_overlay"
                             app:chipIcon="@drawable/ic_snack"
-                            app:chipIconTint="@color/white"
                             app:chipIconVisible="true"
                             app:chipMinTouchTargetSize="0dp"
                             app:iconStartPadding="7dp"
@@ -202,16 +199,15 @@
                             />
 
                         <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            style="@style/ChipCustomStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="7dp"
                             android:paddingVertical="15dp"
                             android:text="Tea-time"
                             android:textAlignment="center"
-                            app:chipBackgroundColor="@color/cards"
+                            android:elevation="@dimen/elevation_14_overlay"
                             app:chipIcon="@drawable/ic_tea_time"
-                            app:chipIconTint="@color/white"
                             app:chipIconVisible="true"
                             app:chipMinTouchTargetSize="0dp"
                             app:iconStartPadding="7dp"
@@ -219,15 +215,14 @@
                             />
 
                         <com.google.android.material.chip.Chip
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            style="@style/ChipCustomStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingVertical="15dp"
                             android:text="Dinner"
                             android:textAlignment="center"
-                            app:chipBackgroundColor="@color/cards"
+                            android:elevation="@dimen/elevation_14_overlay"
                             app:chipIcon="@drawable/ic_dinner"
-                            app:chipIconTint="@color/white"
                             app:chipIconVisible="true"
                             app:chipMinTouchTargetSize="0dp"
                             app:iconStartPadding="7dp"
