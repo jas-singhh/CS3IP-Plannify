@@ -243,6 +243,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
 
+
                     <!--            INGREDIENTS CONTAINER  -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/ingredients_parent"

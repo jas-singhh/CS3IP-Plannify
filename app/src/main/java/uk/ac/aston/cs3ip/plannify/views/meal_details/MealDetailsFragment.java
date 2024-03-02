@@ -121,13 +121,26 @@ public class MealDetailsFragment extends Fragment {
     private void displayMealMainAttributes() {
         if (selectedRecipe == null) return;
 
-        String time = selectedRecipe.getReadyInMinutes() + "m";
 
-        Picasso.get().load(selectedRecipe.getImage()).into(binding.headerImage);
+        // image
+        Picasso.get().load(selectedRecipe.getImage())
+                .placeholder(R.drawable.img_image_not_available)
+                .into(binding.headerImage);
+
+        // name
         binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getTitle()));
+
+        // time
+        String time = "N/A";
+        if (selectedRecipe.getReadyInMinutes() > 0) time = selectedRecipe.getReadyInMinutes() + "m";
         binding.detailsTime.setText(time);
-        binding.detailsHealthRating.setText(Utilities.capitaliseString(Utilities.getMealHealthRating(selectedRecipe)));
-        String servings = selectedRecipe.getServings() + " servings";
+
+        // health rating - returns N/A if it is 0
+        binding.detailsHealthRating.setText(Utilities.getMealHealthRating(selectedRecipe));
+
+        // servings
+        String servings = "N/A";
+        if (selectedRecipe.getServings() > 0) servings = selectedRecipe.getServings() + " servings";
         binding.detailsServings.setText(servings);
     }
 
@@ -141,11 +154,16 @@ public class MealDetailsFragment extends Fragment {
         rvLayout.setOrientation(LinearLayoutManager.VERTICAL);
         binding.detailsIngredientsRv.setLayoutManager(rvLayout);
 
-        if (selectedRecipe.getExtendedIngredients() != null)
+        if (selectedRecipe.getExtendedIngredients() != null) {
+            // initialise adapter
             binding.detailsIngredientsRv.setAdapter(
                     new MealDetailsIngredientsAdapter(selectedRecipe.
                             getExtendedIngredients().
                             toArray(new ExtendedIngredient[0])));
+
+            // show no results status message if there are no ingredients
+        }
+
     }
 
     /**
@@ -183,26 +201,62 @@ public class MealDetailsFragment extends Fragment {
 
         if (selectedRecipe.getNutrition() != null) {
             binding.detailsNutrientsLimitRv.setAdapter(new MealDetailsNutrientsAdapter(getNutrientsToLimit()));
-            binding.detailsNutrientsGetEnoughRv.setAdapter(new MealDetailsNutrientsAdapter(getNuteintsToGetEnough()));
+            binding.detailsNutrientsGetEnoughRv.setAdapter(new MealDetailsNutrientsAdapter(getNutrientsToGetEnough()));
         }
     }
 
+    /**
+     * Filters out the nutrients to limit for this recipe and returns them as an array.
+     *
+     * @return an array of nutrients to limit, if this recipe has any, null otherwise.
+     */
     private Nutrient[] getNutrientsToLimit() {
+
         if (selectedRecipe.getNutrition() != null) {
-            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
-                    getNutrients().toArray(new Nutrient[0]);
-            return Arrays.copyOfRange(nutrientsArray, 0, 8);
+            List<Nutrient> nutrientList = selectedRecipe.getNutrition().getNutrients();
+            if (nutrientList != null && !nutrientList.isEmpty()) {
+                List<String> nutrientsToLimitNames = Arrays.asList(Utilities.getNutrientsToLimitNames());
+
+                // filter the nutrients to limit associated with this recipe
+                return nutrientList.stream().filter(nutrient -> nutrient.getName() != null &&
+                        nutrientsToLimitNames.contains(nutrient.getName())).toArray(Nutrient[]::new);
+            }
         }
+
+
+//        if (selectedRecipe.getNutrition() != null) {
+//            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
+//                    getNutrients().toArray(new Nutrient[0]);
+//            return Arrays.copyOfRange(nutrientsArray, 0, 8);
+//        }
 
         return null;
     }
 
-    private Nutrient[] getNuteintsToGetEnough() {
+    /**
+     * Filters out the nutrients to get enough for this recipe and returns them as an array.
+     *
+     * @return an array of nutrients to get enough, if the recipe has any, null otherwise.
+     */
+    private Nutrient[] getNutrientsToGetEnough() {
+
         if (selectedRecipe.getNutrition() != null) {
-            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
-                    getNutrients().toArray(new Nutrient[0]);
-            return Arrays.copyOfRange(nutrientsArray, 8, nutrientsArray.length);
+            List<Nutrient> nutrientList = selectedRecipe.getNutrition().getNutrients();
+            if (nutrientList != null && !nutrientList.isEmpty()) {
+                List<String> nutrientsToGetEnoughNames = Arrays.asList(Utilities.getNutrientsToGetEnoughNames());
+
+                return nutrientList.stream()
+                        .filter(nutrient -> nutrient.getName() != null &&
+                                nutrientsToGetEnoughNames.contains(nutrient.getName())).toArray(Nutrient[]::new);
+            }
         }
+
+
+//        if (selectedRecipe.getNutrition() != null) {
+//            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
+//                    getNutrients().toArray(new Nutrient[0]);
+//            return Arrays.copyOfRange(nutrientsArray, 8, nutrientsArray.length);
+//        }
 
         return null;
     }

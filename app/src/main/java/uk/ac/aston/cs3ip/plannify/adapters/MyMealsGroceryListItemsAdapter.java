@@ -139,24 +139,42 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
                 .error(R.drawable.img_image_not_available)
                 .into(viewHolder.getGroceryItemImage());
 
-        // quantity
-        String quantity = "";
-        if (localDataSet.get(position).getMeasures().getMetric().getAmount() < 1) {
-            quantity += getFractionFromDecimal(localDataSet.get(position).getMeasures()
-                    .getMetric().getAmount()) +
-                    " " + localDataSet.get(position).getMeasures().getMetric().getUnitShort().toLowerCase();
-        } else {
-            quantity += localDataSet.get(position).getMeasures().getMetric().getAmount()
-                    + " " + localDataSet.get(position).getMeasures().getMetric().getUnitShort().toLowerCase();
-        }
-
         String name = "Name: " + Utilities.capitaliseString(localDataSet.get(position).getName());
-        String aisle = "Aisle: " + Utilities.capitaliseString(localDataSet.get(position).getAisle());
 
-        viewHolder.getGroceryItemQuantity().setText(quantity);
+        // aisle
+        String aisle = "Aisle: ";
+        if (localDataSet.get(position).getAisle() != null) aisle += "N/A";
+        else aisle += Utilities.capitaliseString(localDataSet.get(position).getAisle());
+
+        viewHolder.getGroceryItemQuantity().setText(getIngredientQuantityText(localDataSet.get(position)));
         viewHolder.getGroceryItemName().setText(name);
         viewHolder.getGroceryItemAisle().setText(aisle);
 
+    }
+
+    private String getIngredientQuantityText(ExtendedIngredient ingredient) {
+        String quantity = "";// default
+
+        if (ingredient.getMeasures() != null) {
+            float amount = ingredient.getMeasures().getMetric().getAmount();
+            if (ingredient.getMeasures().getMetric().getAmount() < 1) {
+                quantity += getFractionFromDecimal(amount);
+            } else {
+                // if quantity is a whole number - then do not display the decimals
+                if (amount % 1 == 0) {
+                    // it is a whole number
+                    int amountWholeNumber = (int) amount;
+                    quantity += amountWholeNumber;
+                } else {
+                    // number contains decimals
+                    quantity += amount;
+                }
+            }
+        } else {
+            quantity += "N/A";
+        }
+
+        return quantity;
     }
 
 

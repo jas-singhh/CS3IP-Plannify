@@ -13,22 +13,35 @@ import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
 @Entity(tableName = "recipes")
 public class LocalRecipe extends Recipe {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int primaryId;
     private LocalDate dateSavedFor;
     private EnumMealType mealTypeSavedFor;
 
+    /**
+     * Room expects an empty public constructor for its entities.
+     */
     public LocalRecipe() {
-        this.primaryId = -1;
+//        this.primaryId = -1;
     }
 
+    /**
+     * This constructor creates a local recipe from a normal recipe, along with
+     * more details such as date saved for and meal type saved for.
+     *
+     * @param recipe recipe from which to create this local recipe.
+     * @param dateSavedFor date for which to save the local recipe.
+     * @param mealTypeSavedFor meal type for which to save the local recipe.
+     */
     public LocalRecipe(Recipe recipe, LocalDate dateSavedFor, EnumMealType mealTypeSavedFor) {
-        this.primaryId = recipe.getId();
+//        this.primaryId = recipe.getId();
+        // primary id will be auto generated
         this.dateSavedFor = dateSavedFor;
         this.mealTypeSavedFor = mealTypeSavedFor;
 
         setIngredientsIdsForThisRecipe(recipe.getExtendedIngredients());
 
+        this.setId(recipe.getId());
         this.setVegetarian(recipe.isVegetarian());
         this.setVegan(recipe.isVegan());
         this.setGlutenFree(recipe.isGlutenFree());
@@ -70,10 +83,11 @@ public class LocalRecipe extends Recipe {
     }
 
     private void setIngredientsIdsForThisRecipe(List<ExtendedIngredient> extendedIngredients) {
+        // ingredients will have a parent id corresponding to the recipe's primary id
         if (extendedIngredients != null) {
             if (!extendedIngredients.isEmpty()) {
                 for (ExtendedIngredient ingredient: extendedIngredients) {
-                    ingredient.setParentRecipeId(this.primaryId);
+                    ingredient.setParentRecipeId(this.getPrimaryId());
                 }
             }
         }

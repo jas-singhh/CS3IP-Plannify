@@ -128,9 +128,9 @@ public class RecipesRepository {
         return database.recipeDao().getAll();
     }
 
-    public Single<Integer> existsById(int id) {
-        return database.recipeDao().existsById(id);
-    }
+//    public Single<Integer> existsById(int id) {
+//        return database.recipeDao().existsById(id);
+//    }
 
     public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {
         return database.recipeDao().getRecipesForDate(date);
@@ -144,12 +144,12 @@ public class RecipesRepository {
         return database.recipeDao().getRecipesWithinDates(from, to);
     }
 
-    public Single<LocalRecipe> getRecipeById(long recipeId) {
-        return database.recipeDao().getRecipeById(recipeId);
+    public Single<LocalRecipe> getRecipeByPrimaryId(long primaryId) {
+        return database.recipeDao().getRecipeByPrimaryId(primaryId);
     }
 
-    public Completable updateIngredientsForRecipeWithId(List<ExtendedIngredient> extendedIngredients, long recipeId) {
-        return database.recipeDao().updateIngredientsForRecipeWithId(extendedIngredients, recipeId);
+    public Completable updateIngredientsForRecipeWithPrimaryId(List<ExtendedIngredient> extendedIngredients, long primaryId) {
+        return database.recipeDao().updateIngredientsForRecipeWithPrimaryId(extendedIngredients, primaryId);
     }
 
 }

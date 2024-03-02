@@ -214,16 +214,16 @@ public class HomeViewModel extends ViewModel {
         return recipeRepository.getAllLocalRecipes();
     }
 
-    /**
-     * Checks whether the recipe already exists in the database and returns 1 if it exists
-     * and 0 if it doesn't.
-     *
-     * @param id unique identifier of the recipe.
-     * @return 1 if it exists - 0 if it doesn't.
-     */
-    public Single<Integer> existsById(int id) {
-        return recipeRepository.existsById(id);
-    }
+//    /**
+//     * Checks whether the recipe already exists in the database and returns 1 if it exists
+//     * and 0 if it doesn't.
+//     *
+//     * @param id unique identifier of the recipe.
+//     * @return 1 if it exists - 0 if it doesn't.
+//     */
+//    public Single<Integer> existsById(int id) {
+//        return recipeRepository.existsById(id);
+//    }
 
     /**
      * Returns a list of local recipes saved for the specified date.
@@ -263,8 +263,8 @@ public class HomeViewModel extends ViewModel {
      * @param recipeId recipe id for which to return the recipe.
      * @return the recipe with the given id if it exists, otherwise returns null.
      */
-    public Single<LocalRecipe> getRecipeById(long recipeId) {
-        return recipeRepository.getRecipeById(recipeId);
+    public Single<LocalRecipe> getRecipeByPrimaryId(long primaryId) {
+        return recipeRepository.getRecipeByPrimaryId(primaryId);
     }
 
     /**
@@ -274,8 +274,8 @@ public class HomeViewModel extends ViewModel {
      * @param recipeId recipe id for which to update the ingredients.
      * @return whether the operation succeeded or not.
      */
-    public Completable updateIngredientsForRecipeWithId(List<ExtendedIngredient> extendedIngredients, long recipeId) {
-        return recipeRepository.updateIngredientsForRecipeWithId(extendedIngredients, recipeId);
+    public Completable updateIngredientsForRecipeWithPrimaryId(List<ExtendedIngredient> extendedIngredients, long primaryId) {
+        return recipeRepository.updateIngredientsForRecipeWithPrimaryId(extendedIngredients, primaryId);
     }
 
 }

@@ -29,12 +29,14 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
         private final MaterialCardView ingredientImageParent;
         private final TextView ingredientText;
         private final TextView ingredientsQuantity;
+        private final TextView ingredientAisle;
 
         public MyViewHolder(View view) {
             super(view);
             ingredientImageParent = view.findViewById(R.id.ingredient_image_container);
             ingredientText = view.findViewById(R.id.ingredient_name);
             ingredientsQuantity = view.findViewById(R.id.ingredient_quantity);
+            ingredientAisle = view.findViewById(R.id.ingredient_aisle);
         }
 
         public MaterialCardView getIngredientImageParent() {
@@ -47,6 +49,10 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
 
         public TextView getIngredientsQuantity() {
             return ingredientsQuantity;
+        }
+
+        public TextView getIngredientAisle() {
+            return ingredientAisle;
         }
     }
 
@@ -73,11 +79,60 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
         // hide the image as it is not displayed here
         holder.getIngredientImageParent().setVisibility(View.GONE);
 
-        String quantityAndUnits = localDataSet.get(position).getAmount() +
-                localDataSet.get(position).getMeasures().getMetric().getUnitShort();
+        // hide aisle as it is not displayed here
+        holder.getIngredientAisle().setVisibility(View.GONE);
+
+
+        String quantityAndUnit = getIngredientQuantityText(localDataSet.get(position)) +
+                " " + localDataSet.get(position).getMeasures().getMetric().getUnitLong();
 
         holder.getIngredientText().setText(localDataSet.get(position).getName());
-        holder.getIngredientsQuantity().setText(quantityAndUnits);
+        holder.getIngredientsQuantity().setText(quantityAndUnit);
+    }
+
+    private String getIngredientQuantityText(ExtendedIngredient ingredient) {
+        String quantity = "";// default
+
+        if (ingredient.getMeasures() != null) {
+            float amount = ingredient.getMeasures().getMetric().getAmount();
+            if (ingredient.getMeasures().getMetric().getAmount() < 1) {
+                quantity += getFractionFromDecimal(amount);
+            } else {
+                // if quantity is a whole number - then do not display the decimals
+                if (amount % 1 == 0) {
+                    // it is a whole number
+                    int amountWholeNumber = (int) amount;
+                    quantity += amountWholeNumber;
+                } else {
+                    // number contains decimals
+                    quantity += amount;
+                }
+            }
+        } else {
+            quantity += "N/A";
+        }
+
+        return quantity;
+    }
+
+    /**
+     * Returns a String including a fraction from the specified number if it is
+     * less than 1.
+     *
+     * @param number number of which the fraction is returned.
+     * @return a String containing the fraction for the given number if it is less than 1.
+     */
+    private String getFractionFromDecimal(double number) {
+        int[] fraction = new int[2];
+
+        // fraction is returned only if number is less than 1
+        if (number < 1) {
+            fraction[0] = 1;
+            double denominator = 1 / number;
+            fraction[1] = (int) Math.round(denominator);
+        }
+
+        return fraction[0] + "/" + fraction[1];
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -107,6 +162,13 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
      */
     public ArrayList<ExtendedIngredient> getIngredients() {
         return localDataSet;
+    }
+
+    public void clearDataSet() {
+        if (localDataSet != null && !localDataSet.isEmpty()) {
+            localDataSet.clear();
+            notifyDataSetChanged();
+        }
     }
 
 }

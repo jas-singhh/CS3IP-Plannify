@@ -89,29 +89,55 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
 
         // get image using the URL provided by the API docs
         String url = "https://spoonacular.com/cdn/ingredients_100x100/" + localDataSet[position].getImage();
-        Picasso.get().load(url).into(viewHolder.getIngredientImage());
-
-        // quantity
-        String quantity = "Quantity: ";
-        if (localDataSet[position].getMeasures().getMetric().getAmount() < 1) {
-            quantity += getFractionFromDecimal(localDataSet[position].getMeasures()
-                    .getMetric().getAmount()) +
-                    " " + localDataSet[position].getMeasures().getMetric().getUnitLong().toLowerCase();
-        } else {
-            quantity += localDataSet[position].getMeasures().getMetric().getAmount()
-                    + " " + localDataSet[position].getMeasures().getMetric().getUnitLong().toLowerCase();
-        }
+        Picasso.get().load(url)
+                .placeholder(R.drawable.img_image_not_available)
+                .into(viewHolder.getIngredientImage());
 
         String name = "Name: " + Utilities.capitaliseString(localDataSet[position].getName());
-//        int roundedQuantity = Math.round(localDataSet[position].getMeasures().getMetric().getAmount());
-//        String quantity = "Quantity: " + roundedQuantity + " " + localDataSet[position].getMeasures().getMetric().getUnitShort();
-        String aisle = "Aisle: " + Utilities.capitaliseString(localDataSet[position].getAisle());
 
-        viewHolder.getIngredientQuantity().setText(quantity);
+        viewHolder.getIngredientQuantity().setText(getIngredientQuantityText(localDataSet[position]));
         viewHolder.getIngredientName().setText(name);
-        viewHolder.getIngredientAisle().setText(aisle);
+        viewHolder.getIngredientAisle().setText(getIngredientAisleText(localDataSet[position]));
     }
 
+    private String getIngredientQuantityText(ExtendedIngredient ingredient) {
+        String quantity = "Quantity: ";
+
+        if (ingredient.getMeasures() != null) {
+            float amount = ingredient.getMeasures().getMetric().getAmount();
+            if (ingredient.getMeasures().getMetric().getAmount() < 1) {
+                quantity += getFractionFromDecimal(amount) +
+                        " " + ingredient.getMeasures().getMetric().getUnitLong().toLowerCase();
+            } else {
+                // if quantity is a whole number - then do not display the decimals
+                if (amount % 1 == 0) {
+                    // it is a whole number
+                    int amountWholeNumber = (int) amount;
+                    quantity += amountWholeNumber;
+                } else {
+                    // number contains decimals
+                    quantity += amount;
+                }
+                quantity += " " + ingredient.getMeasures().getMetric().getUnitLong().toLowerCase();
+            }
+        } else {
+            quantity += "N/A";
+        }
+
+        return quantity;
+    }
+
+    private String getIngredientAisleText(ExtendedIngredient ingredient) {
+        String aisle = "Aisle: ";
+
+        if (ingredient.getAisle() != null) {
+            aisle += Utilities.capitaliseString(ingredient.getAisle());
+        } else {
+            aisle += "N/A";
+        }
+
+        return aisle;
+    }
 
     /**
      * Returns a String including a fraction from the specified number if it is

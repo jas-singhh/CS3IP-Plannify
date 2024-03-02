@@ -5,6 +5,16 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <!-- global action - reference: https://developer.android.com/guide/navigation/design/global-action -->
+    <!--  popUpTo nav graph pops up the backstack to the graph that owns it, avoiding issues with navigating to other fragments
+      reference: https://stackoverflow.com/questions/59648041/pop-up-to-graph-startdestination-fragment-for-a-global-action-android-navigati -->
+    <action
+        android:id="@+id/action_global_createRecipeFragment"
+        app:destination="@id/createRecipeFragment"
+        app:popUpTo="@id/nav_graph"
+        app:launchSingleTop="true"
+        />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="uk.ac.aston.cs3ip.plannify.views.home.HomeFragment"
@@ -90,8 +100,23 @@
         <argument
             android:name="myRecipe"
             app:argType="uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe" />
+    </fragment>
+    <fragment
+        android:id="@+id/createRecipeFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.CreateRecipeFragment"
+        android:label="fragment_create_recipe"
+        tools:layout="@layout/fragment_create_recipe" >
         <action
-            android:id="@+id/action_mealDetailsFragment_to_myMealsFragment"
+            android:id="@+id/action_createRecipeFragment_to_findMealsFragment"
+            app:destination="@id/findMealsFragment" />
+        <action
+            android:id="@+id/action_createRecipeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_createRecipeFragment_to_myMealsFragment"
             app:destination="@id/myMealsFragment" />
+        <action
+            android:id="@+id/action_createRecipeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

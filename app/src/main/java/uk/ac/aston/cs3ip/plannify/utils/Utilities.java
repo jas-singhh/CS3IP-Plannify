@@ -143,9 +143,10 @@ public class Utilities {
     }
 
     public static String getMealHealthRating(uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe recipe) {
-        String rating = "n/a";
-        int healthScore = Math.round(recipe.getHealthScore());
-        if (healthScore >= 0 && healthScore <= 20) rating = "Very Unhealthy";
+        String rating = "N/A";
+        int healthScore = recipe.getHealthScore();
+
+        if (healthScore > 0 && healthScore <= 20) rating = "Very Unhealthy";
         else if (healthScore > 20 && healthScore <= 40) rating = "Unhealthy";
         else if (healthScore > 40 && healthScore <= 60) rating = "A Little Healthy";
         else if (healthScore > 60 && healthScore <= 80) rating = "Healthy";
@@ -216,5 +217,49 @@ public class Utilities {
         }
 
         return -1;//default
+    }
+
+
+    /* Nutrients */
+
+    public static String[] getNutrientsToLimitNames() {
+        String[] result = new String[8];
+        result[0] = "Calories";
+        result[1] = "Fat";
+        result[2] = "Saturated Fat";
+        result[3] = "Carbohydrates";
+        result[4] = "Net Carbohydrates";
+        result[5] = "Sugar";
+        result[6] = "Cholesterol";
+        result[7] = "Sodium";
+
+        return result;
+    }
+
+    public static String[] getNutrientsToGetEnoughNames() {
+        String[] result = new String[21];
+        result[0] = "Protein";
+        result[1] = "Vitamin C";
+        result[2] = "Vitamin A";
+        result[3] = "Manganese";
+        result[4] = "Folate";
+        result[5] = "Vitamin E";
+        result[6] = "Vitamin B6";
+        result[7] = "Fiber";
+        result[8] = "Magnesium";
+        result[9] = "Phosphorus";
+        result[10] = "Potassium";
+        result[11] = "Copper";
+        result[12] = "Vitamin K";
+        result[13] = "Vitamin B2";
+        result[14] = "Vitamin B1";
+        result[15] = "Iron";
+        result[16] = "Vitamin B3";
+        result[17] = "Zinc";
+        result[18] = "Vitamin B5";
+        result[19] = "Calcium";
+        result[20] = "Selenium";
+
+        return result;
     }
 }

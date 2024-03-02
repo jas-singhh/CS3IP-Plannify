@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cd69459dd49014e24ef2d41e41a54dd7",
+    "identityHash": "ce9f1337f523954b289c062f195e544b",
     "entities": [
       {
         "tableName": "recipes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`primaryId` INTEGER NOT NULL, `dateSavedFor` TEXT, `mealTypeSavedFor` TEXT, `vegetarian` INTEGER NOT NULL, `vegan` INTEGER NOT NULL, `glutenFree` INTEGER NOT NULL, `dairyFree` INTEGER NOT NULL, `veryHealthy` INTEGER NOT NULL, `cheap` INTEGER NOT NULL, `veryPopular` INTEGER NOT NULL, `sustainable` INTEGER NOT NULL, `lowFodmap` INTEGER NOT NULL, `weightWatcherSmartPoints` INTEGER NOT NULL, `gaps` TEXT, `preparationMinutes` INTEGER NOT NULL, `cookingMinutes` INTEGER NOT NULL, `aggregateLikes` INTEGER NOT NULL, `healthScore` INTEGER NOT NULL, `creditsText` TEXT, `license` TEXT, `sourceName` TEXT, `pricePerServing` REAL NOT NULL, `extendedIngredients` TEXT, `id` INTEGER NOT NULL, `title` TEXT, `readyInMinutes` INTEGER NOT NULL, `servings` INTEGER NOT NULL, `sourceUrl` TEXT, `image` TEXT, `imageType` TEXT, `summary` TEXT, `cuisines` TEXT, `dishTypes` TEXT, `diets` TEXT, `occasions` TEXT, `analyzedInstructions` TEXT, `nutrition` TEXT, `spoonacularScore` REAL NOT NULL, `spoonacularSourceUrl` TEXT, `usedIngredientCount` INTEGER NOT NULL, `missedIngredientCount` INTEGER NOT NULL, `likes` INTEGER NOT NULL, PRIMARY KEY(`primaryId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`primaryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateSavedFor` TEXT, `mealTypeSavedFor` TEXT, `vegetarian` INTEGER NOT NULL, `vegan` INTEGER NOT NULL, `glutenFree` INTEGER NOT NULL, `dairyFree` INTEGER NOT NULL, `veryHealthy` INTEGER NOT NULL, `cheap` INTEGER NOT NULL, `veryPopular` INTEGER NOT NULL, `sustainable` INTEGER NOT NULL, `lowFodmap` INTEGER NOT NULL, `weightWatcherSmartPoints` INTEGER NOT NULL, `gaps` TEXT, `preparationMinutes` INTEGER NOT NULL, `cookingMinutes` INTEGER NOT NULL, `aggregateLikes` INTEGER NOT NULL, `healthScore` INTEGER NOT NULL, `creditsText` TEXT, `license` TEXT, `sourceName` TEXT, `pricePerServing` REAL NOT NULL, `extendedIngredients` TEXT, `id` INTEGER NOT NULL, `title` TEXT, `readyInMinutes` INTEGER NOT NULL, `servings` INTEGER NOT NULL, `sourceUrl` TEXT, `image` TEXT, `imageType` TEXT, `summary` TEXT, `cuisines` TEXT, `dishTypes` TEXT, `diets` TEXT, `occasions` TEXT, `analyzedInstructions` TEXT, `nutrition` TEXT, `spoonacularScore` REAL NOT NULL, `spoonacularSourceUrl` TEXT, `usedIngredientCount` INTEGER NOT NULL, `missedIngredientCount` INTEGER NOT NULL, `likes` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "primaryId",
@@ -262,7 +262,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
             "primaryId"
           ]
@@ -274,7 +274,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd69459dd49014e24ef2d41e41a54dd7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ce9f1337f523954b289c062f195e544b')"
     ]
   }
 }

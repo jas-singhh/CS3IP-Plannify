@@ -35,11 +35,11 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes")
     Flowable<List<LocalRecipe>> getAll();
 
-    @Query("DELETE FROM recipes")
-    Completable deleteAll();
+//    @Query("DELETE FROM recipes")
+//    Completable deleteAll();
 
-    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE primaryId = :id)")
-    Single<Integer> existsById(int id);
+//    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE primaryId = :id)")
+//    Single<Integer> existsById(int id);
 
     @Query("SELECT * FROM recipes WHERE dateSavedFor = :date")
     Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date);
@@ -51,9 +51,9 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE dateSavedFor BETWEEN :from AND :to")
     Flowable<List<LocalRecipe>> getRecipesWithinDates(LocalDate from, LocalDate to);
 
-    @Query("SELECT * FROM recipes WHERE primaryId=:recipeId LIMIT 1")
-    Single<LocalRecipe> getRecipeById(long recipeId);
+    @Query("SELECT * FROM recipes WHERE primaryId=:primaryId LIMIT 1")
+    Single<LocalRecipe> getRecipeByPrimaryId(long primaryId);
 
-    @Query("UPDATE recipes SET extendedIngredients=:extendedIngredients WHERE primaryId=:recipeId")
-    Completable updateIngredientsForRecipeWithId(List<ExtendedIngredient> extendedIngredients, long recipeId);
+    @Query("UPDATE recipes SET extendedIngredients=:extendedIngredients WHERE primaryId=:primaryId")
+    Completable updateIngredientsForRecipeWithPrimaryId(List<ExtendedIngredient> extendedIngredients, long primaryId);
 }

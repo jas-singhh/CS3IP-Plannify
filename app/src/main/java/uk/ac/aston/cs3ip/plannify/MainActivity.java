@@ -7,7 +7,6 @@ import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,15 +15,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3ip.plannify.databinding.ActivityMainBinding;
 import uk.ac.aston.cs3ip.plannify.notifications.NotificationHelper;
 import uk.ac.aston.cs3ip.plannify.shared_prefs.SharedPreferencesManager;
-import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
-import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogCustomMeal;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogGetNotified;
 
 public class MainActivity extends AppCompatActivity {
@@ -169,14 +164,24 @@ public class MainActivity extends AppCompatActivity {
      * box to add a custom meal.
      */
     private void initFab() {
-        findViewById(R.id.fab).setOnClickListener(v -> new DialogCustomMeal(MainActivity.this, localRecipe -> {
-            // save recipe once the user clicks on save
-            mDisposable.add(homeViewModel.insert(localRecipe)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> Toast.makeText(this, "Recipe Saved", Toast.LENGTH_LONG).show()
-                            , throwable -> Utilities.showErrorToast(this)));
-        }));
+//        findViewById(R.id.fab).setOnClickListener(v -> new DialogCustomMeal(MainActivity.this, localRecipe -> {
+//            // save recipe once the user clicks on save
+//            mDisposable.add(homeViewModel.insert(localRecipe)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(() -> Toast.makeText(this, "Recipe Saved", Toast.LENGTH_LONG).show()
+//                            , throwable -> Utilities.showErrorToast(this)));
+//        }));
+
+        findViewById(R.id.fab).setOnClickListener(v -> {
+            // global action - reference: https://developer.android.com/guide/navigation/design/global-action
+            NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+            if (navHostFragment != null) {
+                navHostFragment.getNavController().navigate(NavGraphDirections.actionGlobalCreateRecipeFragment());
+
+            }
+
+        });
     }
 
     /**

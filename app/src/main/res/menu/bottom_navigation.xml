@@ -14,7 +14,7 @@
         />
 
     <item
-        android:id="@+id/placeholder"
+        android:id="@+id/createRecipeFragment"
         android:title=""
         />
 

@@ -108,11 +108,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/_primary"
-                    app:cardElevation="24dp"
+                    app:cardBackgroundColor="@color/text_white"
+                    app:cardElevation="@dimen/elevation_15_overlay"
                     app:cardCornerRadius="@dimen/radius_card"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/semi_transparent_white"
+                    app:strokeWidth="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
@@ -125,10 +124,10 @@
                         android:paddingHorizontal="7dp"
                         android:paddingVertical="5dp"
                         android:text="340 Calories "
-                        android:textColor="@color/text_white"
+                        android:textColor="@color/text_black"
                         android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_calories"
-                        app:drawableTint="@color/text_white" />
+                        app:drawableTint="@color/text_black" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -138,10 +137,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@color/_primary"
-                    app:cardElevation="24dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/semi_transparent_white"
+                    app:cardBackgroundColor="@color/text_white"
+                    app:cardElevation="@dimen/elevation_15_overlay"
+                    app:strokeWidth="0dp"
                     app:cardCornerRadius="@dimen/radius_card"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/attribute_calories"
@@ -156,10 +154,10 @@
                         android:paddingHorizontal="7dp"
                         android:paddingVertical="5dp"
                         android:text="120 Min"
-                        android:textColor="@color/text_white"
+                        android:textColor="@color/text_black"
                         android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_time_filled"
-                        app:drawableTint="@color/text_white" />
+                        app:drawableTint="@color/text_black" />
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

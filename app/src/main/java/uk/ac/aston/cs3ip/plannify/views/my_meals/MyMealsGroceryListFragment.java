@@ -183,7 +183,7 @@ public class MyMealsGroceryListFragment extends Fragment implements MyMealsGroce
     @Override
     public void onClickGroceryItem(ExtendedIngredient groceryItem, boolean isChecked) {
         // reference: https://stackoverflow.com/questions/56764884/nested-network-calls-using-rx-android-and-retrofit
-        mDisposable.add(homeViewModel.getRecipeById(groceryItem.getParentRecipeId())
+        mDisposable.add(homeViewModel.getRecipeByPrimaryId(groceryItem.getParentRecipeId())
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable(localRecipe -> {
                     if (localRecipe == null) {
@@ -199,7 +199,7 @@ public class MyMealsGroceryListFragment extends Fragment implements MyMealsGroce
                     }
 
                     // update the changes in the database to persist them
-                    return homeViewModel.updateIngredientsForRecipeWithId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId());
+                    return homeViewModel.updateIngredientsForRecipeWithPrimaryId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId());
                 })
                 .subscribe(() -> {
                     Log.d(MainActivity.TAG, "data updated for " + groceryItem.getName());

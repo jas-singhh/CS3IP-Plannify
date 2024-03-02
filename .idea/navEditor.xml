@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="createRecipeFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="791" />
+                            <option name="y" value="480" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="findMealsFragment">
                     <value>
                       <LayoutPositions>
@@ -101,6 +113,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_mealDetailsFragment_to_myMealsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -123,6 +140,11 @@
                               </value>
                             </entry>
                             <entry key="action_myMealsFragment_to_homeFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_myMealsFragment_to_mealDetailsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
