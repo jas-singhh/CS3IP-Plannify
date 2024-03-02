@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "WMK";
     public static final int RC_NOTIFICATIONS = 14;
 
-    private HomeViewModel homeViewModel;
     private CompositeDisposable mDisposable;
     private DialogGetNotified notificationsDialog;
 
@@ -58,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initVariables() {
-        homeViewModel = new ViewModelProvider(this,
-                ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mDisposable = new CompositeDisposable();
     }
 

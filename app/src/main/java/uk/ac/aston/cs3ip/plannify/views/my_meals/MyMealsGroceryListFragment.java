@@ -201,9 +201,7 @@ public class MyMealsGroceryListFragment extends Fragment implements MyMealsGroce
                     // update the changes in the database to persist them
                     return homeViewModel.updateIngredientsForRecipeWithPrimaryId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId());
                 })
-                .subscribe(() -> {
-                    Log.d(MainActivity.TAG, "data updated for " + groceryItem.getName());
-                }, throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
+                .subscribe(() -> Log.d(MainActivity.TAG, "data updated for " + groceryItem.getName()), throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
 
 
 //        // find the item in the database and update its status

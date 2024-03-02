@@ -11,9 +11,9 @@ import android.widget.TextView;
  */
 public class CreateRecipeCustomTextWatcher implements TextWatcher {
 
-    private TextView textView;// text view or edit text for which to implement the text watcher
-    private boolean checkAndClearErrorsForTextView;// flag to indicate whether to check and clear errors for the given text view
-    private Button buttonToEnableOnTextChanged;// button to enable when the text is changed - this is for the clear button in the CreateRecipeFragment
+    private final TextView textView;// text view or edit text for which to implement the text watcher
+    private final boolean checkAndClearErrorsForTextView;// flag to indicate whether to check and clear errors for the given text view
+    private final Button buttonToEnableOnTextChanged;// button to enable when the text is changed - this is for the clear button in the CreateRecipeFragment
 
     public CreateRecipeCustomTextWatcher(TextView textView,boolean checkAndClearErrorsForTextView, Button buttonToEnableOnTextChanged) {
         this.textView = textView;

@@ -260,7 +260,7 @@ public class HomeViewModel extends ViewModel {
     /**
      * Returns the recipe with the given id, if it exists.
      *
-     * @param recipeId recipe id for which to return the recipe.
+     * @param primaryId recipe id for which to return the recipe.
      * @return the recipe with the given id if it exists, otherwise returns null.
      */
     public Single<LocalRecipe> getRecipeByPrimaryId(long primaryId) {
@@ -271,7 +271,7 @@ public class HomeViewModel extends ViewModel {
      * Updates the ingredients for the recipe with the given id, if it exists.
      *
      * @param extendedIngredients ingredients to update.
-     * @param recipeId recipe id for which to update the ingredients.
+     * @param primaryId recipe id for which to update the ingredients.
      * @return whether the operation succeeded or not.
      */
     public Completable updateIngredientsForRecipeWithPrimaryId(List<ExtendedIngredient> extendedIngredients, long primaryId) {

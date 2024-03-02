@@ -40,7 +40,6 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
         private final TextView groceryItemQuantity;
         private final TextView groceryItemName;
         private final TextView groceryItemAisle;
-        private final MyMealsGroceryListOnClickInterface myMealsGroceryListOnClickInterface;
 
         public MyViewHolder(View view, MyMealsGroceryListOnClickInterface myMealsGroceryListOnClickInterface, List<ExtendedIngredient> localDataSet) {
             super(view);
@@ -51,7 +50,6 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
             groceryItemName = view.findViewById(R.id.grocery_item_name);
             groceryItemAisle = view.findViewById(R.id.grocery_item_aisle);
 
-            this.myMealsGroceryListOnClickInterface = myMealsGroceryListOnClickInterface;
             // Define click listener for the ViewHolder's View
             groceryItemCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
