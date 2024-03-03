@@ -4,14 +4,12 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 
 @Entity(tableName = "recipes")
-public class LocalRecipe extends Recipe {
+public class LocalRecipe extends NetworkRecipe {
 
     @PrimaryKey(autoGenerate = true)
     private int primaryId;
@@ -22,75 +20,60 @@ public class LocalRecipe extends Recipe {
      * Room expects an empty public constructor for its entities.
      */
     public LocalRecipe() {
-//        this.primaryId = -1;
+        this.setId(-1);// id will be -1 for custom recipes
     }
 
     /**
      * This constructor creates a local recipe from a normal recipe, along with
      * more details such as date saved for and meal type saved for.
      *
-     * @param recipe recipe from which to create this local recipe.
+     * @param networkRecipe recipe from which to create this local recipe.
      * @param dateSavedFor date for which to save the local recipe.
      * @param mealTypeSavedFor meal type for which to save the local recipe.
      */
-    public LocalRecipe(Recipe recipe, LocalDate dateSavedFor, EnumMealType mealTypeSavedFor) {
-//        this.primaryId = recipe.getId();
-        // primary id will be auto generated
+    public LocalRecipe(NetworkRecipe networkRecipe, LocalDate dateSavedFor, EnumMealType mealTypeSavedFor) {
         this.dateSavedFor = dateSavedFor;
         this.mealTypeSavedFor = mealTypeSavedFor;
 
-        setIngredientsIdsForThisRecipe(recipe.getExtendedIngredients());
-
-        this.setId(recipe.getId());
-        this.setVegetarian(recipe.isVegetarian());
-        this.setVegan(recipe.isVegan());
-        this.setGlutenFree(recipe.isGlutenFree());
-        this.setDairyFree(recipe.isDairyFree());
-        this.setVeryHealthy(recipe.isVeryHealthy());
-        this.setCheap(recipe.isCheap());
-        this.setVeryPopular(recipe.isVeryPopular());
-        this.setSustainable(recipe.isSustainable());
-        this.setLowFodmap(recipe.isLowFodmap());
-        this.setWeightWatcherSmartPoints(recipe.getWeightWatcherSmartPoints());
-        this.setGaps(recipe.getGaps());
-        this.setPreparationMinutes(recipe.getPreparationMinutes());
-        this.setCookingMinutes(recipe.getCookingMinutes());
-        this.setAggregateLikes(recipe.getAggregateLikes());
-        this.setHealthScore(recipe.getHealthScore());
-        this.setCreditsText(recipe.getCreditsText());
-        this.setLicense(recipe.getLicense());
-        this.setSourceName(recipe.getSourceName());
-        this.setPricePerServing(recipe.getPricePerServing());
-        this.setExtendedIngredients(recipe.getExtendedIngredients());
-        this.setTitle(recipe.getTitle());
-        this.setReadyInMinutes(recipe.getReadyInMinutes());
-        this.setServings(recipe.getServings());
-        this.setSourceUrl(recipe.getSourceUrl());
-        this.setImage(recipe.getImage());
-        this.setImageType(recipe.getImageType());
-        this.setSummary(recipe.getSummary());
-        this.setCuisines(recipe.getCuisines());
-        this.setDishTypes(recipe.getDishTypes());
-        this.setDiets(recipe.getDiets());
-        this.setOccasions(recipe.getOccasions());
-        this.setAnalyzedInstructions(recipe.getAnalyzedInstructions());
-        this.setNutrition(recipe.getNutrition());
-        this.setSpoonacularScore(recipe.getSpoonacularScore());
-        this.setSpoonacularSourceUrl(recipe.getSpoonacularSourceUrl());
-        this.setUsedIngredientCount(recipe.getUsedIngredientCount());
-        this.setMissedIngredientCount(recipe.getMissedIngredientCount());
-        this.setLikes(recipe.getLikes());
-    }
-
-    private void setIngredientsIdsForThisRecipe(List<ExtendedIngredient> extendedIngredients) {
-        // ingredients will have a parent id corresponding to the recipe's primary id
-        if (extendedIngredients != null) {
-            if (!extendedIngredients.isEmpty()) {
-                for (ExtendedIngredient ingredient: extendedIngredients) {
-                    ingredient.setParentRecipeId(this.getPrimaryId());
-                }
-            }
-        }
+        this.setId(networkRecipe.getId());
+        this.setVegetarian(networkRecipe.isVegetarian());
+        this.setVegan(networkRecipe.isVegan());
+        this.setGlutenFree(networkRecipe.isGlutenFree());
+        this.setDairyFree(networkRecipe.isDairyFree());
+        this.setVeryHealthy(networkRecipe.isVeryHealthy());
+        this.setCheap(networkRecipe.isCheap());
+        this.setVeryPopular(networkRecipe.isVeryPopular());
+        this.setSustainable(networkRecipe.isSustainable());
+        this.setLowFodmap(networkRecipe.isLowFodmap());
+        this.setWeightWatcherSmartPoints(networkRecipe.getWeightWatcherSmartPoints());
+        this.setGaps(networkRecipe.getGaps());
+        this.setPreparationMinutes(networkRecipe.getPreparationMinutes());
+        this.setCookingMinutes(networkRecipe.getCookingMinutes());
+        this.setAggregateLikes(networkRecipe.getAggregateLikes());
+        this.setHealthScore(networkRecipe.getHealthScore());
+        this.setCreditsText(networkRecipe.getCreditsText());
+        this.setLicense(networkRecipe.getLicense());
+        this.setSourceName(networkRecipe.getSourceName());
+        this.setPricePerServing(networkRecipe.getPricePerServing());
+        this.setExtendedIngredients(networkRecipe.getExtendedIngredients());
+        this.setTitle(networkRecipe.getTitle());
+        this.setReadyInMinutes(networkRecipe.getReadyInMinutes());
+        this.setServings(networkRecipe.getServings());
+        this.setSourceUrl(networkRecipe.getSourceUrl());
+        this.setImage(networkRecipe.getImage());
+        this.setImageType(networkRecipe.getImageType());
+        this.setSummary(networkRecipe.getSummary());
+        this.setCuisines(networkRecipe.getCuisines());
+        this.setDishTypes(networkRecipe.getDishTypes());
+        this.setDiets(networkRecipe.getDiets());
+        this.setOccasions(networkRecipe.getOccasions());
+        this.setAnalyzedInstructions(networkRecipe.getAnalyzedInstructions());
+        this.setNutrition(networkRecipe.getNutrition());
+        this.setSpoonacularScore(networkRecipe.getSpoonacularScore());
+        this.setSpoonacularSourceUrl(networkRecipe.getSpoonacularSourceUrl());
+        this.setUsedIngredientCount(networkRecipe.getUsedIngredientCount());
+        this.setMissedIngredientCount(networkRecipe.getMissedIngredientCount());
+        this.setLikes(networkRecipe.getLikes());
     }
 
     public int getPrimaryId() {

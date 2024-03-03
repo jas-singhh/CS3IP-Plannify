@@ -1,9 +1,9 @@
 package uk.ac.aston.cs3ip.plannify.adapters;
 
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.local_recipe.GroceryItem;
 
 public interface MyMealsGroceryListOnClickInterface {
 
-    void onClickGroceryItem(ExtendedIngredient groceryItem, boolean isChecked);
+    void onClickGroceryItem(GroceryItem groceryItem, boolean isChecked);
 
 }

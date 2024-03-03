@@ -85,8 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/semi_transparent_white"
                     android:text="Health Rating: "
+                    android:textColor="@color/semi_transparent_white"
                     android:textSize="@dimen/text_medium"
                     android:textStyle="bold" />
 
@@ -109,11 +109,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/text_white"
-                    app:cardElevation="@dimen/elevation_15_overlay"
                     app:cardCornerRadius="@dimen/radius_card"
-                    app:strokeWidth="0dp"
+                    app:cardElevation="@dimen/elevation_15_overlay"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:strokeWidth="0dp">
 
                     <TextView
                         android:id="@+id/meal_calories"
@@ -123,7 +123,7 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="7dp"
                         android:paddingVertical="5dp"
-                        android:text="340 Calories "
+                        android:text="340 kcal "
                         android:textColor="@color/text_black"
                         android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_calories"
@@ -133,17 +133,18 @@
 
                 <!--                TIME-->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/attribute_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@color/text_white"
-                    app:cardElevation="@dimen/elevation_15_overlay"
-                    app:strokeWidth="0dp"
                     app:cardCornerRadius="@dimen/radius_card"
+                    app:cardElevation="@dimen/elevation_15_overlay"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/attribute_calories"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeWidth="0dp">
 
                     <TextView
                         android:id="@+id/meal_time"
@@ -153,11 +154,40 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="7dp"
                         android:paddingVertical="5dp"
-                        android:text="120 Min"
+                        android:text="120 m"
                         android:textColor="@color/text_black"
                         android:textSize="@dimen/text_medium"
                         app:drawableStartCompat="@drawable/ic_time_filled"
                         app:drawableTint="@color/text_black" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!--                FOR CUSTOM RECIPES ONLY -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/attribute_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/_secondary"
+                    app:cardCornerRadius="@dimen/radius_card"
+                    app:cardElevation="@dimen/elevation_15_overlay"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/attribute_time"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeWidth="0dp">
+
+                    <TextView
+                        android:id="@+id/custom_recipe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp"
+                        android:text="Custom"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_black"
+                        android:textSize="@dimen/text_medium" />
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

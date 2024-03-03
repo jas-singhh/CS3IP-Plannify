@@ -10,7 +10,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -19,7 +18,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import uk.ac.aston.cs3ip.plannify.databinding.ActivityMainBinding;
 import uk.ac.aston.cs3ip.plannify.notifications.NotificationHelper;
 import uk.ac.aston.cs3ip.plannify.shared_prefs.SharedPreferencesManager;
-import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogGetNotified;
 
 public class MainActivity extends AppCompatActivity {

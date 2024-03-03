@@ -23,7 +23,7 @@ import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentFindMealsBinding;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.AutoCompleteResult;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.viewmodels.FindMealsViewModel;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogFindMealsFilters;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogLottie;
@@ -86,7 +86,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
                 mViewModel.requestRandomHealthyRecipes();
             else {
                 if (mAdapter != null)
-                    mAdapter.updateData((ArrayList<? extends Recipe>) mViewModel.getRandomHealthyRecipes().getValue().getResults());
+                    mAdapter.updateData((ArrayList<? extends NetworkRecipe>) mViewModel.getRandomHealthyRecipes().getValue().getResults());
             }
         }
     }
@@ -175,7 +175,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
                     // hide no results message in case it is visible
                     binding.noResultsMessageParent.setVisibility(View.GONE);
 
-                    mAdapter.updateData((ArrayList<? extends Recipe>) recipeResponseList.getResults());
+                    mAdapter.updateData((ArrayList<? extends NetworkRecipe>) recipeResponseList.getResults());
                 }
 
             }
@@ -205,7 +205,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
     private void subscribeToRandomHealthyRecipes() {
         mViewModel.getRandomHealthyRecipes().observe(getViewLifecycleOwner(), recipeResponseList -> {
             if (mAdapter != null && mViewModel.getRequestedRecipes().getValue() == null) {
-                mAdapter.updateData((ArrayList<? extends Recipe>) recipeResponseList.getResults());
+                mAdapter.updateData((ArrayList<? extends NetworkRecipe>) recipeResponseList.getResults());
             }
         });
     }
@@ -259,7 +259,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
             if (mViewModel.getRandomHealthyRecipes().getValue() != null) {
                 // we already have the data
                 if (mAdapter != null) {
-                    mAdapter.updateData((ArrayList<? extends Recipe>)
+                    mAdapter.updateData((ArrayList<? extends NetworkRecipe>)
                             mViewModel.getRandomHealthyRecipes().getValue().getResults());
                     // hide the no results parent if it is visible
                     if (binding.noResultsMessageParent.getVisibility() == View.VISIBLE)
@@ -277,9 +277,9 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
     }
 
     @Override
-    public void onClickMeal(Recipe recipe) {
+    public void onClickMeal(NetworkRecipe networkRecipe) {
         FindMealsFragmentDirections.ActionFindMealsFragmentToMealDetailsFragment action =
-                FindMealsFragmentDirections.actionFindMealsFragmentToMealDetailsFragment(recipe);
+                FindMealsFragmentDirections.actionFindMealsFragmentToMealDetailsFragment(networkRecipe);
 
         // reference: https://developer.android.com/guide/navigation/navcontroller
         NavHostFragment.findNavController(this).navigate(action);

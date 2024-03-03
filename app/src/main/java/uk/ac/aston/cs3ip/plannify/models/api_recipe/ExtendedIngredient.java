@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class ExtendedIngredient implements Serializable {
 
     private long id;
-    private long parentRecipeId;
     private String aisle;
     private String image;
     private String consistency;
@@ -26,14 +25,6 @@ public class ExtendedIngredient implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getParentRecipeId() {
-        return parentRecipeId;
-    }
-
-    public void setParentRecipeId(long parentRecipeId) {
-        this.parentRecipeId = parentRecipeId;
     }
 
     public String getAisle() {

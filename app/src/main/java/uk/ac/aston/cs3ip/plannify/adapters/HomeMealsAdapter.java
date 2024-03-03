@@ -1,5 +1,6 @@
 package uk.ac.aston.cs3ip.plannify.adapters;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import uk.ac.aston.cs3ip.plannify.R;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 
 public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyViewHolder> {
 
 //    reference: https://developer.android.com/develop/ui/views/layout/recyclerview
 
-    private ArrayList<? extends uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe> localDataSet;
+    private ArrayList<? extends NetworkRecipe> localDataSet;
     private final HomeMealsOnClickInterface mInterface;
 
 
@@ -36,6 +38,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         private final LinearLayout mealHealthRatingParent;
         private final TextView mealCalories;
         private final TextView mealTime;
+        private final MaterialCardView customAttributeParent;
 
         private final HomeMealsOnClickInterface homeInterface;
 
@@ -46,6 +49,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
             mealName = itemView.findViewById(R.id.meal_name);
             mealCalories = itemView.findViewById(R.id.meal_calories);
             mealTime = itemView.findViewById(R.id.meal_time);
+            customAttributeParent = itemView.findViewById(R.id.attribute_custom);
 
             mealHealthRatingParent = itemView.findViewById(R.id.meal_health_rating_parent);
         }
@@ -70,12 +74,16 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
             return mealHealthRatingParent;
         }
 
-        public void setOnClickListener(Recipe recipe) {
+        public MaterialCardView getCustomAttributeParent() {
+            return customAttributeParent;
+        }
+
+        public void setOnClickListener(NetworkRecipe networkRecipe) {
             if (homeInterface != null) {
                 itemView.setOnClickListener(v -> {
                     int currentPos = getAbsoluteAdapterPosition();
                     if (currentPos != RecyclerView.NO_POSITION) {
-                        homeInterface.onClickMeal(recipe);
+                        homeInterface.onClickMeal(networkRecipe);
                     }
                 });
             }
@@ -88,7 +96,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      * @param dataSet List of recipes containing the data to populate views to be used
      *                by RecyclerView
      */
-    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, ArrayList<? extends uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe> dataSet) {
+    public HomeMealsAdapter(HomeMealsOnClickInterface homeInterface, ArrayList<? extends NetworkRecipe> dataSet) {
         mInterface = homeInterface;
         localDataSet = dataSet;
     }
@@ -108,25 +116,38 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe currentItem = localDataSet.get(position);
+        NetworkRecipe currentItem = localDataSet.get(position);
+
+        ImageView placeholderImage = new ImageView(holder.itemView.getContext());
+        placeholderImage.setImageResource(R.drawable.img_image_not_available);
+        Drawable placeholderDrawable = placeholderImage.getDrawable();
+        if (placeholderDrawable != null) placeholderDrawable.setAlpha(160);
 
         Picasso.get().load(currentItem.getImage())
-                .error(R.drawable.img_image_not_available)
-                .placeholder(R.drawable.img_image_not_available)
+                .placeholder(placeholderImage.getDrawable())
                 .into(holder.getMealImage());
+
         holder.getMealName().setText(currentItem.getTitle());
         String calories = "N/A";
         if (currentItem.getNutrition() != null && currentItem.getNutrition().getNutrients() != null)
-            calories = Math.round(currentItem.getNutrition().getNutrients().get(0).getAmount()) + " Calories";
+            calories = Math.round(currentItem.getNutrition().getNutrients().get(0).getAmount()) + " kcal";
         String time = currentItem.getReadyInMinutes() + "m";
         holder.getMealCalories().setText(calories);
         holder.getMealTime().setText(time);
 
         // health rating
         holder.getMealHealthRatingParent().removeAllViews();//clear all views to avoid duplicates
-        int healthRating = currentItem.getHealthScore();
-        int numStars = getStarRatingFromHealthScore(healthRating);
-        ImageView[] stars = new ImageView[numStars];
+        // do not display health rating if it is a custom recipe
+        if (localDataSet.get(position).getId() == -1) {
+            // it is a custom recipe
+            TextView tv = new TextView(holder.itemView.getContext());
+            tv.setText("Health Rating Not Available");
+            holder.getMealHealthRatingParent().addView(tv);
+        } else {
+            // it is not a custom recipe
+            int healthRating = currentItem.getHealthScore();
+            int numStars = getStarRatingFromHealthScore(healthRating);
+            ImageView[] stars = new ImageView[numStars];
 
             for (int i = 0; i < stars.length; i++) {
                 ImageView imageView = new ImageView(holder.itemView.getContext());
@@ -135,6 +156,14 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
                 imageView.setColorFilter(ContextCompat.getColor(holder.itemView.getContext(), R.color.semi_transparent_white));
                 holder.getMealHealthRatingParent().addView(imageView);
             }
+        }
+
+        // if it is a custom recipe - display the custom attribute to indicate it is a custom recipe
+        if (localDataSet.get(position).getId() == -1) {
+            holder.getCustomAttributeParent().setVisibility(View.VISIBLE);
+        } else {
+            holder.getCustomAttributeParent().setVisibility(View.GONE);
+        }
 
         // set on click listener for the meal
         holder.setOnClickListener(currentItem);
@@ -150,7 +179,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      *
      * @param dataSet list containing the data to update the current one with.
      */
-    public void updateData(ArrayList<? extends Recipe> dataSet) {
+    public void updateData(ArrayList<? extends NetworkRecipe> dataSet) {
         if (dataSet != null) {
             // creating a new arraylist instead of using the parameter
             // avoids making any unexpected changes in the original data
@@ -176,7 +205,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      * @param pos index where to find the recipe.
      * @return the recipe at the given index.
      */
-    public Recipe getRecipeAt(int pos) {
+    public NetworkRecipe getRecipeAt(int pos) {
         if (pos == RecyclerView.NO_POSITION || localDataSet.size() == 0) return null;
 
         return localDataSet.get(pos);

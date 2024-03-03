@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 
 public class Utilities {
 
@@ -142,9 +143,9 @@ public class Utilities {
         return salt * 400;
     }
 
-    public static String getMealHealthRating(uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe recipe) {
+    public static String getMealHealthRating(NetworkRecipe networkRecipe) {
         String rating = "N/A";
-        int healthScore = recipe.getHealthScore();
+        int healthScore = networkRecipe.getHealthScore();
 
         if (healthScore > 0 && healthScore <= 20) rating = "Very Unhealthy";
         else if (healthScore > 20 && healthScore <= 40) rating = "Unhealthy";
@@ -153,6 +154,22 @@ public class Utilities {
         else if (healthScore > 80 && healthScore <= 100) rating = "Very Healthy";
 
         return rating;
+    }
+
+    /**
+     * Calculates the rating in stars depending on the specified health score.
+     *
+     * @param healthScore health score based on which the rating is calculated.
+     * @return rating for the specified health score ranging from 0 to 5.
+     */
+    public static int getStarRatingFromHealthScore(int healthScore) {
+        int result = 0;
+        if (healthScore >= 0 && healthScore <= 20) result = 1;
+        else if (healthScore > 20 && healthScore <= 40) result = 2;
+        else if (healthScore > 40 && healthScore <= 60) result = 3;
+        else if (healthScore > 60 && healthScore <= 80) result = 4;
+        else if (healthScore > 80 && healthScore <= 100) result = 5;
+        return result;
     }
 
     public static String capitaliseString(String value) {

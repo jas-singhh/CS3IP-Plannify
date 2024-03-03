@@ -4,9 +4,9 @@ import java.util.List;
 
 public class RecipeResponseList {
 
-    private List<Recipe> results;
+    private List<NetworkRecipe> results;
 
-    public List<Recipe> getResults() {
+    public List<NetworkRecipe> getResults() {
         return results;
     }
 

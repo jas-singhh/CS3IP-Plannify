@@ -30,8 +30,8 @@ import uk.ac.aston.cs3ip.plannify.adapters.MealDetailsIngredientsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.MealDetailsNutrientsAdapter;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentMealDetailsBinding;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.Nutrient;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.Step;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
@@ -41,7 +41,7 @@ import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogSaveRecipe;
 public class MealDetailsFragment extends Fragment {
 
     private FragmentMealDetailsBinding binding;
-    private Recipe selectedRecipe;
+    private NetworkRecipe selectedNetworkRecipe;
     private ConstraintLayout[] tabLayouts;
     private HomeViewModel homeViewModel;
     private CompositeDisposable mDisposable;
@@ -55,7 +55,7 @@ public class MealDetailsFragment extends Fragment {
         mDisposable = new CompositeDisposable();
 
         // safe args
-        selectedRecipe = MealDetailsFragmentArgs.fromBundle(getArguments()).getMyRecipe();
+        selectedNetworkRecipe = MealDetailsFragmentArgs.fromBundle(getArguments()).getMyRecipe();
     }
 
     @Override
@@ -119,28 +119,28 @@ public class MealDetailsFragment extends Fragment {
      * the meal's health rating, and the meal's serving size.
      */
     private void displayMealMainAttributes() {
-        if (selectedRecipe == null) return;
+        if (selectedNetworkRecipe == null) return;
 
 
         // image
-        Picasso.get().load(selectedRecipe.getImage())
+        Picasso.get().load(selectedNetworkRecipe.getImage())
                 .placeholder(R.drawable.img_image_not_available)
                 .into(binding.headerImage);
 
         // name
-        binding.detailsName.setText(Utilities.capitaliseString(selectedRecipe.getTitle()));
+        binding.detailsName.setText(Utilities.capitaliseString(selectedNetworkRecipe.getTitle()));
 
         // time
         String time = "N/A";
-        if (selectedRecipe.getReadyInMinutes() > 0) time = selectedRecipe.getReadyInMinutes() + "m";
+        if (selectedNetworkRecipe.getReadyInMinutes() > 0) time = selectedNetworkRecipe.getReadyInMinutes() + "m";
         binding.detailsTime.setText(time);
 
         // health rating - returns N/A if it is 0
-        binding.detailsHealthRating.setText(Utilities.getMealHealthRating(selectedRecipe));
+        binding.detailsHealthRating.setText(Utilities.getMealHealthRating(selectedNetworkRecipe));
 
         // servings
         String servings = "N/A";
-        if (selectedRecipe.getServings() > 0) servings = selectedRecipe.getServings() + " servings";
+        if (selectedNetworkRecipe.getServings() > 0) servings = selectedNetworkRecipe.getServings() + " servings";
         binding.detailsServings.setText(servings);
     }
 
@@ -154,10 +154,10 @@ public class MealDetailsFragment extends Fragment {
         rvLayout.setOrientation(LinearLayoutManager.VERTICAL);
         binding.detailsIngredientsRv.setLayoutManager(rvLayout);
 
-        if (selectedRecipe.getExtendedIngredients() != null) {
+        if (selectedNetworkRecipe.getExtendedIngredients() != null) {
             // initialise adapter
             binding.detailsIngredientsRv.setAdapter(
-                    new MealDetailsIngredientsAdapter(selectedRecipe.
+                    new MealDetailsIngredientsAdapter(selectedNetworkRecipe.
                             getExtendedIngredients().
                             toArray(new ExtendedIngredient[0])));
 
@@ -170,11 +170,11 @@ public class MealDetailsFragment extends Fragment {
      * Sets up the steps for the specific recipe.
      */
     private void initSteps() {
-        if (selectedRecipe.getAnalyzedInstructions() == null) return;
-        if (selectedRecipe.getAnalyzedInstructions().isEmpty() ||
-                selectedRecipe.getAnalyzedInstructions().get(0).getSteps() == null) return;
+        if (selectedNetworkRecipe.getAnalyzedInstructions() == null) return;
+        if (selectedNetworkRecipe.getAnalyzedInstructions().isEmpty() ||
+                selectedNetworkRecipe.getAnalyzedInstructions().get(0).getSteps() == null) return;
 
-        List<Step> steps = selectedRecipe.getAnalyzedInstructions().get(0).getSteps();
+        List<Step> steps = selectedNetworkRecipe.getAnalyzedInstructions().get(0).getSteps();
 
         // html formatting for readability
         StringBuilder mealSteps = new StringBuilder();
@@ -199,7 +199,7 @@ public class MealDetailsFragment extends Fragment {
         binding.detailsNutrientsGetEnoughRv.setHasFixedSize(true);
         binding.detailsNutrientsGetEnoughRv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        if (selectedRecipe.getNutrition() != null) {
+        if (selectedNetworkRecipe.getNutrition() != null) {
             binding.detailsNutrientsLimitRv.setAdapter(new MealDetailsNutrientsAdapter(getNutrientsToLimit()));
             binding.detailsNutrientsGetEnoughRv.setAdapter(new MealDetailsNutrientsAdapter(getNutrientsToGetEnough()));
         }
@@ -212,8 +212,8 @@ public class MealDetailsFragment extends Fragment {
      */
     private Nutrient[] getNutrientsToLimit() {
 
-        if (selectedRecipe.getNutrition() != null) {
-            List<Nutrient> nutrientList = selectedRecipe.getNutrition().getNutrients();
+        if (selectedNetworkRecipe.getNutrition() != null) {
+            List<Nutrient> nutrientList = selectedNetworkRecipe.getNutrition().getNutrients();
             if (nutrientList != null && !nutrientList.isEmpty()) {
                 List<String> nutrientsToLimitNames = Arrays.asList(Utilities.getNutrientsToLimitNames());
 
@@ -240,8 +240,8 @@ public class MealDetailsFragment extends Fragment {
      */
     private Nutrient[] getNutrientsToGetEnough() {
 
-        if (selectedRecipe.getNutrition() != null) {
-            List<Nutrient> nutrientList = selectedRecipe.getNutrition().getNutrients();
+        if (selectedNetworkRecipe.getNutrition() != null) {
+            List<Nutrient> nutrientList = selectedNetworkRecipe.getNutrition().getNutrients();
             if (nutrientList != null && !nutrientList.isEmpty()) {
                 List<String> nutrientsToGetEnoughNames = Arrays.asList(Utilities.getNutrientsToGetEnoughNames());
 
@@ -272,7 +272,7 @@ public class MealDetailsFragment extends Fragment {
             // reference: https://stackoverflow.com/questions/9860456/search-a-specific-string-in-youtube-application-from-my-app
             Intent intent = new Intent(Intent.ACTION_SEARCH);
             intent.setPackage("com.google.android.youtube");
-            intent.putExtra("query", selectedRecipe.getTitle());
+            intent.putExtra("query", selectedNetworkRecipe.getTitle());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             requireActivity().startActivity(intent);
         });
@@ -300,8 +300,8 @@ public class MealDetailsFragment extends Fragment {
         binding.btnSave.setOnClickListener(v -> {
 
             // show the dialog box for the date and meal type
-            new DialogSaveRecipe(requireContext(), (date, mealType) -> {
-                LocalRecipe recipeToSave = new LocalRecipe(selectedRecipe, date, mealType);
+            new DialogSaveRecipe(requireContext(), selectedNetworkRecipe, (date, mealType) -> {
+                LocalRecipe recipeToSave = new LocalRecipe(selectedNetworkRecipe, date, mealType);
 
                 mDisposable.add(homeViewModel.insert(recipeToSave)
                         .subscribeOn(Schedulers.io())

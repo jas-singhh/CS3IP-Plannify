@@ -20,10 +20,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+<!--    Height recommended by Material design
+        Reference:https://m2.material.io/components/bottom-navigation#specs -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/cl_navigation_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -32,7 +34,7 @@
             android:id="@+id/bottom_app_bar"
             app:elevation="@dimen/elevation_11_overlay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:backgroundTint="@color/_primary"
             android:layout_gravity="bottom"
             app:fabCradleMargin="0dp"
@@ -45,7 +47,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginEnd="16dp"
                 app:itemIconTint="@drawable/navigation_bar_selector"
-                app:itemTextColor="@color/text_white"
+                app:itemTextColor="@drawable/navigation_bar_selector"
                 android:elevation="0dp"
                 android:background="@drawable/transparent_bg"
                 app:itemIconSize="20dp"
@@ -66,7 +68,7 @@
             app:borderWidth="1dp"
             android:backgroundTint="@color/_primary"
             app:fabSize="mini"
-            app:maxImageSize="25dp" />
+            app:maxImageSize="31dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

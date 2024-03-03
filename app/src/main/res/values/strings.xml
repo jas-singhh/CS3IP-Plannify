@@ -21,6 +21,8 @@
     <string name="teatime_subtext">Tea Time placeholder</string>
     <string name="dinner_subtext">Dinner placeholder</string>
     <string name="channel_name">Meal Reminders</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
 
     <!--    TEXT INPUT PROPERTIES -->
     <dimen name="input_radius">20dp</dimen>

@@ -18,6 +18,7 @@ import java.util.List;
 
 import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.local_recipe.GroceryItem;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 
 public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMealsGroceryListItemsAdapter.MyViewHolder> {
@@ -25,7 +26,7 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
 
     // using array as the size of the ingredients will be known and
     // it can save some memory.
-    private ArrayList<ExtendedIngredient> localDataSet;
+    private ArrayList<GroceryItem> localDataSet;
     private final MyMealsGroceryListOnClickInterface mInterface;
 
     /**
@@ -41,7 +42,7 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
         private final TextView groceryItemName;
         private final TextView groceryItemAisle;
 
-        public MyViewHolder(View view, MyMealsGroceryListOnClickInterface myMealsGroceryListOnClickInterface, List<ExtendedIngredient> localDataSet) {
+        public MyViewHolder(View view, MyMealsGroceryListOnClickInterface myMealsGroceryListOnClickInterface, List<GroceryItem> localDataSet) {
             super(view);
             groceryItemParent = view.findViewById(R.id.grocery_item_parent);
             groceryItemCheckBox = view.findViewById(R.id.grocery_item_checkbox);
@@ -102,7 +103,7 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
      * @param dataSet String[] containing the data to populate views to be used
      *                by RecyclerView
      */
-    public MyMealsGroceryListItemsAdapter(ArrayList<ExtendedIngredient> dataSet, MyMealsGroceryListOnClickInterface myMealsGroceryListOnClickInterface) {
+    public MyMealsGroceryListItemsAdapter(ArrayList<GroceryItem> dataSet, MyMealsGroceryListOnClickInterface myMealsGroceryListOnClickInterface) {
         localDataSet = dataSet;
         mInterface = myMealsGroceryListOnClickInterface;
     }
@@ -125,26 +126,27 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
         // contents of the view with that element
 
         // update the checkbox state
-        viewHolder.getGroceryItemCheckBox().setChecked(localDataSet.get(position).isCheckedInGroceryList());
+        viewHolder.getGroceryItemCheckBox().setChecked(localDataSet.get(position).getIngredient().isCheckedInGroceryList());
 
         // set the container's alpha based on the checkbox state
         float alpha = viewHolder.getGroceryItemCheckBox().isChecked() ? .8f : 1f;
         viewHolder.getGroceryItemParent().setAlpha(alpha);
 
         // get image using the URL provided by the API docs
-        String url = "https://spoonacular.com/cdn/ingredients_100x100/" + localDataSet.get(position).getImage();
+        String url = "https://spoonacular.com/cdn/ingredients_100x100/" + localDataSet.get(position).getIngredient().getImage();
         Picasso.get().load(url)
                 .error(R.drawable.img_image_not_available)
+                .placeholder(R.drawable.img_image_not_available)
                 .into(viewHolder.getGroceryItemImage());
 
-        String name = "Name: " + Utilities.capitaliseString(localDataSet.get(position).getName());
+        String name = "Name: " + Utilities.capitaliseString(localDataSet.get(position).getIngredient().getName());
 
         // aisle
         String aisle = "Aisle: ";
-        if (localDataSet.get(position).getAisle() != null) aisle += "N/A";
-        else aisle += Utilities.capitaliseString(localDataSet.get(position).getAisle());
+        if (localDataSet.get(position).getIngredient().getAisle() == null) aisle += "N/A";
+        else aisle += Utilities.capitaliseString(localDataSet.get(position).getIngredient().getAisle());
 
-        viewHolder.getGroceryItemQuantity().setText(getIngredientQuantityText(localDataSet.get(position)));
+        viewHolder.getGroceryItemQuantity().setText(getIngredientQuantityText(localDataSet.get(position).getIngredient()));
         viewHolder.getGroceryItemName().setText(name);
         viewHolder.getGroceryItemAisle().setText(aisle);
 
@@ -153,19 +155,23 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
     private String getIngredientQuantityText(ExtendedIngredient ingredient) {
         String quantity = "";// default
 
+        // use short unit if available - if not use long unit
+        String unit = ingredient.getMeasures().getMetric().getUnitShort() != null ?
+                ingredient.getMeasures().getMetric().getUnitShort() : ingredient.getMeasures().getMetric().getUnitLong();
+
         if (ingredient.getMeasures() != null) {
             float amount = ingredient.getMeasures().getMetric().getAmount();
             if (ingredient.getMeasures().getMetric().getAmount() < 1) {
-                quantity += getFractionFromDecimal(amount);
+                quantity += getFractionFromDecimal(amount) + " " + unit;
             } else {
                 // if quantity is a whole number - then do not display the decimals
                 if (amount % 1 == 0) {
                     // it is a whole number
                     int amountWholeNumber = (int) amount;
-                    quantity += amountWholeNumber;
+                    quantity += amountWholeNumber + " " + unit;
                 } else {
                     // number contains decimals
-                    quantity += amount;
+                    quantity += amount + " " + unit;
                 }
             }
         } else {
@@ -207,14 +213,14 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
      *
      * @param dataSet list containing the data to update the current one with.
      */
-    public void updateData(ArrayList<ExtendedIngredient> dataSet) {
+    public void updateData(ArrayList<GroceryItem> dataSet) {
         if (dataSet != null) {
             localDataSet = dataSet;
             notifyDataSetChanged();
         }
     }
 
-    public ArrayList<ExtendedIngredient> getLocalDataSet() {
+    public ArrayList<GroceryItem> getLocalDataSet() {
         return localDataSet;
     }
     public void clearDataSet() {

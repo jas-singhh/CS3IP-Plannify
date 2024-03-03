@@ -31,7 +31,7 @@ import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentMyMealsSavedBinding;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 import uk.ac.aston.cs3ip.plannify.viewmodels.CalendarViewModel;
@@ -112,7 +112,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
 
                     // update the adapter
                     if (mAdapter != null)
-                        mAdapter.updateData((ArrayList<? extends Recipe>) list);
+                        mAdapter.updateData((ArrayList<? extends NetworkRecipe>) list);
                 }));
     }
 
@@ -242,10 +242,10 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     }
 
     @Override
-    public void onClickMeal(Recipe recipe) {
+    public void onClickMeal(NetworkRecipe networkRecipe) {
 
         MyMealsFragmentDirections.ActionMyMealsFragmentToMealDetailsFragment action =
-                MyMealsFragmentDirections.actionMyMealsFragmentToMealDetailsFragment(recipe);
+                MyMealsFragmentDirections.actionMyMealsFragmentToMealDetailsFragment(networkRecipe);
 
         // reference: https://developer.android.com/guide/navigation/navcontroller
         NavHostFragment.findNavController(this).navigate(action);

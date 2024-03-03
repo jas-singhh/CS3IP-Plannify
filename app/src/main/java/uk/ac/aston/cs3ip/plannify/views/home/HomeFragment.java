@@ -35,7 +35,7 @@ import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.api.QuoteService;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentHomeBinding;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe;
+import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 import uk.ac.aston.cs3ip.plannify.repos.QuotesRepository;
 import uk.ac.aston.cs3ip.plannify.shared_prefs.SharedPreferencesManager;
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         quoteViewModel.getQuote().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
 
         homeViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponse -> {
-            mAdapter.updateData((ArrayList<Recipe>) recipeResponse.getResults());
+            mAdapter.updateData((ArrayList<NetworkRecipe>) recipeResponse.getResults());
 //            animatedLoading.dismiss();
         });
 
@@ -270,9 +270,9 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
                     if (pos != RecyclerView.NO_POSITION) {
 
                         // display popup to request date and meal type for the recipe
-                        new DialogSaveRecipe(requireContext(), (date, mealType) -> {
-                            Recipe selectedRecipe = mAdapter.getRecipeAt(pos);
-                            LocalRecipe recipeToSave = new LocalRecipe(selectedRecipe, date, mealType);
+                        new DialogSaveRecipe(requireContext(), mAdapter.getRecipeAt(pos), (date, mealType) -> {
+                            NetworkRecipe selectedNetworkRecipe = mAdapter.getRecipeAt(pos);
+                            LocalRecipe recipeToSave = new LocalRecipe(selectedNetworkRecipe, date, mealType);
                             recipeToSave.setDateSavedFor(date);
                             recipeToSave.setMealTypeSavedFor(mealType);
 
@@ -334,10 +334,10 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
     }
 
     @Override
-    public void onClickMeal(uk.ac.aston.cs3ip.plannify.models.api_recipe.Recipe recipe) {
+    public void onClickMeal(NetworkRecipe networkRecipe) {
 
         HomeFragmentDirections.ActionHomeFragmentToMealDetailsFragment action =
-                HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(recipe);
+                HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(networkRecipe);
 
         // reference: https://developer.android.com/guide/navigation/navcontroller
         NavHostFragment.findNavController(this).navigate(action);
