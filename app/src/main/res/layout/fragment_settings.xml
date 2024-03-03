@@ -1,66 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/surface"
+    android:orientation="vertical"
     tools:context=".views.settings.SettingsFragment">
 
-    <RelativeLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/primary"
-        >
+        app:cardBackgroundColor="@color/_primary"
+        app:cardElevation="@dimen/elevation_15_overlay">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="Settings"
-            android:layout_margin="@dimen/margin"
-            android:textSize="42sp"
-            />
+            android:layout_height="100dp">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin"
+                android:paddingHorizontal="10dp"
+                android:text="Settings"
+                android:textSize="42sp" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:orientation="vertical"
-        android:padding="15dp"
         android:background="@drawable/input_rounded"
         android:backgroundTint="@color/cards"
-        >
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <!--        NOTIFICATIONS PARENT -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <!--        NOTIFICATIONS ICON -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/notifications_icon_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:id="@+id/notifications_icon_parent"
-                app:cardCornerRadius="@dimen/radius_card"
-                >
+                app:cardCornerRadius="@dimen/radius_card">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notifications"
-                    app:tint="@color/white"
-                    android:padding="10dp"
                     android:background="@color/purple"
-                    />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_notifications"
+                    app:tint="@color/white" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -68,24 +69,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/notifications_icon_parent"
                 android:layout_centerVertical="true"
-                android:text="Notifications"
+                android:layout_toEndOf="@+id/notifications_icon_parent"
                 android:padding="10dp"
-                android:textSize="@dimen/text_important"/>
+                android:text="Notifications"
+                android:textSize="@dimen/text_important" />
 
 
             <!--        NOTIFICATIONS TOGGLE -->
             <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_notifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:padding="10dp"
                 android:checked="true"
-                app:useMaterialThemeColors="true"
-                android:id="@+id/switch_notifications"
-                />
+                android:padding="10dp"
+                app:thumbTint="@color/primary"
+                app:trackTint="@color/_secondary"
+                app:useMaterialThemeColors="true" />
 
         </RelativeLayout>
 
@@ -93,27 +95,24 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            >
+            android:layout_marginTop="@dimen/margin">
 
             <!--        MOTIVATIONAL QUOTE ICON -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/motivational_quote_icon_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:id="@+id/motivational_quote_icon_parent"
-                app:cardCornerRadius="@dimen/radius_card"
-                >
+                app:cardCornerRadius="@dimen/radius_card">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_motivation"
-                    app:tint="@color/white"
-                    android:padding="10dp"
                     android:background="@color/pink"
-                    />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_motivation"
+                    app:tint="@color/white" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -121,24 +120,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/motivational_quote_icon_parent"
                 android:layout_centerVertical="true"
-                android:text="Motivational Quote"
+                android:layout_toEndOf="@+id/motivational_quote_icon_parent"
                 android:padding="10dp"
-                android:textSize="@dimen/text_important"/>
+                android:text="Motivational Quote"
+                android:textSize="@dimen/text_important" />
 
 
             <!--        MOTIVATIONAL QUOTE TOGGLE -->
             <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_motivational_quote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:padding="10dp"
                 android:checked="true"
-                app:useMaterialThemeColors="true"
-                android:id="@+id/switch_motivational_quote"
-                />
+                android:padding="10dp"
+                app:thumbTint="@color/primary"
+                app:trackTint="@color/_secondary"
+                app:useMaterialThemeColors="true" />
 
         </RelativeLayout>
 
