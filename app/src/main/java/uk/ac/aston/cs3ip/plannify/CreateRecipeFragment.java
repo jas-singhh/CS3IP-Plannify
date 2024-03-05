@@ -317,7 +317,7 @@ public class CreateRecipeFragment extends Fragment {
                 mDisposable.add(recipeViewModel.insert(localRecipe)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> new DialogSuccess(requireContext(), "Recipe Has Been Saved!"),
+                        .subscribe(primaryId -> new DialogSuccess(requireContext(), "Recipe Has Been Saved!"),
                                 throwable -> {
                                     Utilities.showErrorToast(requireContext());
                                     Log.d(MainActivity.TAG, throwable.toString());

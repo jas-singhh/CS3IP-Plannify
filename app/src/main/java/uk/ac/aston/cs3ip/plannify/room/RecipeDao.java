@@ -23,8 +23,13 @@ public interface RecipeDao {
     // RxJava async Dao queries
     // reference: https://developer.android.com/training/data-storage/room/async-queries#java
 
-    @Insert (onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(LocalRecipe recipe);
+    // long is the id of the recipe just inserted
+    // used for the undo functionality as Room matches the primary id when removing elements
+    // from the database, which is assigned upon insertion. Therefore, we need to know the primary id
+    // once the data is inserted so we can perform the undo functionality, i.e. delete it if it was saved.
+    // reference: https://stackoverflow.com/questions/50413911/android-room-database-delete-is-not-working
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Single<Long> insert(LocalRecipe recipe);
 
     @Delete
     Completable delete(LocalRecipe recipe);
@@ -35,11 +40,8 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes")
     Flowable<List<LocalRecipe>> getAll();
 
-//    @Query("DELETE FROM recipes")
-//    Completable deleteAll();
-
-//    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE primaryId = :id)")
-//    Single<Integer> existsById(int id);
+    @Query("SELECT EXISTS(SELECT * FROM recipes WHERE id=:recipeId AND mealTypeSavedFor=:mealTypeSavedFor AND dateSavedFor =:dateSavedFor)")
+    Single<Boolean> doesRecipeWithIdAndMealTypeAndDateExist(int recipeId, EnumMealType mealTypeSavedFor, LocalDate dateSavedFor);
 
     @Query("SELECT * FROM recipes WHERE dateSavedFor = :date")
     Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date);

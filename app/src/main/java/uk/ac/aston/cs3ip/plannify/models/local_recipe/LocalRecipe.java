@@ -1,6 +1,7 @@
 package uk.ac.aston.cs3ip.plannify.models.local_recipe;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDate;
@@ -8,11 +9,16 @@ import java.time.LocalDate;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 
-@Entity(tableName = "recipes")
+@Entity(tableName = "recipes", indices = {@Index(value={"id", "title", "dateSavedFor", "mealTypeSavedFor"}, unique = true)})
 public class LocalRecipe extends NetworkRecipe {
 
+    // reference: https://stackoverflow.com/questions/59159978/android-room-insert-how-do-i-verify-by-comparing-object-strings-that-i-wont
+    // indices ensure data integrity by preventing duplicate insertion in the database
+    // for remote recipe - we need to check the id, date saved for, and meal type saved for
+    // however, for custom recipes - we need to check the title as well because the id is always -1
+
     @PrimaryKey(autoGenerate = true)
-    private int primaryId;
+    private long primaryId;
     private LocalDate dateSavedFor;
     private EnumMealType mealTypeSavedFor;
 
@@ -76,11 +82,11 @@ public class LocalRecipe extends NetworkRecipe {
         this.setLikes(networkRecipe.getLikes());
     }
 
-    public int getPrimaryId() {
+    public long getPrimaryId() {
         return primaryId;
     }
 
-    public void setPrimaryId(int primaryId) {
+    public void setPrimaryId(long primaryId) {
         this.primaryId = primaryId;
     }
 

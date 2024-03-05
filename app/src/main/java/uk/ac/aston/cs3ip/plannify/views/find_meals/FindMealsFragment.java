@@ -18,22 +18,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentFindMealsBinding;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.AutoCompleteResult;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.utils.SwipingUtils;
 import uk.ac.aston.cs3ip.plannify.viewmodels.FindMealsViewModel;
+import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogFindMealsFilters;
-import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogLottie;
+import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogLoading;
 
 public class FindMealsFragment extends Fragment implements HomeMealsOnClickInterface {
 
     private FragmentFindMealsBinding binding;
+    private CompositeDisposable mDisposable;
+    private HomeViewModel homeViewModel;
     private FindMealsViewModel mViewModel;
     private HomeMealsAdapter mAdapter;
-    private DialogLottie animatedLoading;
+    private DialogLoading animatedLoading;
     private ArrayAdapter<String> autoCompleteAdapter;
 
     private int autoCompleteTextCounter;
@@ -42,10 +47,13 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        homeViewModel = new ViewModelProvider(requireActivity(),
+                ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mViewModel = new ViewModelProvider(requireActivity(),
                 ViewModelProvider.Factory.from(FindMealsViewModel.initializer)).get(FindMealsViewModel.class);
+        mDisposable = new CompositeDisposable();
         mAdapter = new HomeMealsAdapter(this, new ArrayList<>());
-        animatedLoading = new DialogLottie(requireActivity());
+        animatedLoading = new DialogLoading(requireActivity());
         autoCompleteTextCounter = 0;
     }
 
@@ -58,6 +66,7 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
         initRecyclerView();
         initAutoComplete();
 
+        animatedLoading.show();
         requestRandomHealthyMeals();
 
         subscribeToSearchedRecipes();
@@ -70,6 +79,15 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
         onClickClearResults();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // set up the swipe to save feature once the view has been created
+        SwipingUtils.setupSwipeToSave((MainActivity) requireActivity(), homeViewModel, mAdapter,
+                mDisposable, view, binding.rvSearchResults);
     }
 
     /**
@@ -204,6 +222,8 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
      */
     private void subscribeToRandomHealthyRecipes() {
         mViewModel.getRandomHealthyRecipes().observe(getViewLifecycleOwner(), recipeResponseList -> {
+            if (animatedLoading != null) animatedLoading.dismiss();
+
             if (mAdapter != null && mViewModel.getRequestedRecipes().getValue() == null) {
                 mAdapter.updateData((ArrayList<? extends NetworkRecipe>) recipeResponseList.getResults());
             }
@@ -284,5 +304,17 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
         // reference: https://developer.android.com/guide/navigation/navcontroller
         NavHostFragment.findNavController(this).navigate(action);
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mDisposable.clear();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDisposable.clear();
     }
 }

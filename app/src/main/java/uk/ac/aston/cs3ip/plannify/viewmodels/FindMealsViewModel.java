@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -144,7 +144,7 @@ public class FindMealsViewModel extends ViewModel {
          * @param recipe recipe to insert.
          * @return whether the operation succeeded or not.
          */
-    public Completable insert(LocalRecipe recipe) {
+    public Single<Long> insert(LocalRecipe recipe) {
         return recipeRepository.insert(recipe);
     }
 

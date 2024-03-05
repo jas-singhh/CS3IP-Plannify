@@ -1,22 +1,18 @@
 package uk.ac.aston.cs3ip.plannify.views.my_meals;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,18 +21,16 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-import uk.ac.aston.cs3ip.plannify.R;
+import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentMyMealsSavedBinding;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
-import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
-import uk.ac.aston.cs3ip.plannify.utils.Utilities;
+import uk.ac.aston.cs3ip.plannify.utils.SwipingUtils;
 import uk.ac.aston.cs3ip.plannify.viewmodels.CalendarViewModel;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
-import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogLottie;
+import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogLoading;
 
 
 public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickInterface {
@@ -45,7 +39,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     private CompositeDisposable mDisposable;
     private HomeViewModel homeViewModel;
     private HomeMealsAdapter mAdapter;
-    private DialogLottie animatedLoading;
+    private DialogLoading animatedLoading;
     private CalendarViewModel calendarViewModel;
     private LocalDate selectedDate;
 
@@ -58,7 +52,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                 ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         calendarViewModel = new ViewModelProvider(requireActivity()).get(CalendarViewModel.class);
         mAdapter = new HomeMealsAdapter(this, new ArrayList<>());
-        animatedLoading = new DialogLottie(requireContext());
+        animatedLoading = new DialogLoading(requireContext());
         selectedDate = calendarViewModel.getSelectedDate().getValue();
     }
 
@@ -67,6 +61,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMyMealsSavedBinding.inflate(inflater, container, false);
+
         animatedLoading.show();
 
         initRecyclerView();
@@ -75,6 +70,14 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         subscribeToChangesInTheSelectedDate();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        SwipingUtils.setupSwipeToDelete((MainActivity) requireActivity(), homeViewModel, mAdapter,
+                mDisposable, view, binding.rvSavedRecipes);
     }
 
     /**
@@ -103,7 +106,7 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-                    animatedLoading.dismiss();
+                    if (animatedLoading!= null) animatedLoading.dismiss();
 
                     // hide or show the status message depending on whether there are any
                     // saved meals or not.
@@ -122,7 +125,6 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
     private void initRecyclerView() {
         binding.rvSavedRecipes.setLayoutManager(new LinearLayoutManager(requireContext()));
         if (mAdapter != null) binding.rvSavedRecipes.setAdapter(mAdapter);
-        initSwipeToDelete();
     }
 
     /**
@@ -167,78 +169,6 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         value = value.replace("-", "_");
 
         return EnumMealType.valueOf(value);
-    }
-
-    /**
-     * Sets up the "swipe to delete" feature for individual saved recipes.
-     */
-    private void initSwipeToDelete() {
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                // check for left swipe
-                if (direction == ItemTouchHelper.LEFT) {
-                    int pos = viewHolder.getBindingAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION && mAdapter != null) {
-                        LocalRecipe recipeToDelete = (LocalRecipe) mAdapter.getRecipeAt(pos);
-
-                        // delete the recipe
-                        mDisposable.add(homeViewModel.delete(recipeToDelete)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                            showSnackBarWithUndo((LocalRecipe) mAdapter.getRecipeAt(pos), pos);
-                                            // update adapter
-                                            mAdapter.notifyItemChanged(pos);
-                                        }
-                                        , throwable -> Utilities.showErrorToast(requireContext())));
-                    }
-                }
-            }
-
-            @Override
-            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                // reference: https://github.com/xabaras/RecyclerViewSwipeDecorator
-                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                        .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.error_red))
-                        .addActionIcon(R.drawable.ic_remove)
-                        .setActionIconTint(ContextCompat.getColor(requireContext(), R.color.white))
-                        .addSwipeLeftLabel("Remove")
-                        .setSwipeLeftLabelColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        .addCornerRadius(1, 50)
-                        .addSwipeLeftPadding(1, 10, 10, 10)
-                        .create()
-                        .decorate();
-
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-        }).attachToRecyclerView(binding.rvSavedRecipes);
-    }
-
-    /**
-     * Displays a SnackBar indicating the action completion and allows the user to undo
-     * the action - aligns with Nielsen's error prevention principle.
-     *
-     * @param removedRecipe recipe that was initially un-saved.
-     * @param adapterPos    recycler view adapter position which needs to be updated.
-     */
-    private void showSnackBarWithUndo(LocalRecipe removedRecipe, int adapterPos) {
-        if (removedRecipe == null || adapterPos == RecyclerView.NO_POSITION) return;
-
-        // reference: https://m2.material.io/components/snackbars/android#theming-snackbars
-        Snackbar.make(requireView(), "Recipe Removed", Snackbar.LENGTH_LONG).setAction("Undo", v -> {
-            // undo - delete the saved recipe
-            mDisposable.add(homeViewModel.insert(removedRecipe)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> mAdapter.notifyItemChanged(adapterPos),
-                            throwable -> Utilities.showErrorToast(requireContext())));
-        }).show();
     }
 
     @Override

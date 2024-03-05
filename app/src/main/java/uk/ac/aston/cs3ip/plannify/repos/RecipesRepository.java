@@ -100,7 +100,7 @@ public class RecipesRepository {
      * Local database related queries
      */
 
-    public Completable insert(LocalRecipe recipe) {
+    public Single<Long> insert(LocalRecipe recipe) {
         if (recipe != null) {
             return database.recipeDao().insert(recipe);
         }
@@ -128,9 +128,9 @@ public class RecipesRepository {
         return database.recipeDao().getAll();
     }
 
-//    public Single<Integer> existsById(int id) {
-//        return database.recipeDao().existsById(id);
-//    }
+    public Single<Boolean> doesRecipeWithIdAndMealTypeAndDateExist(int recipeId, EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
+        return database.recipeDao().doesRecipeWithIdAndMealTypeAndDateExist(recipeId, mealTypeSavedFor, dateSavedFor);
+    }
 
     public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {
         return database.recipeDao().getRecipesForDate(date);

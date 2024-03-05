@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ce9f1337f523954b289c062f195e544b",
+    "identityHash": "9a1eaf767a5821738ef1e67108442898",
     "entities": [
       {
         "tableName": "recipes",
@@ -267,14 +267,27 @@
             "primaryId"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_recipes_id_title_dateSavedFor_mealTypeSavedFor",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "title",
+              "dateSavedFor",
+              "mealTypeSavedFor"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_recipes_id_title_dateSavedFor_mealTypeSavedFor` ON `${TABLE_NAME}` (`id`, `title`, `dateSavedFor`, `mealTypeSavedFor`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ce9f1337f523954b289c062f195e544b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9a1eaf767a5821738ef1e67108442898')"
     ]
   }
 }

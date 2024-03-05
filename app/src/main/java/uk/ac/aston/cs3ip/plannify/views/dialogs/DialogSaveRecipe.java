@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -228,9 +227,6 @@ public class DialogSaveRecipe extends Dialog {
                 // perform a callback
                 if (mListener != null) mListener.onClickSave(selectedDate,
                         EnumMealType.getEnumMealTypeFromValue(mealTypeAutoTextView.getText().toString()));
-
-                // display a toast
-                Toast.makeText(v.getContext(), "Recipe Saved", Toast.LENGTH_SHORT).show();
 
                 // close the dialog
                 if (dialog != null) dialog.dismiss();

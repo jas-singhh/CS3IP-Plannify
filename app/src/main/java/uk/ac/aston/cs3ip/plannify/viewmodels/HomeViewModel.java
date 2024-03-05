@@ -180,7 +180,7 @@ public class HomeViewModel extends ViewModel {
      * @param recipe recipe to insert.
      * @return whether the operation succeeded or not.
      */
-    public Completable insert(LocalRecipe recipe) {
+    public Single<Long> insert(LocalRecipe recipe) {
         return recipeRepository.insert(recipe);
     }
 
@@ -224,6 +224,9 @@ public class HomeViewModel extends ViewModel {
 //    public Single<Integer> existsById(int id) {
 //        return recipeRepository.existsById(id);
 //    }
+public Single<Boolean> doesRecipeWithIdAndMealTypeAndDateExist(int recipeId, EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
+    return recipeRepository.doesRecipeWithIdAndMealTypeAndDateExist(recipeId, mealTypeSavedFor, dateSavedFor);
+}
 
     /**
      * Returns a list of local recipes saved for the specified date.

@@ -6,11 +6,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -34,6 +32,7 @@ import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.Nutrient;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.Step;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
+import uk.ac.aston.cs3ip.plannify.utils.SnackBarUtils;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogSaveRecipe;
@@ -306,9 +305,14 @@ public class MealDetailsFragment extends Fragment {
                 mDisposable.add(homeViewModel.insert(recipeToSave)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            Toast.makeText(requireContext(), "Recipe Saved", Toast.LENGTH_LONG).show();
-                            binding.bntSaveImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_remove));
+                        .subscribe(primaryId -> {
+                            // check if the returned primary id is -1 - meaning that the recipe was
+                            // not inserted as it already exists. If so, display an informational SnackBar.
+                            if (primaryId == -1) {
+                                SnackBarUtils.showInformationalSnackBarIfRecipeAlreadySaved(requireView());
+                            } else {
+                                SnackBarUtils.showInformationalSnackBarOnRecipeSaved(requireView());
+                            }
                         }, throwable -> Utilities.showErrorToast(requireContext())));
             });
         });

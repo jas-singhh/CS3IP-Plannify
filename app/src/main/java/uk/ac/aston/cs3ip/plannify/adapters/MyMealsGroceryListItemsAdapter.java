@@ -171,7 +171,7 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
                     quantity += amountWholeNumber + " " + unit;
                 } else {
                     // number contains decimals
-                    quantity += amount + " " + unit;
+                    quantity += Math.round(amount) + " " + unit;
                 }
             }
         } else {
