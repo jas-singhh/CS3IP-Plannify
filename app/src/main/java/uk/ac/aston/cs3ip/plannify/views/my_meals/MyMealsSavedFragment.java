@@ -1,17 +1,22 @@
 package uk.ac.aston.cs3ip.plannify.views.my_meals;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.chip.Chip;
 
 import java.time.LocalDate;
@@ -22,11 +27,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
+import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentMyMealsSavedBinding;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
 import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.shared_prefs.SharedPreferencesManager;
 import uk.ac.aston.cs3ip.plannify.utils.SwipingUtils;
 import uk.ac.aston.cs3ip.plannify.viewmodels.CalendarViewModel;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
@@ -116,6 +123,10 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
                     // update the adapter
                     if (mAdapter != null)
                         mAdapter.updateData((ArrayList<? extends NetworkRecipe>) list);
+
+                    // check if we need to display the intro to swipe to delete
+                    if (!list.isEmpty())
+                        binding.rvSavedRecipes.post(this::showIntroIfNotAlreadyShown);
                 }));
     }
 
@@ -148,7 +159,6 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
         }));
     }
 
-
     /**
      * Gets and returns the currently selected chip's value and translates it
      * into the meal type enum.
@@ -170,6 +180,61 @@ public class MyMealsSavedFragment extends Fragment implements HomeMealsOnClickIn
 
         return EnumMealType.valueOf(value);
     }
+
+    /**
+     * Shows the intro if not already shown after a 1 second delay
+     */
+    private void showIntroIfNotAlreadyShown() {
+
+        // check if the swipe to save intro has already been shown
+        if (!SharedPreferencesManager.readBoolean(requireContext(), SharedPreferencesManager.SWIPE_TO_DELETE_INTRO_SHOWN)) {
+            // not yet shown - show it
+            new Handler().postDelayed(this::displaySwipeToDeleteIntro, MainActivity.INTRO_DELAY_MS);
+            // and update the shared preferences
+            SharedPreferencesManager.writeBoolean(requireContext(), SharedPreferencesManager.SWIPE_TO_DELETE_INTRO_SHOWN, true);
+        }
+    }
+
+    /**
+     * Displays the swipe to save introduction by drawing a circle around the first item
+     * in the recycler view, if there is any, otherwise the first item in the chip group and
+     * informs the user about the option.
+     */
+    private void displaySwipeToDeleteIntro() {
+        // reference: https://github.com/KeepSafe/TapTargetView
+
+        RecyclerView.LayoutManager layoutManager = binding.rvSavedRecipes.getLayoutManager();
+        View rvChild = binding.chipGroup.getChildAt(0);// use chip group if the recycler view child is null
+        if (layoutManager != null)
+            rvChild = layoutManager.getChildAt(0);
+
+        if (rvChild != null) {
+            TapTargetView.showFor(requireActivity(),// `this` is an Activity
+                    TapTarget.forView(rvChild, "Swipe Left to Delete!", "Tap to Continue")
+                            // All options below are optional
+                            .outerCircleColor(R.color._secondary)      // Specify a color for the outer circle
+                            .outerCircleAlpha(.96f)            // Specify the alpha amount for the outer circle
+                            .targetCircleColor(R.color._complementary)   // Specify a color for the target circle
+                            .titleTextSize(25)                  // Specify the size (in sp) of the title text
+                            .descriptionTextColor(R.color.text_black)
+                            .descriptionTextSize(20)
+                            .titleTextColor(R.color.text_black)      // Specify the color of the title text
+                            .textTypeface(ResourcesCompat.getFont(requireContext(), R.font.alata))  // Specify a typeface for the text
+                            .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                            .drawShadow(true)                   // Whether to draw a drop shadow or not
+                            .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                            .tintTarget(false)                   // Whether to tint the target view's color
+                            .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                            .targetRadius(60),                  // Specify the target radius (in dp)
+                    new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                        @Override
+                        public void onTargetClick(TapTargetView view) {
+                            super.onTargetClick(view);      // This call is optional
+                        }
+                    });
+        }
+    }
+
 
     @Override
     public void onClickMeal(NetworkRecipe networkRecipe) {

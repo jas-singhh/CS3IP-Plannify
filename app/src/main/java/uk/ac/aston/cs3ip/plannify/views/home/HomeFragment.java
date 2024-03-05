@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.ac.aston.cs3ip.plannify.BuildConfig;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
+import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.api.QuoteService;
@@ -87,12 +91,16 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         initChipGroupOnClickListeners();
         initRecyclerView();
 
+
         // Observe the quote data requested from the API
         quoteViewModel.getQuote().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
 
         homeViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponse -> {
             mAdapter.updateData((ArrayList<NetworkRecipe>) recipeResponse.getResults());
             animatedLoading.dismiss();
+
+            binding.rvHomeMeals.post(this::showIntroIfNotAlreadyShown);
+
         });
 
         return binding.getRoot();
@@ -102,27 +110,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SwipingUtils.setupSwipeToSave((MainActivity) requireActivity(), homeViewModel, mAdapter, mDisposable, view, binding.rvHomeMeals);
-//
-//        // Inside your method where you want to delay the swipe action
-//        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                        // Specify the index of the item you want to swipe
-//                int index = 2; // For example, swiping the first item
-//
-//// Specify the distance you want the item to be swiped
-//                int distance = 300; // For example, swiping 200 pixels
-//
-//// Specify the direction of the swipe (ItemTouchHelper.START for left swipe, ItemTouchHelper.END for right swipe)
-//                int direction = ItemTouchHelper.END; // For example, swiping to the right
-//
-//// Specify the duration of the swipe animation
-//                long time = 500; // Animation duration in milliseconds
-//
-//// Call the method to animate the swipe
-//                swipeRecyclerViewItem(binding.rvHomeMeals, index, distance, direction, time);
-//            }
-//        }, 5000); // 5000 milliseconds = 5 seconds
 
     }
 
@@ -131,7 +118,8 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
             int index,
             int distance,
             int direction,
-            long time
+            long time,
+            Runnable introRunnable
     ) {
         View childView = recyclerView.getChildAt(index);
         if (childView == null) return;
@@ -183,31 +171,39 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                new Handler().postDelayed(() -> {
-                    // Reverse animation
-                    final ValueAnimator reverseAnimator = ValueAnimator.ofInt(distance, 0);
-                    reverseAnimator.setDuration(time);
-                    reverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(@NonNull ValueAnimator animation1) {
-                            int dX = (int) animation1.getAnimatedValue();
-                            float mX = (direction == ItemTouchHelper.END) ? x + dX : x - dX;
-                            recyclerView.dispatchTouchEvent(
-                                    MotionEvent.obtain(
-                                            downTime,
-                                            SystemClock.uptimeMillis(),
-                                            MotionEvent.ACTION_MOVE,
-                                            mX,
-                                            y,
-                                            0
-                                    )
-                            );
-                        }
-                    });
-                    reverseAnimator.start();
-                }, 1500);
+                new Handler().postDelayed(introRunnable, 500);
+                super.onAnimationEnd(animation);
             }
         });
+
+//        animator.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                new Handler().postDelayed(() -> {
+//                    // Reverse animation
+//                    final ValueAnimator reverseAnimator = ValueAnimator.ofInt(distance, 0);
+//                    reverseAnimator.setDuration(time);
+//                    reverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                        @Override
+//                        public void onAnimationUpdate(@NonNull ValueAnimator animation1) {
+//                            int dX = (int) animation1.getAnimatedValue();
+//                            float mX = (direction == ItemTouchHelper.END) ? x + dX : x - dX;
+//                            recyclerView.dispatchTouchEvent(
+//                                    MotionEvent.obtain(
+//                                            downTime,
+//                                            SystemClock.uptimeMillis(),
+//                                            MotionEvent.ACTION_MOVE,
+//                                            mX,
+//                                            y,
+//                                            0
+//                                    )
+//                            );
+//                        }
+//                    });
+//                    reverseAnimator.start();
+//                }, 1500);
+//            }
+//        });
     }
 
 
@@ -244,9 +240,9 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         String checkedChipTag = SharedPreferencesManager.readString(requireContext(), SharedPreferencesManager.HOME_SELECTED_CHIP_TAG);
 
         if (checkedChipTag != null) {
-            for (int i =0 ; i< binding.chipGroup.getChildCount(); i++) {
+            for (int i = 0; i < binding.chipGroup.getChildCount(); i++) {
                 Chip chip = (Chip) binding.chipGroup.getChildAt(i);
-                if (chip!= null) {
+                if (chip != null) {
                     if (chip.getTag().equals(checkedChipTag)) {
                         chip.setChecked(true);
                         requestMealsBasedOnSelectedChip(chip);
@@ -275,7 +271,7 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
 
             // each selected chip has a unique tag, declared in the xml file
             if (selectedChip != null) {
-                if (selectedChip.getTag()!= null) {
+                if (selectedChip.getTag() != null) {
                     // update the shared preferences value
                     SharedPreferencesManager.writeString(
                             requireContext(),
@@ -330,6 +326,60 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
      */
     private void requestBreakfastMeals() {
         homeViewModel.requestRecipesByMealType(EnumMealType.BREAKFAST);
+    }
+
+    /**
+     * Shows the intro if not already shown after a 1 second delay
+     */
+    private void showIntroIfNotAlreadyShown() {
+
+        // check if the swipe to save intro has already been shown
+        if (!SharedPreferencesManager.readBoolean(requireContext(), SharedPreferencesManager.SWIPE_TO_SAVE_INTRO_SHOWN)) {
+            // not yet shown - show it
+            new Handler().postDelayed(this::displaySwipeToSaveIntro, MainActivity.INTRO_DELAY_MS);
+            // and update the shared preferences
+            SharedPreferencesManager.writeBoolean(requireContext(), SharedPreferencesManager.SWIPE_TO_SAVE_INTRO_SHOWN, true);
+        }
+    }
+
+    /**
+     * Displays the swipe to save introduction by drawing a circle around the first item
+     * in the recycler view, if there is any, otherwise the first item in the chip group and
+     * informs the user about the option.
+     */
+    private void displaySwipeToSaveIntro() {
+        // reference: https://github.com/KeepSafe/TapTargetView
+
+        RecyclerView.LayoutManager layoutManager = binding.rvHomeMeals.getLayoutManager();
+        View rvChild = binding.chipGroup.getChildAt(0);// use chip group if the recycler view child is null
+        if (layoutManager != null)
+            rvChild = layoutManager.getChildAt(0);
+
+        if (rvChild != null) {
+            TapTargetView.showFor(requireActivity(),// `this` is an Activity
+                    TapTarget.forView(rvChild, "Swipe Right to Save!", "Tap to Continue")
+                            // All options below are optional
+                            .outerCircleColor(R.color._secondary)      // Specify a color for the outer circle
+                            .outerCircleAlpha(.96f)            // Specify the alpha amount for the outer circle
+                            .targetCircleColor(R.color._complementary)   // Specify a color for the target circle
+                            .titleTextSize(25)                  // Specify the size (in sp) of the title text
+                            .descriptionTextColor(R.color.text_black)
+                            .descriptionTextSize(20)
+                            .titleTextColor(R.color.text_black)      // Specify the color of the title text
+                            .textTypeface(ResourcesCompat.getFont(requireContext(), R.font.alata))  // Specify a typeface for the text
+                            .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                            .drawShadow(true)                   // Whether to draw a drop shadow or not
+                            .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                            .tintTarget(false)                   // Whether to tint the target view's color
+                            .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                            .targetRadius(60),                  // Specify the target radius (in dp)
+                    new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                        @Override
+                        public void onTargetClick(TapTargetView view) {
+                            super.onTargetClick(view);      // This call is optional
+                        }
+                    });
+        }
     }
 
     @Override

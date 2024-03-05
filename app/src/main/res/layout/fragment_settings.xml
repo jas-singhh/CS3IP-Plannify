@@ -85,8 +85,10 @@
                 android:layout_centerVertical="true"
                 android:checked="true"
                 android:padding="10dp"
+                android:scaleX="1.42"
+                android:scaleY="1.42"
                 app:thumbTint="@color/primary"
-                app:trackTint="@color/_secondary"
+                app:trackTint="@animator/switch_track_selector"
                 app:useMaterialThemeColors="true" />
 
         </RelativeLayout>
@@ -136,8 +138,10 @@
                 android:layout_centerVertical="true"
                 android:checked="true"
                 android:padding="10dp"
+                android:scaleX="1.42"
+                android:scaleY="1.42"
                 app:thumbTint="@color/primary"
-                app:trackTint="@color/_secondary"
+                app:trackTint="@animator/switch_track_selector"
                 app:useMaterialThemeColors="true" />
 
         </RelativeLayout>

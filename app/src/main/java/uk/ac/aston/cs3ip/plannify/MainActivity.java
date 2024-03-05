@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     public static final String TAG = "WMK";
+    public static int INTRO_DELAY_MS = 1000;
     public static final int RC_NOTIFICATIONS = 14;
 
     private CompositeDisposable mDisposable;
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // handle splash screen transitions
+        // reference: https://www.youtube.com/watch?v=dsstwSpF_ik&ab_channel=TechPoty
+        SplashScreen.installSplashScreen(this);
+
+
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

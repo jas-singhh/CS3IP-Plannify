@@ -18,6 +18,8 @@ public class SharedPreferencesManager {
     public static final String ARE_NOTIFICATIONS_SETUP = "are_notifications_setup";
     public static final String IS_MOTIVATIONAL_QUOTE_DISABLED = "is_motivational_quote_disabled";
     public static final String HOME_SELECTED_CHIP_TAG = "home_selected_chip_tag";
+    public static final String SWIPE_TO_SAVE_INTRO_SHOWN = "swipe_to_save_intro_shown";
+    public static final String SWIPE_TO_DELETE_INTRO_SHOWN = "swipe_to_delete_intro_shown";
 
     // private constructor to avoid initialisation
     private SharedPreferencesManager() {}

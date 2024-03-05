@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- reference: https://stackoverflow.com/questions/11253512/change-on-color-of-a-switch -->
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/primary200"
+        android:state_checked="true" />
+    <item android:color="@color/text_white"/>
+</selector>

@@ -29,4 +29,21 @@
         <item name="android:textColor">@drawable/chip_text_selector</item>
         <item name="chipIconTint">@drawable/chip_text_selector</item>
     </style>
+
+<!-- reference: https://www.youtube.com/watch?v=dsstwSpF_ik -->
+    <style name="Theme.SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item><!-- 1000ms -->
+
+        <!--        Theme to follow the splash screen -->
+        <item name="postSplashScreenTheme">@style/Base.Theme.Plannify</item>
+    </style>
+
+    <style name="CustomSwitch" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="colorSwitchThumbNormal">@color/_primary</item>
+        <item name="android:colorForeground">@color/primary200</item>
+    </style>
+
 </resources>

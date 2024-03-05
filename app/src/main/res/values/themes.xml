@@ -1,10 +1,10 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.MealPlanner" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Base.Theme.Plannify" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:fontFamily">@font/alata</item>
     </style>
 
-    <style name="Theme.MealPlanner" parent="Base.Theme.MealPlanner" />
+    <style name="Theme.MealPlanner" parent="Base.Theme.Plannify" />
 </resources>
