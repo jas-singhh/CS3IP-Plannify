@@ -79,7 +79,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:text="This will contain a motivational quote"
+                            android:text="Health is Wealth"
                             android:textColor="@color/semi_transparent_white"
                             android:textSize="@dimen/text_medium"
                             app:layout_constraintEnd_toEndOf="parent"

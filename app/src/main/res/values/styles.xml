@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    Reference 1: https://stackoverflow.com/questions/34454182/round-only-top-corner-of-cardview -->
-<!--    Reference 2: https://stackoverflow.com/questions/51178933/cardview-with-different-corner-radius/57837141#57837141 -->
-    <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">40dp</item>
-        <item name="cornerSizeTopLeft">40dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-    </style>
-
 <!--   Reference 1 : https://stackoverflow.com/questions/33015652/tablayout-tab-title-text-in-lower-case -->
 <!--   Reference 2 : https://github.com/Andy671/Dachshund-Tab-Layout/issues/2 -->
     <style name="CustomTextAppearance" parent="TextAppearance.Design.Tab">
@@ -39,11 +25,4 @@
         <!--        Theme to follow the splash screen -->
         <item name="postSplashScreenTheme">@style/Base.Theme.Plannify</item>
     </style>
-
-    <style name="CustomSwitch" parent="Theme.AppCompat.DayNight">
-        <item name="colorControlActivated">@color/primary</item>
-        <item name="colorSwitchThumbNormal">@color/_primary</item>
-        <item name="android:colorForeground">@color/primary200</item>
-    </style>
-
 </resources>

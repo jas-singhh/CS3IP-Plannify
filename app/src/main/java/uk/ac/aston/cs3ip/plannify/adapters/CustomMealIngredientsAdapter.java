@@ -13,7 +13,7 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 
 import uk.ac.aston.cs3ip.plannify.R;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
 
 public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMealIngredientsAdapter.MyViewHolder> {
     // reference: https://developer.android.com/develop/ui/views/layout/recyclerview

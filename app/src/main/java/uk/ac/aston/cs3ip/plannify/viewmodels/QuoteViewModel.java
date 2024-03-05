@@ -6,50 +6,51 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.ac.aston.cs3ip.plannify.models.quote.Quote;
-import uk.ac.aston.cs3ip.plannify.repos.QuotesRepository;
+import uk.ac.aston.cs3ip.plannify.models.network_quote.NetworkQuote;
+import uk.ac.aston.cs3ip.plannify.repos.QuoteRepository;
 
 public class QuoteViewModel extends ViewModel {
 
     // Reference: Mobile Design and Development lab 2
     // Mutable data = data that can be changed
     // Live data = read-only data
-    private final MutableLiveData<Quote> quote;
+
+    private final MutableLiveData<NetworkQuote> healthQuoteOfTheDay;
 
     public QuoteViewModel() {
         super();
-        quote = new MutableLiveData<>();
+        healthQuoteOfTheDay = new MutableLiveData<>();
     }
 
-    public MutableLiveData<Quote> getQuote() {
-        return quote;
+    public MutableLiveData<NetworkQuote> getHealthQuoteOfTheDay() {
+        return healthQuoteOfTheDay;
     }
 
-    public void requestQuote(QuotesRepository quoteDataSource) {
-        Call<List<Quote>> request = quoteDataSource.getQuote();
-        request.enqueue(new Callback<List<Quote>>() {
+    public void requestHealthQuoteOfTheDay(QuoteRepository quoteRepository) {
+        Call<NetworkQuote> request = quoteRepository.getHealthQuoteOfTheDay();
+        request.enqueue(new Callback<NetworkQuote>() {
             @Override
-            public void onResponse(@NonNull Call<List<Quote>> call, @NonNull Response<List<Quote>> response) {
+            public void onResponse(@NonNull Call<NetworkQuote> call, @NonNull Response<NetworkQuote> response) {
                 if (response.isSuccessful()) {
-                    assert response.body() != null;
-                    storeResponse(response.body().get(0));//store the first received response
+                    if (response.body() != null)
+                        storeResponse(response.body());//store the first received response
                 } else {
-                    assert response.errorBody() != null;
-                    Log.i("err", response.errorBody().toString());
+                    if (response.errorBody() != null)
+                        Log.i("err", "quote response not successful: " + response.errorBody());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Quote>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<NetworkQuote> call, @NonNull Throwable t) {
                 Log.i("err", "Error in requestQuote: " + t);
             }
         });
     }
 
-    private void storeResponse(Quote response) {quote.setValue(response);}
+    private void storeResponse(NetworkQuote response) {
+        healthQuoteOfTheDay.setValue(response);
+    }
 }

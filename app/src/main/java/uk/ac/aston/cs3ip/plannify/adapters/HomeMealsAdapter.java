@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import uk.ac.aston.cs3ip.plannify.R;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
 
 public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyViewHolder> {
 

@@ -14,8 +14,8 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
 
 @Dao
 public interface RecipeDao {
@@ -39,9 +39,6 @@ public interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
     Flowable<List<LocalRecipe>> getAll();
-
-    @Query("SELECT EXISTS(SELECT * FROM recipes WHERE id=:recipeId AND mealTypeSavedFor=:mealTypeSavedFor AND dateSavedFor =:dateSavedFor)")
-    Single<Boolean> doesRecipeWithIdAndMealTypeAndDateExist(int recipeId, EnumMealType mealTypeSavedFor, LocalDate dateSavedFor);
 
     @Query("SELECT * FROM recipes WHERE dateSavedFor = :date")
     Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date);

@@ -9,9 +9,9 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.List;
 
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.AnalyzedInstruction;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Nutrition;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.AnalyzedInstruction;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.Nutrition;
 
 /**
  * This class provides type converters to tell Room how to

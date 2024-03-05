@@ -1,14 +1,9 @@
 package uk.ac.aston.cs3ip.plannify.views.home;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,7 +13,6 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,18 +23,14 @@ import com.google.android.material.chip.Chip;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import uk.ac.aston.cs3ip.plannify.BuildConfig;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
-import uk.ac.aston.cs3ip.plannify.api.QuoteService;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentHomeBinding;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
-import uk.ac.aston.cs3ip.plannify.repos.QuotesRepository;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.repos.QuoteRepository;
 import uk.ac.aston.cs3ip.plannify.shared_prefs.SharedPreferencesManager;
 import uk.ac.aston.cs3ip.plannify.utils.SwipingUtils;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
@@ -93,7 +83,7 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
 
 
         // Observe the quote data requested from the API
-        quoteViewModel.getQuote().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
+        quoteViewModel.getHealthQuoteOfTheDay().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
 
         homeViewModel.getRequestedRecipes().observe(getViewLifecycleOwner(), recipeResponse -> {
             mAdapter.updateData((ArrayList<NetworkRecipe>) recipeResponse.getResults());
@@ -110,100 +100,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SwipingUtils.setupSwipeToSave((MainActivity) requireActivity(), homeViewModel, mAdapter, mDisposable, view, binding.rvHomeMeals);
-
-    }
-
-    public static void swipeRecyclerViewItem(
-            RecyclerView recyclerView,
-            int index,
-            int distance,
-            int direction,
-            long time,
-            Runnable introRunnable
-    ) {
-        View childView = recyclerView.getChildAt(index);
-        if (childView == null) return;
-
-        float x = childView.getWidth() / 2F;
-        int[] viewLocation = new int[2];
-        childView.getLocationInWindow(viewLocation);
-        float y = (viewLocation[1] + childView.getHeight()) / 2F;
-        long downTime = SystemClock.uptimeMillis();
-        recyclerView.dispatchTouchEvent(
-                MotionEvent.obtain(
-                        downTime,
-                        downTime,
-                        MotionEvent.ACTION_DOWN,
-                        x,
-                        y,
-                        0
-                )
-        );
-
-        ValueAnimator animator = ValueAnimator.ofInt(0, distance);
-        animator.setDuration(time);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int dX = (int) animation.getAnimatedValue();
-                float mX;
-                if (direction == ItemTouchHelper.END) {
-                    mX = x + dX;
-                } else if (direction == ItemTouchHelper.START) {
-                    mX = x - dX;
-                } else {
-                    mX = 0F;
-                }
-                recyclerView.dispatchTouchEvent(
-                        MotionEvent.obtain(
-                                downTime,
-                                SystemClock.uptimeMillis(),
-                                MotionEvent.ACTION_MOVE,
-                                mX,
-                                y,
-                                0
-                        )
-                );
-            }
-        });
-        animator.start();
-
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                new Handler().postDelayed(introRunnable, 500);
-                super.onAnimationEnd(animation);
-            }
-        });
-
-//        animator.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                new Handler().postDelayed(() -> {
-//                    // Reverse animation
-//                    final ValueAnimator reverseAnimator = ValueAnimator.ofInt(distance, 0);
-//                    reverseAnimator.setDuration(time);
-//                    reverseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                        @Override
-//                        public void onAnimationUpdate(@NonNull ValueAnimator animation1) {
-//                            int dX = (int) animation1.getAnimatedValue();
-//                            float mX = (direction == ItemTouchHelper.END) ? x + dX : x - dX;
-//                            recyclerView.dispatchTouchEvent(
-//                                    MotionEvent.obtain(
-//                                            downTime,
-//                                            SystemClock.uptimeMillis(),
-//                                            MotionEvent.ACTION_MOVE,
-//                                            mX,
-//                                            y,
-//                                            0
-//                                    )
-//                            );
-//                        }
-//                    });
-//                    reverseAnimator.start();
-//                }, 1500);
-//            }
-//        });
     }
 
 
@@ -213,8 +109,9 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
     private void setupMotivationalQuoteBasedOnPreferences() {
         // check if motivational quote is enabled
         if (!SharedPreferencesManager.readBoolean(requireContext(), SharedPreferencesManager.IS_MOTIVATIONAL_QUOTE_DISABLED)) {
-            // enabled - fetch and display the quote
-            requestQuote();
+            // enabled - fetch and display the quote if not already stored
+            if (quoteViewModel.getHealthQuoteOfTheDay().getValue() == null)
+                requestQuote();
             binding.motivationalQuoteParent.setVisibility(View.VISIBLE);
         } else {
             // disabled - hide the container
@@ -249,10 +146,9 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
                     }
                 }
             }
-        } else {
-            // if the tag is null - it means it has not been initialised
-            // so we do not need to do anything as the breakfast chip is set by default
-        }
+        }  // if the tag is null - it means it has not been initialised
+        // so we do not need to do anything as the breakfast chip is set by default
+
     }
 
     /**
@@ -312,12 +208,7 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
      * Requests the motivational quote to display at launch.
      */
     private void requestQuote() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.NINJA_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        QuoteService request = retrofit.create(QuoteService.class);
-        quoteViewModel.requestQuote(new QuotesRepository(request));
+        quoteViewModel.requestHealthQuoteOfTheDay(new QuoteRepository());
     }
 
     /**
@@ -372,13 +263,7 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
                             .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
                             .tintTarget(false)                   // Whether to tint the target view's color
                             .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
-                            .targetRadius(60),                  // Specify the target radius (in dp)
-                    new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
-                        @Override
-                        public void onTargetClick(TapTargetView view) {
-                            super.onTargetClick(view);      // This call is optional
-                        }
-                    });
+                            .targetRadius(60));
         }
     }
 

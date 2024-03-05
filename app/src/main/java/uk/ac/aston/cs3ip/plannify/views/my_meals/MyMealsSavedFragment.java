@@ -32,7 +32,7 @@ import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsOnClickInterface;
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentMyMealsSavedBinding;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.shared_prefs.SharedPreferencesManager;
 import uk.ac.aston.cs3ip.plannify.utils.SwipingUtils;
 import uk.ac.aston.cs3ip.plannify.viewmodels.CalendarViewModel;

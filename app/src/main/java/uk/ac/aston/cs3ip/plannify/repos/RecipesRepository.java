@@ -11,16 +11,15 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
-import uk.ac.aston.cs3ip.plannify.BuildConfig;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.api.MyRecipeService;
 import uk.ac.aston.cs3ip.plannify.api.RetrofitClient;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMaxReadyTime;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.AutoCompleteResult;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.AutoCompleteResult;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.room.AppDatabase;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 
@@ -30,7 +29,7 @@ public class RecipesRepository {
     private final AppDatabase database;
 
     public RecipesRepository(Application application) {
-        this.request = RetrofitClient.getInstance(BuildConfig.SPOONACULAR_BASE_URL).create(MyRecipeService.class);
+        this.request = RetrofitClient.getRecipeRetrofitInstance().create(MyRecipeService.class);
         this.database = AppDatabase.getDatabase(application);
     }
 
@@ -42,17 +41,6 @@ public class RecipesRepository {
         return request.getRecipesBySearch(query);
     }
 
-//    public Call<RecipeResponse> getRecipesByQuery(String query) {
-//        return request.getRecipesByQuery(TYPE, BuildConfig.EDAMAM_APP_ID,
-//                BuildConfig.EDAMAM_API_KEY, query);
-//    }
-
-
-    //    public Call<RecipeResponse> getRecipesByDiet(EnumDiet diet) {
-//        return request.getRecipeByDiet(TYPE, BuildConfig.EDAMAM_APP_ID,
-//                BuildConfig.EDAMAM_API_KEY, diet);
-//    }
-//
     public Call<RecipeResponseList> getRecipesByMealType(EnumMealType mealType) {
         return request.getRecipesByMealType(mealType.getMealType());
     }
@@ -126,10 +114,6 @@ public class RecipesRepository {
 
     public Flowable<List<LocalRecipe>> getAllLocalRecipes() {
         return database.recipeDao().getAll();
-    }
-
-    public Single<Boolean> doesRecipeWithIdAndMealTypeAndDateExist(int recipeId, EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
-        return database.recipeDao().doesRecipeWithIdAndMealTypeAndDateExist(recipeId, mealTypeSavedFor, dateSavedFor);
     }
 
     public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {

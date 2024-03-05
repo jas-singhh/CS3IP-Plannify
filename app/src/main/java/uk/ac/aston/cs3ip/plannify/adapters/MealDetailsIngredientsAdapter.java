@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import uk.ac.aston.cs3ip.plannify.R;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 
 public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDetailsIngredientsAdapter.MyViewHolder> {

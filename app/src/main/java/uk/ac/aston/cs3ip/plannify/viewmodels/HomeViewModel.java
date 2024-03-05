@@ -20,9 +20,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.repos.RecipesRepository;
 
 public class HomeViewModel extends ViewModel {
@@ -213,20 +213,6 @@ public class HomeViewModel extends ViewModel {
     public Flowable<List<LocalRecipe>> getAllLocalRecipes() {
         return recipeRepository.getAllLocalRecipes();
     }
-
-//    /**
-//     * Checks whether the recipe already exists in the database and returns 1 if it exists
-//     * and 0 if it doesn't.
-//     *
-//     * @param id unique identifier of the recipe.
-//     * @return 1 if it exists - 0 if it doesn't.
-//     */
-//    public Single<Integer> existsById(int id) {
-//        return recipeRepository.existsById(id);
-//    }
-public Single<Boolean> doesRecipeWithIdAndMealTypeAndDateExist(int recipeId, EnumMealType mealTypeSavedFor, LocalDate dateSavedFor) {
-    return recipeRepository.doesRecipeWithIdAndMealTypeAndDateExist(recipeId, mealTypeSavedFor, dateSavedFor);
-}
 
     /**
      * Returns a list of local recipes saved for the specified date.

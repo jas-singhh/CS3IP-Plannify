@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
 
 public class Utilities {
 

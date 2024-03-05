@@ -43,8 +43,7 @@
 
         <receiver
             android:name="uk.ac.aston.cs3ip.plannify.notifications.NotificationPublisher"
-            android:exported="true"
-            android:permission="">
+            android:exported="true">
         <intent-filter>
             <action android:name="uk.ac.aston.cs3mdd.mealplanner.START_ALARM" >
             </action>

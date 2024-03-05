@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
 
 /**
  * Grocery Item is the main entity representing each grocery item containing

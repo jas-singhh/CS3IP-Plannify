@@ -99,7 +99,7 @@
             app:destination="@id/homeFragment" />
         <argument
             android:name="myRecipe"
-            app:argType="uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe" />
+            app:argType="uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe" />
     </fragment>
     <fragment
         android:id="@+id/createRecipeFragment"

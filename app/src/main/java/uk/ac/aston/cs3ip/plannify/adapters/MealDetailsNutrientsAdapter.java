@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import uk.ac.aston.cs3ip.plannify.R;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.Nutrient;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.Nutrient;
 
 public class MealDetailsNutrientsAdapter extends RecyclerView.Adapter<MealDetailsNutrientsAdapter.MyViewHolder> {
     // reference: https://developer.android.com/develop/ui/views/layout/recyclerview

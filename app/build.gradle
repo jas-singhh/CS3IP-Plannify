@@ -25,13 +25,9 @@ android {
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        buildConfigField "String", "SPOONACULAR_API_KEY", "\"${properties.getProperty("SPOONACULAR_API_KEY")}\""
-        buildConfigField "String", "EDAMAM_APP_ID", "\"${properties.getProperty("EDAMAM_APP_ID")}\""
-        buildConfigField "String", "EDAMAM_API_KEY", "\"${properties.getProperty("EDAMAM_API_KEY")}\""
-        buildConfigField "String", "NINJA_API_KEY", "\"${properties.getProperty("NINJA_API_KEY")}\""
-        buildConfigField "String", "NINJA_BASE_URL", "\"https://api.api-ninjas.com\""
         buildConfigField "String", "SPOONACULAR_BASE_URL", "\"https://api.spoonacular.com\""
-        buildConfigField "String", "EDAMAM_BASE_URL", "\"https://api.edamam.com\""
+        buildConfigField "String", "SPOONACULAR_API_KEY", "\"${properties.getProperty("SPOONACULAR_API_KEY")}\""
+        buildConfigField "String", "PAPER_QUOTES_BASE_URL", "\"https://api.paperquotes.com\""
     }
 
     buildTypes {

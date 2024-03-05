@@ -1,25 +1,6 @@
 <resources>
     <string name="app_name">Plannify</string>
 
-
-    <!--    MEAL TYPES -->
-    <array name="array_meal_types">
-        <item>Popular</item>
-        <item>Breakfast</item>
-        <item>Brunch</item>
-        <item>Lunch</item>
-        <item>Snack</item>
-        <item>Tea Time</item>
-        <item>Dinner</item>
-    </array>
-
-    <!--    MEAL TYPES SUB-TEXT-->
-    <string name="breakfast_subtext">Most important meal of the day</string>
-    <string name="brunch_subtext">Brunch placeholder</string>
-    <string name="lunch_subtext">Lunch placeholder</string>
-    <string name="snack_subtext">Snack placeholder</string>
-    <string name="teatime_subtext">Tea Time placeholder</string>
-    <string name="dinner_subtext">Dinner placeholder</string>
     <string name="channel_name">Meal Reminders</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
@@ -40,9 +21,6 @@
     <dimen name="text_titles">20sp</dimen>
     <dimen name="text_medium">14sp</dimen>
     <dimen name="text_important">16sp</dimen>
-
-    <!--    PADDINGS -->
-    <dimen name="padding_cards">20dp</dimen>
 
     <!--    MARGINS RECOMMENDED BY ANDROID -->
     <!--    REFERENCE: https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-basics#:~:text=To%20begin%20creating%20a%20solid,adapt%20to%20accommodate%20larger%20screens. -->

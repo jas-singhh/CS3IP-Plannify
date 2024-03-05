@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDate;
 
 import uk.ac.aston.cs3ip.plannify.enums.EnumMealType;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
 
 @Entity(tableName = "recipes", indices = {@Index(value={"id", "title", "dateSavedFor", "mealTypeSavedFor"}, unique = true)})
 public class LocalRecipe extends NetworkRecipe {

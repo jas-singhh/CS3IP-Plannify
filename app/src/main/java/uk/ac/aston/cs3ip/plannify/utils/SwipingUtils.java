@@ -15,8 +15,8 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.adapters.HomeMealsAdapter;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
 import uk.ac.aston.cs3ip.plannify.viewmodels.HomeViewModel;
 import uk.ac.aston.cs3ip.plannify.views.dialogs.DialogSaveRecipe;
 

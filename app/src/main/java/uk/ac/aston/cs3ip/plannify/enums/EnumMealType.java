@@ -2,6 +2,8 @@ package uk.ac.aston.cs3ip.plannify.enums;
 
 import androidx.annotation.NonNull;
 
+import java.util.Locale;
+
 public enum EnumMealType {
 
     BREAKFAST("Breakfast"),
@@ -23,7 +25,7 @@ public enum EnumMealType {
     }
 
     public static EnumMealType getEnumMealTypeFromValue(String value) {
-        value = value.toLowerCase();
+        value = value.toLowerCase(Locale.getDefault());
         for (EnumMealType enumValue: EnumMealType.values()) {
             if(enumValue.toString().toLowerCase().equals(value)) {
                 return enumValue;

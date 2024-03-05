@@ -9,8 +9,8 @@ import retrofit2.http.Headers;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import uk.ac.aston.cs3ip.plannify.BuildConfig;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.AutoCompleteResult;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.RecipeResponseList;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.AutoCompleteResult;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.RecipeResponseList;
 
 public interface MyRecipeService {
 

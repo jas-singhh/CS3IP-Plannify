@@ -1,6 +1,6 @@
 package uk.ac.aston.cs3ip.plannify.adapters;
 
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
 
 public interface HomeMealsOnClickInterface {
 

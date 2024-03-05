@@ -18,9 +18,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.ac.aston.cs3ip.plannify.MainActivity;
 import uk.ac.aston.cs3ip.plannify.enums.EnumFilterId;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.AutoCompleteResult;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.AutoCompleteResult;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.RecipeResponseList;
 import uk.ac.aston.cs3ip.plannify.repos.RecipesRepository;
 
 public class FindMealsViewModel extends ViewModel {

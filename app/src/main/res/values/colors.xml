@@ -7,10 +7,8 @@
     <color name="primary">#005EB8</color>
     <color name="primary200">#8cc6f4</color>
     <color name="complementary">#B85500</color>
-    <color name="complementary200">#d7a02e</color>
     <color name="split_complementary">#B88800</color>
     <color name="error_red">#B00020</color>
-    <color name="gray">#424242</color>
     <color name="card_bg">#2D2D2D</color>
 
 <!--    RECOMMENDED BY MATERIALS
@@ -25,7 +23,6 @@
 <!--    TESTING -->
     <color name="_primary">#121212</color>
     <color name="_secondary">#8cc6f4</color>
-    <color name="_secondary2">#1A8CC6F4</color>
     <color name="_complementary">#B85500</color>
 
     <!--    STRESS REDUCING COLOURS -->
@@ -34,7 +31,6 @@
     <color name="green">#00E676</color>
     <color name="pink">#880E4F</color>
     <color name="purple">#4A148C</color>
-    <color name="blue">#0D47A1</color>
     <color name="semi_transparent_white">#99FFFFFF</color>
 
 </resources>

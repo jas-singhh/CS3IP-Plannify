@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.aston.cs3ip.plannify.R;
-import uk.ac.aston.cs3ip.plannify.models.api_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.GroceryItem;
+import uk.ac.aston.cs3ip.plannify.models.network_recipe.ExtendedIngredient;
 import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 
 public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMealsGroceryListItemsAdapter.MyViewHolder> {
