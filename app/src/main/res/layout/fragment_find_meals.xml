@@ -59,7 +59,8 @@
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:src="@drawable/ic_filter"
-                app:tint="@color/text_white" />
+                app:tint="@color/text_white"
+                android:contentDescription="Filters icon" />
 
         </com.google.android.material.card.MaterialCardView>
 

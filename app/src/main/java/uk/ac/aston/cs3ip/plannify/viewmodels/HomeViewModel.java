@@ -56,85 +56,6 @@ public class HomeViewModel extends ViewModel {
         return allRecipes;
     }
 
-    /**
-     * Requests recipes by searching for the provided query.
-     *
-     * @param query query to search the recipes.
-     */
-    public void requestRecipesByQuery(String query) {
-        Call<RecipeResponseList> request = recipeRepository.getRecipesByQuery(query);
-        request.enqueue(new Callback<RecipeResponseList>() {
-            @Override
-            public void onResponse(@NonNull Call<RecipeResponseList> call, @NonNull Response<RecipeResponseList> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
-
-                    storeData(response.body());
-                } else {
-                    assert response.errorBody() != null;
-                    Log.i(MainActivity.TAG, response.errorBody().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<RecipeResponseList> call, @NonNull Throwable t) {
-                Log.i(MainActivity.TAG, "Error in requestRecipesByQuery: " + t);
-            }
-        });
-    }
-
-//    /**
-//     * Requests recipes by searching for the provided query.
-//     *
-//     * @param query query to search the recipes.
-//     */
-//    public void requestRecipesByQuery(String query) {
-//        Call<RecipeResponse> request = recipeRepository.getRecipesByQuery(query);
-//        request.enqueue(new Callback<RecipeResponse>() {
-//            @Override
-//            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
-//                if (response.isSuccessful()) {
-//                    assert response.body() != null;
-//                    storeData(response.body());
-//                } else {
-//                    assert response.errorBody() != null;
-//                    Log.i(MainActivity.TAG, response.errorBody().toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
-//                Log.i(MainActivity.TAG, "Error in requestRecipesByQuery: " + t);
-//            }
-//        });
-//    }
-
-//    /**
-//     * Requests recipes according to the specified diet type.
-//     *
-//     * @param diet diet for which to fetch recipes.
-//     */
-//    public void requestRecipesByDiet(EnumDiet diet) {
-//        Call<RecipeResponse> request = recipeRepository.getRecipesByDiet(diet);
-//        request.enqueue(new Callback<RecipeResponse>() {
-//            @Override
-//            public void onResponse(@NonNull Call<RecipeResponse> call, @NonNull Response<RecipeResponse> response) {
-//                if (response.isSuccessful()) {
-//                    assert response.body() != null;
-//                    storeData(response.body());
-//                } else {
-//                    assert response.errorBody() != null;
-//                    Log.i(MainActivity.TAG, response.errorBody().toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<RecipeResponse> call, @NonNull Throwable t) {
-//                Log.i(MainActivity.TAG, "Error in requestRecipesByDiet: " + t);
-//            }
-//        });
-//    }
-//
 
     /**
      * Requests the recipes by the specified meal type.
@@ -202,26 +123,6 @@ public class HomeViewModel extends ViewModel {
      */
     public Completable update(LocalRecipe recipe) {
         return recipeRepository.update(recipe);
-    }
-
-
-    /**
-     * Returns the local recipes present in the database.
-     *
-     * @return local recipes in the database.
-     */
-    public Flowable<List<LocalRecipe>> getAllLocalRecipes() {
-        return recipeRepository.getAllLocalRecipes();
-    }
-
-    /**
-     * Returns a list of local recipes saved for the specified date.
-     *
-     * @param date date for which to retrieve saved recipes.
-     * @return a list of recipes for the given date.
-     */
-    public Flowable<List<LocalRecipe>> getRecipesForDate(LocalDate date) {
-        return recipeRepository.getRecipesForDate(date);
     }
 
     /**

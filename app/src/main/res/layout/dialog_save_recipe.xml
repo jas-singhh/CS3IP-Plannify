@@ -164,7 +164,6 @@
         android:textColor="@color/text_white"
         android:textColorHint="@color/text_grey"
         android:textSize="@dimen/text_important"
-        app:drawableEndCompat="@drawable/ic_arrow_down"
         app:drawableStartCompat="@drawable/ic_calendar"
         app:drawableTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +188,6 @@
         app:boxCornerRadiusTopStart="@dimen/input_radius"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        app:endIconMode="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_date">
@@ -201,7 +199,6 @@
             android:background="@drawable/input_rounded"
             android:backgroundTint="@color/card_bg"
             android:drawableStart="@drawable/ic_meal_type"
-            android:drawableEnd="@drawable/ic_arrow_down"
             android:drawablePadding="7dp"
             android:drawableTint="@color/white"
             android:focusable="true"

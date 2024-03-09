@@ -5,6 +5,21 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="deleteRow()">
+        <State />
+      </entry>
+      <entry key="getRowByDate()">
+        <State />
+      </entry>
+      <entry key="getRowByPrimaryId()">
+        <State />
+      </entry>
+      <entry key="getRowOfTypeForDate()">
+        <State />
+      </entry>
+      <entry key="getRowsWithinDates()">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

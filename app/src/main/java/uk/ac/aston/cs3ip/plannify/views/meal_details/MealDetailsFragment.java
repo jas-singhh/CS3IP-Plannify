@@ -222,13 +222,6 @@ public class MealDetailsFragment extends Fragment {
             }
         }
 
-
-//        if (selectedRecipe.getNutrition() != null) {
-//            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
-//                    getNutrients().toArray(new Nutrient[0]);
-//            return Arrays.copyOfRange(nutrientsArray, 0, 8);
-//        }
-
         return null;
     }
 
@@ -249,13 +242,6 @@ public class MealDetailsFragment extends Fragment {
                                 nutrientsToGetEnoughNames.contains(nutrient.getName())).toArray(Nutrient[]::new);
             }
         }
-
-
-//        if (selectedRecipe.getNutrition() != null) {
-//            Nutrient[] nutrientsArray = selectedRecipe.getNutrition().
-//                    getNutrients().toArray(new Nutrient[0]);
-//            return Arrays.copyOfRange(nutrientsArray, 8, nutrientsArray.length);
-//        }
 
         return null;
     }
@@ -278,8 +264,8 @@ public class MealDetailsFragment extends Fragment {
     }
 
     /**
-     * Navigates the user back to the previous page depending on which source
-     * called it in the first place.
+     * Navigates the user back to the previous page depending on which source page
+     * called it.
      */
     private void onClickBack() {
         binding.btnBack.setOnClickListener(v -> {

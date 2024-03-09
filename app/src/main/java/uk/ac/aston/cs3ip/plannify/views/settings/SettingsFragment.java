@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import uk.ac.aston.cs3ip.plannify.databinding.FragmentSettingsBinding;
 import uk.ac.aston.cs3ip.plannify.notifications.NotificationHelper;
@@ -35,7 +36,7 @@ public class SettingsFragment extends Fragment {
         setupSwitches();
 
         initSwitchesListeners();
-
+        initOnClickHelp();
 
         return binding.getRoot();
     }
@@ -81,13 +82,19 @@ public class SettingsFragment extends Fragment {
 
 
         // motivational quote switch
-        binding.switchMotivationalQuote.setOnCheckedChangeListener((buttonView, isChecked) ->  {
-            SharedPreferencesManager.writeBoolean(
-                    requireContext(),
-                    SharedPreferencesManager.IS_MOTIVATIONAL_QUOTE_DISABLED,
-                    !isChecked
-            );
+        binding.switchMotivationalQuote.setOnCheckedChangeListener((buttonView, isChecked) -> SharedPreferencesManager.writeBoolean(
+                requireContext(),
+                SharedPreferencesManager.IS_MOTIVATIONAL_QUOTE_DISABLED,
+                !isChecked
+        ));
+    }
+
+    private void initOnClickHelp() {
+        binding.settingsHelpBtn.setOnClickListener(v -> {
+            // reference: https://developer.android.com/guide/navigation/navcontroller
+            NavHostFragment.findNavController(this).navigate(SettingsFragmentDirections.actionSettingsFragmentToHelpFragment());
         });
     }
+
 
 }

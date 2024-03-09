@@ -33,7 +33,7 @@ public class DialogGetNotified extends Dialog {
         setTitle(null);
         setCancelable(false);
         setOnCancelListener(null);
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_get_notified,
+        View view = View.inflate(context, R.layout.dialog_get_notified,
                 null);
 
         initCancelButton(view);

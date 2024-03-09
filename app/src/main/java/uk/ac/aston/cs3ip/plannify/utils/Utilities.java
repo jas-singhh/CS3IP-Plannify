@@ -57,8 +57,6 @@ public class Utilities {
         switch (meal) {
             case POPULAR:
                 return R.drawable.ic_popular;
-            case BREAKFAST:
-                return R.drawable.ic_breakfast;
             case BRUNCH:
                 return R.drawable.ic_brunch;
             case LUNCH:
@@ -69,6 +67,7 @@ public class Utilities {
                 return R.drawable.ic_tea_time;
             case DINNER:
                 return R.drawable.ic_dinner;
+            case BREAKFAST:
             default:
                 return R.drawable.ic_breakfast;
         }

@@ -28,8 +28,7 @@ public class DialogLoading extends Dialog {
         setTitle(null);
         setCancelable(false);
         setOnCancelListener(null);
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading,
-                null);
+        View view = View.inflate(context, R.layout.dialog_loading, null);
 
         // reference: https://copyprogramming.com/howto/changing-background-dim-color-for-dialog-appears-in-android
         // do not dim the background

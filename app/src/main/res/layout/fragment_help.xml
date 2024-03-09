@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/_primary"
+    tools:context=".views.settings.HelpFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/help_header_parent"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardBackgroundColor="@color/_primary"
+        app:cardElevation="@dimen/elevation_15_overlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <!--    BACK BUTTON -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/help_back_btn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="@dimen/margin"
+                android:backgroundTint="@color/_complementary"
+                android:clickable="true"
+                android:elevation="@dimen/elevation_14_overlay"
+                android:layout_centerVertical="true"
+                android:focusable="true"
+                app:cardCornerRadius="50dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    app:srcCompat="@drawable/ic_back"
+                    app:tint="@color/text_white" />
+
+            </com.google.android.material.card.MaterialCardView>
+            <!-- BACK BUTTON -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/help_back_btn"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="10dp"
+                android:textStyle="bold"
+                android:text="Help &amp; Tips"
+                android:textSize="@dimen/text_headings" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+<!--    SAVING RECIPE HEADING -->
+    <TextView
+        android:id="@+id/help_saving_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/help_header_parent"
+        android:text="Saving a Recipe"
+        android:layout_marginStart="@dimen/margin"
+        android:textSize="@dimen/text_titles"
+        android:layout_marginTop="@dimen/margin"
+        android:textStyle="bold"
+        />
+
+
+    <!--    SAVING RECIPE PARENT -->
+    <LinearLayout
+        android:id="@+id/help_saving_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_rounded"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/cards"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/help_saving_heading"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:text="@string/help_saving_recipe"
+            android:padding="5dp"
+            android:lineSpacingExtra="10dp"
+            />
+
+    </LinearLayout>
+
+    <!--    DELETING RECIPE HEADING -->
+    <TextView
+        android:id="@+id/help_deleting_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/help_saving_parent"
+        android:text="Deleting a Recipe"
+        android:layout_marginStart="@dimen/margin"
+        android:textSize="@dimen/text_titles"
+        android:layout_marginTop="@dimen/margin"
+        android:textStyle="bold"
+        />
+
+
+    <!--    DELETING RECIPE PARENT -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_rounded"
+        android:layout_marginHorizontal="@dimen/margin"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/cards"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/help_deleting_heading"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:text="@string/help_deleting_recipe"
+            android:padding="5dp"
+            android:lineSpacingExtra="10dp"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

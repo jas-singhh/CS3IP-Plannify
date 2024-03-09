@@ -47,7 +47,7 @@ public class DialogFindMealsFilters extends Dialog {
 
     public DialogFindMealsFilters(@NonNull Context context, MainActivity activity) {
         super(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        View view = getLayoutInflater().inflate(R.layout.dialog_find_meals_filters, null);
+        View view = View.inflate(context, R.layout.dialog_find_meals_filters, null);
         this.context = context;
         findMealsViewModel = new ViewModelProvider(activity,
                 ViewModelProvider.Factory.from(FindMealsViewModel.initializer)).get(FindMealsViewModel.class);

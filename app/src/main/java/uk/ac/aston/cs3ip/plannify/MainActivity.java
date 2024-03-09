@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     public static final String TAG = "WMK";
-    public static int INTRO_DELAY_MS = 1000;
+    public static final int INTRO_DELAY_MS = 1000;
     public static final int RC_NOTIFICATIONS = 14;
 
     private CompositeDisposable mDisposable;
@@ -166,15 +166,6 @@ public class MainActivity extends AppCompatActivity {
      * box to add a custom meal.
      */
     private void initFab() {
-//        findViewById(R.id.fab).setOnClickListener(v -> new DialogCustomMeal(MainActivity.this, localRecipe -> {
-//            // save recipe once the user clicks on save
-//            mDisposable.add(homeViewModel.insert(localRecipe)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(() -> Toast.makeText(this, "Recipe Saved", Toast.LENGTH_LONG).show()
-//                            , throwable -> Utilities.showErrorToast(this)));
-//        }));
-
         findViewById(R.id.fab).setOnClickListener(v -> {
             // global action - reference: https://developer.android.com/guide/navigation/design/global-action
             NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -209,48 +200,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferencesManager.writeBoolean(MainActivity.this,
                 SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP, true);
     }
-
-//    private void setupNotificationsIfNotAlreadySet() {
-//
-//        // check if notifications have already been set
-//        // return if they have been already set up as we do not want to set them multiple times
-//        if (SharedPreferencesManager.readBoolean(MainActivity.this, SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP)) return;
-//
-//        for (EnumMealType mealType: EnumMealType.values()) {
-//            // set up the intent for the specific meal type
-//            Intent intent = new Intent(MainActivity.this, NotificationPublisher.class);
-//            intent.putExtra(TITLE, mealType.getMealType());
-//            intent.setAction("uk.ac.aston.cs3mdd.mealplanner.START_ALARM");
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-//                    MainActivity.this,
-//                    mealType.hashCode(),
-//                    intent,
-//                    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
-//            );
-//
-//            // set up the appropriate time for each meal notification
-//            int mealHour = Utilities.getTimeHourFromMealType(mealType);
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTimeInMillis(System.currentTimeMillis());
-//            int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-//
-//            // check if meal time has already passed
-//            // if meal time has passed - schedule it for the next day
-//            if (currentHour >= mealHour) {
-//                calendar.add(Calendar.DAY_OF_MONTH, 1);// schedule starting from tomorrow
-//            }
-//            calendar.set(Calendar.HOUR_OF_DAY, mealHour);
-//            calendar.set(Calendar.MINUTE, 0);
-//            calendar.set(Calendar.SECOND, 0);
-//
-//            // schedule the notification
-//            NotificationHelper.scheduleRTCNotification(MainActivity.this, calendar, pendingIntent);
-//        }
-//
-//        // update the shared preferences to indicate that the notifications have been set
-//        SharedPreferencesManager.writeBoolean(MainActivity.this,
-//                SharedPreferencesManager.ARE_NOTIFICATIONS_SETUP, true);
-//}
 
     @Override
     protected void onStop() {

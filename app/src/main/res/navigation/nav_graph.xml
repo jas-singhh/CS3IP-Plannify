@@ -84,6 +84,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_myMealsFragment"
             app:destination="@id/myMealsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_helpFragment"
+            app:destination="@id/helpFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
@@ -97,13 +100,14 @@
         <action
             android:id="@+id/action_mealDetailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <!--suppress NavigationFile -->
         <argument
             android:name="myRecipe"
             app:argType="uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe" />
     </fragment>
     <fragment
         android:id="@+id/createRecipeFragment"
-        android:name="uk.ac.aston.cs3ip.plannify.CreateRecipeFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.create_recipe.CreateRecipeFragment"
         android:label="fragment_create_recipe"
         tools:layout="@layout/fragment_create_recipe" >
         <action
@@ -118,5 +122,14 @@
         <action
             android:id="@+id/action_createRecipeFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="uk.ac.aston.cs3ip.plannify.views.settings.HelpFragment"
+        android:label="fragment_help"
+        tools:layout="@layout/fragment_help" >
+        <action
+            android:id="@+id/action_helpFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 </navigation>

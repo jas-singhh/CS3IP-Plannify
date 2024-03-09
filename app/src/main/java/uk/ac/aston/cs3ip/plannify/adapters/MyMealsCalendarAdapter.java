@@ -66,7 +66,7 @@ public class MyMealsCalendarAdapter extends RecyclerView.Adapter<MyMealsCalendar
 
         // evenly distribute the horizontal space in the recycler view for the 7 days of the week
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = (int) (parent.getMeasuredWidth() / 7);
+        layoutParams.width = parent.getMeasuredWidth() / 7;
 
         return new MyViewHolder(view);
     }

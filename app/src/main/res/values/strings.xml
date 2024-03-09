@@ -11,7 +11,7 @@
     <!--    CARD PROPERTIES -->
     <dimen name="radius_card">20dp</dimen>
     <dimen name="radius_small_card">5dp</dimen>
-<!--    REFERENCE: https://m2.material.io/design/color/dark-theme.html#properties -->
+    <!--    REFERENCE: https://m2.material.io/design/color/dark-theme.html#properties -->
     <dimen name="elevation_11_overlay">6dp</dimen>
     <dimen name="elevation_14_overlay">12dp</dimen>
     <dimen name="elevation_15_overlay">16dp</dimen>
@@ -25,5 +25,8 @@
     <!--    MARGINS RECOMMENDED BY ANDROID -->
     <!--    REFERENCE: https://developer.android.com/design/ui/mobile/guides/layout-and-content/layout-basics#:~:text=To%20begin%20creating%20a%20solid,adapt%20to%20accommodate%20larger%20screens. -->
     <dimen name="margin">16dp</dimen>
+    <string name="help_saving_recipe">Two ways of saving a recipe;\n1. Swipe right on the desired recipe or\n2. Click on the recipe and save it from the details page.</string>
+    <string name="help_deleting_recipe">To delete a recipe in your saved meals, simply swipe left on the desired recipe.</string>
+    <string name="health_rating_not_available">Health Rating Not Available</string>
 
 </resources>

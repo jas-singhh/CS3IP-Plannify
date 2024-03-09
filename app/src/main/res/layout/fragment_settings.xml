@@ -59,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/purple"
+                    android:contentDescription="Notifications ring bell"
                     android:padding="10dp"
                     android:src="@drawable/ic_notifications"
                     app:tint="@color/white" />
@@ -112,6 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/pink"
+                    android:contentDescription="Character in happy mood and motivated"
                     android:padding="10dp"
                     android:src="@drawable/ic_motivation"
                     app:tint="@color/white" />
@@ -147,5 +149,61 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+
+    <!--        HELP BUTTON PARENT -->
+    <RelativeLayout
+        android:id="@+id/settings_help_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:background="@drawable/input_rounded"
+        android:backgroundTint="@color/cards"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <!--        MOTIVATIONAL QUOTE ICON -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/help_icon_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="@dimen/radius_card">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
+                android:contentDescription="Question mark"
+                android:padding="10dp"
+                android:src="@drawable/ic_help"
+                app:tint="@color/text_white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!--        HELP TEXT -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/help_icon_parent"
+            android:padding="10dp"
+            android:text="Help &amp; Tips"
+            android:textSize="@dimen/text_important" />
+
+
+        <!--        HELP ICON -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="Arrow to move forward"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_forward" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

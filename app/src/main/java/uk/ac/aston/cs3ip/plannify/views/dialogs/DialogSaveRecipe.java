@@ -49,7 +49,7 @@ public class DialogSaveRecipe extends Dialog {
     public DialogSaveRecipe(@NonNull Context context, NetworkRecipe selectedNetworkRecipe, DialogSaveRecipeOnClickInterface listener) {
         super(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_save_recipe, null);
+        View view = View.inflate(context, R.layout.dialog_save_recipe, null);
         mListener = listener;
 
         selectedDate = LocalDate.now();

@@ -14,7 +14,8 @@
         android:src="@drawable/img_notifications_bell"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Yellow ring bell for notifications" />
 
     <!--    HEADING -->
     <TextView
@@ -49,7 +50,8 @@
         android:src="@drawable/img_cooking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notifications_description" />
+        app:layout_constraintTop_toBottomOf="@id/notifications_description"
+        android:contentDescription="Colourful bowl mixing some ingredients with a mixer" />
 
 
     <!--    BUTTONS -->

@@ -20,8 +20,7 @@ public class DialogSuccess extends Dialog {
 
     public DialogSuccess(@NonNull Context context, String description) {
         super(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_success,
-                null);
+        View view = View.inflate(context, R.layout.dialog_success, null);
 
         TextView descriptionTextView = view.findViewById(R.id.dialog_confirmation_text);
         descriptionTextView.setText(description);

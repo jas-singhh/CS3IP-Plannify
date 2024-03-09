@@ -212,32 +212,5 @@ public class MyMealsGroceryListFragment extends Fragment implements MyMealsGroce
                     return homeViewModel.updateIngredientsForRecipeWithPrimaryId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId());
                 })
                 .subscribe(() -> {}, throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
-
-
-//        // find the item in the database and update its status
-//        mDisposable.add(homeViewModel.getRecipeById(groceryItem.getParentRecipeId())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(localRecipe -> {
-//                    if (localRecipe != null) {
-//                        for (ExtendedIngredient ingredient : localRecipe.getExtendedIngredients()) {
-//                            if (groceryItem.getId() == ingredient.getId()) {
-//                                ingredient.setCheckedInGroceryList(isChecked);
-//                                break;
-//                            }
-//                        }
-//
-//                        // update the changes in the database to persist them
-//                        mDisposable.add(homeViewModel.updateIngredientsForRecipeWithId(localRecipe.getExtendedIngredients(), localRecipe.getPrimaryId())
-//                                .subscribeOn(Schedulers.io())
-//                                .observeOn(AndroidSchedulers.mainThread())
-//                                .subscribe(() -> {
-//                                            Log.d(MainActivity.TAG, "data updated for " + groceryItem.getName());
-//                                        },
-//                                        throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
-//                    }
-//
-//                }, throwable -> Log.e(MainActivity.TAG, "MyMealsGroceryListFragment::onClickGroceryItem: " + throwable)));
-
     }
 }

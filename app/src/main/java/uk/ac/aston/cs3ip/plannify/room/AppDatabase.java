@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import uk.ac.aston.cs3ip.plannify.models.local_recipe.LocalRecipe;
 
 
-@Database(entities = LocalRecipe.class, version = 1)
+@Database(entities = {LocalRecipe.class}, version = 1)
 @TypeConverters({RoomDataTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 

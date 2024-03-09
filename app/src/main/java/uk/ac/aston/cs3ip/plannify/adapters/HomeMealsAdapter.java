@@ -141,7 +141,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         if (localDataSet.get(position).getId() == -1) {
             // it is a custom recipe
             TextView tv = new TextView(holder.itemView.getContext());
-            tv.setText("Health Rating Not Available");
+            tv.setText(R.string.health_rating_not_available);
             holder.getMealHealthRatingParent().addView(tv);
         } else {
             // it is not a custom recipe
