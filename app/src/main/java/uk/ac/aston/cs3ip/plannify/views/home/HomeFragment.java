@@ -275,7 +275,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
 
         // reference: https://developer.android.com/guide/navigation/navcontroller
         NavHostFragment.findNavController(this).navigate(action);
-
     }
 
     @Override

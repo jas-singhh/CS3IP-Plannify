@@ -67,12 +67,11 @@ public class HomeViewModel extends ViewModel {
         request.enqueue(new Callback<RecipeResponseList>() {
             @Override
             public void onResponse(@NonNull Call<RecipeResponseList> call, @NonNull Response<RecipeResponseList> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+                if (response.isSuccessful() && response.body() != null) {
                     storeData(response.body());
                 } else {
-                    assert response.errorBody() != null;
-                    Log.i(MainActivity.TAG, response.errorBody().toString());
+                    if (response.errorBody() != null)
+                        Log.i(MainActivity.TAG, response.errorBody().toString());
                 }
             }
 
