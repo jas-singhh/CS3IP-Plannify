@@ -195,8 +195,10 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
      * Clears the contents of the local data set.
      */
     public void clearData() {
-        if (localDataSet != null)
+        if (localDataSet != null) {
             localDataSet.clear();
+            notifyDataSetChanged();
+        }
     }
 
 
