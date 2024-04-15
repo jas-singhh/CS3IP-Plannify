@@ -16,6 +16,11 @@ public class QuoteRepository {
         this.request = RetrofitClient.getQuoteRetrofitInstance().create(MyQuoteService.class);
     }
 
+    /**
+     * Returns the health quote of the day.
+     *
+     * @return the health quote of the day.
+     */
     public Call<NetworkQuote> getHealthQuoteOfTheDay() {
         return request.getHealthQuoteOfTheDay();
     }

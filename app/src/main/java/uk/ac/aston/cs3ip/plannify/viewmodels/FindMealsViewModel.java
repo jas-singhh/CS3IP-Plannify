@@ -209,6 +209,11 @@ public class FindMealsViewModel extends ViewModel {
         return autoCompleteResult;
     }
 
+    /**
+     * Returns random healthy recipes.
+     *
+     * @return random healthy recipes.
+     */
     public MutableLiveData<RecipeResponseList> getRandomHealthyRecipes() {
         return randomHealthyRecipes;
     }

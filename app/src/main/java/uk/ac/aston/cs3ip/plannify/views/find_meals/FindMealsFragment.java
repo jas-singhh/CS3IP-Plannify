@@ -144,12 +144,10 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
 
         binding.customMealAutoCompleteSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -187,15 +185,12 @@ public class FindMealsFragment extends Fragment implements HomeMealsOnClickInter
                 if (recipeResponseList.getResults().isEmpty()) {
                     // show no results message
                     binding.noResultsMessageParent.setVisibility(View.VISIBLE);
-
                     mAdapter.clearData();
                 } else {
                     // hide no results message in case it is visible
                     binding.noResultsMessageParent.setVisibility(View.GONE);
-
                     mAdapter.updateData((ArrayList<? extends NetworkRecipe>) recipeResponseList.getResults());
                 }
-
             }
 
             if (animatedLoading != null) animatedLoading.dismiss();

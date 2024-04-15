@@ -99,16 +99,10 @@ public class MealDetailsFragment extends Fragment {
                     }
                 }
             }
-
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
     }
 
@@ -119,7 +113,6 @@ public class MealDetailsFragment extends Fragment {
      */
     private void displayMealMainAttributes() {
         if (selectedNetworkRecipe == null) return;
-
 
         // image
         Picasso.get().load(selectedNetworkRecipe.getImage())
@@ -162,7 +155,6 @@ public class MealDetailsFragment extends Fragment {
 
             // show no results status message if there are no ingredients
         }
-
     }
 
     /**

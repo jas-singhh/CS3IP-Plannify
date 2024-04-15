@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import uk.ac.aston.cs3ip.plannify.R;
 import uk.ac.aston.cs3ip.plannify.models.network_recipe.NetworkRecipe;
+import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 
 public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyViewHolder> {
 
@@ -146,7 +147,7 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         } else {
             // it is not a custom recipe
             int healthRating = currentItem.getHealthScore();
-            int numStars = getStarRatingFromHealthScore(healthRating);
+            int numStars = Utilities.getStarRatingFromHealthScore(healthRating);
             ImageView[] stars = new ImageView[numStars];
 
             for (int i = 0; i < stars.length; i++) {
@@ -209,22 +210,6 @@ public class HomeMealsAdapter extends RecyclerView.Adapter<HomeMealsAdapter.MyVi
         if (pos == RecyclerView.NO_POSITION || localDataSet.size() == 0) return null;
 
         return localDataSet.get(pos);
-    }
-
-    /**
-     * Calculates the rating in stars depending on the specified health score.
-     *
-     * @param healthScore health score based on which the rating is calculated.
-     * @return rating for the specified health score ranging from 0 to 5.
-     */
-    private int getStarRatingFromHealthScore(int healthScore) {
-        int result = 0;
-        if (healthScore >= 0 && healthScore <= 20) result = 1;
-        else if (healthScore > 20 && healthScore <= 40) result = 2;
-        else if (healthScore > 40 && healthScore <= 60) result = 3;
-        else if (healthScore > 60 && healthScore <= 80) result = 4;
-        else if (healthScore > 80 && healthScore <= 100) result = 5;
-        return result;
     }
 
 }

@@ -35,7 +35,6 @@ import uk.ac.aston.cs3ip.plannify.viewmodels.FindMealsViewModel;
 
 public class DialogFindMealsFilters extends Dialog {
 
-
     private final Context context;
     private final FindMealsViewModel findMealsViewModel;
     private HashMap<EnumFilterId, List<String>> filtersMap;

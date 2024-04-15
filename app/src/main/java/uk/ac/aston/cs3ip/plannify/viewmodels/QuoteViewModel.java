@@ -25,10 +25,21 @@ public class QuoteViewModel extends ViewModel {
         healthQuoteOfTheDay = new MutableLiveData<>();
     }
 
+    /**
+     * Returns the quote of the day live data.
+     *
+     * @return quote of the day.
+     */
     public MutableLiveData<NetworkQuote> getHealthQuoteOfTheDay() {
         return healthQuoteOfTheDay;
     }
 
+    /**
+     * Requests the quote through an API call and stores the response in the live data on success,
+     * or outputs an error message on failure.
+     *
+     * @param quoteRepository quote repository for creating the API request.
+     */
     public void requestHealthQuoteOfTheDay(QuoteRepository quoteRepository) {
         Call<NetworkQuote> request = quoteRepository.getHealthQuoteOfTheDay();
         request.enqueue(new Callback<NetworkQuote>() {
@@ -50,6 +61,11 @@ public class QuoteViewModel extends ViewModel {
         });
     }
 
+    /**
+     * Stores the response into the live data.
+     *
+     * @param response response to store into the live data.
+     */
     private void storeResponse(NetworkQuote response) {
         healthQuoteOfTheDay.setValue(response);
     }

@@ -100,6 +100,12 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
         viewHolder.getIngredientAisle().setText(getIngredientAisleText(localDataSet[position]));
     }
 
+    /**
+     * Returns a readable format for the ingredient quantity for the specified ingredient.
+     *
+     * @param ingredient ingredient for which to format the quantity text.
+     * @return formatted version of the ingredient quantity for the specified ingredient.
+     */
     private String getIngredientQuantityText(ExtendedIngredient ingredient) {
         String quantity = "Quantity: ";
 
@@ -127,6 +133,12 @@ public class MealDetailsIngredientsAdapter extends RecyclerView.Adapter<MealDeta
         return quantity;
     }
 
+    /**
+     * Returns a readable format for the ingredient aisle text for the specified ingredient.
+     *
+     * @param ingredient ingredient for which to format the aisle text.
+     * @return formatted version of the ingredient aisle text for the specified ingredient.
+     */
     private String getIngredientAisleText(ExtendedIngredient ingredient) {
         String aisle = "Aisle: ";
 

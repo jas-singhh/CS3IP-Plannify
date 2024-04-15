@@ -35,7 +35,6 @@ import uk.ac.aston.cs3ip.plannify.utils.Utilities;
 
 
 public class DialogSaveRecipe extends Dialog {
-
     private Dialog dialog;
     private DatePickerDialog datePickerDialog;
     private final TextView dateBtn;
@@ -67,6 +66,12 @@ public class DialogSaveRecipe extends Dialog {
         createAlertDialog(context, view);
     }
 
+    /**
+     * Initialises the selected recipe's details.
+     *
+     * @param view view required to display information about the selected recipe.
+     * @param selectedNetworkRecipe selected recipe, for which to display details.
+     */
     private void initRecipeDetails(View view, NetworkRecipe selectedNetworkRecipe) {
         if (view == null || selectedNetworkRecipe == null) return;
 
@@ -105,6 +110,12 @@ public class DialogSaveRecipe extends Dialog {
     }
 
 
+    /**
+     * Creates the alert dialog.
+     *
+     * @param context context required to create the alert dialog.
+     * @param view view required to create the alert dialog.
+     */
     private void createAlertDialog(Context context, View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);

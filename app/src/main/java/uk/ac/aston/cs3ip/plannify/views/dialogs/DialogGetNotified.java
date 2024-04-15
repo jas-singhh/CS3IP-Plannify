@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -46,11 +45,22 @@ public class DialogGetNotified extends Dialog {
         this.show();
     }
 
+    /**
+     * Initialises the cancel button to dismiss the dialog.
+     *
+     * @param view view required to get a reference of the cancel button.
+     */
     private void initCancelButton(View view) {
         Button cancelBtn = view.findViewById(R.id.notifications_cancel_btn);
         cancelBtn.setOnClickListener(v -> dismiss());
     }
 
+    /**
+     * Initialises the accept button.
+     *
+     * @param view view required to get a reference of the accept button.
+     * @param context context required to request notifications' permissions.
+     */
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void initAcceptButton(View view, Context context) {
         Button acceptBtn = view.findViewById(R.id.notifications_accept_btn);

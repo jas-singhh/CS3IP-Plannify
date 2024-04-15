@@ -61,7 +61,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
                 ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         mDisposable = new CompositeDisposable();
 
-
         requestBreakfastMeals();
     }
 
@@ -80,7 +79,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
         // setup UI elements
         initChipGroupOnClickListeners();
         initRecyclerView();
-
 
         // Observe the quote data requested from the API
         quoteViewModel.getHealthQuoteOfTheDay().observe(getViewLifecycleOwner(), quote -> binding.tvMotivationalQuote.setText(quote.getQuote()));
@@ -280,7 +278,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
     @Override
     public void onStop() {
         super.onStop();
-
         /*
          * Reference1: https://developer.android.com/training/data-storage/room/async-queries
          * Reference2: https://github.com/android/architecture-components-samples/blob/main/BasicRxJavaSample/app/src/main/java/com/example/android/observability/persistence/LocalUserDataSource.java
@@ -291,7 +288,6 @@ public class HomeFragment extends Fragment implements HomeMealsOnClickInterface 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         /*
          * Reference1: https://developer.android.com/training/data-storage/room/async-queries
          * Reference2: https://github.com/android/architecture-components-samples/blob/main/BasicRxJavaSample/app/src/main/java/com/example/android/observability/persistence/LocalUserDataSource.java

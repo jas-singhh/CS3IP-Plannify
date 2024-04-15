@@ -8,7 +8,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -35,8 +34,6 @@ public class NotificationPublisher extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.d(MainActivity.TAG, "Notification Publisher called");
-
         rescheduleNotification(context, intent);
 
         Notification notification = buildNotification(context, intent);
@@ -51,6 +48,12 @@ public class NotificationPublisher extends BroadcastReceiver {
         notificationManager.notify(uniqueId, notification);
     }
 
+    /**
+     * Reschedules the notifications for the specific meal type.
+     *
+     * @param context context required for rescheduling the notification.
+     * @param intent intent from which to fetch the meal type to reschedule its notification.
+     */
     private void rescheduleNotification(Context context, Intent intent) {
 
         EnumMealType mealType = EnumMealType.getEnumMealTypeFromValue(intent.getStringExtra(TITLE));

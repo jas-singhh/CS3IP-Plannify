@@ -14,7 +14,12 @@ public class RetrofitClient {
 
     private RetrofitClient(){}
 
-    // thread safe
+    /**
+     * Returns the retrofit instance for the recipes, ensuring synchronised access
+     * to the instance.
+     *
+     * @return the retrofit instance for the recipes.
+     */
     public static Retrofit getRecipeRetrofitInstance() {
         if (RECIPE_RETROFIT == null) {
             synchronized (RetrofitClient.class) {
@@ -28,6 +33,11 @@ public class RetrofitClient {
         return RECIPE_RETROFIT;
     }
 
+    /**
+     * Returns the retrofit instance for the quote.
+     *
+     * @return the retrofit instance for the quote.
+     */
     public static Retrofit getQuoteRetrofitInstance() {
         if (QUOTE_RETROFIT == null) {
             synchronized (RetrofitClient.class) {

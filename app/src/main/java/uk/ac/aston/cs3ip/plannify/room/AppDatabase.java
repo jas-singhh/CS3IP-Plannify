@@ -20,6 +20,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
 
+    /**
+     * Synchronously returns the database for the specified context, ensuring
+     * that multiple threads do not access it at the same time.
+     *
+     * @param context context for which to return the database instance.
+     * @return the database instance for the provided context.
+     */
     public static synchronized AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {

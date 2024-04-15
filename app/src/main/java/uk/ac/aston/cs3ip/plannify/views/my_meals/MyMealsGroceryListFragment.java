@@ -84,13 +84,9 @@ public class MyMealsGroceryListFragment extends Fragment implements MyMealsGroce
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-
                     // hide or show status message depending on whether there are saved recipes or not.
                     int statusMessageVisibility = list.isEmpty() ? View.VISIBLE : View.GONE;
                     binding.noGroceryItemsMessageParent.setVisibility(statusMessageVisibility);
-
-//                    Log.d(MainActivity.TAG, "recipes for dates: " + CalendarUtils.getFormattedDayMonthYearFromDate(from)
-//                            + " - " + CalendarUtils.getFormattedDayMonthYearFromDate(to) + "\n");
 
                     // hashset is better in performance - no duplicates
                     HashSet<GroceryItem> uniqueGroceryItems = new HashSet<>();

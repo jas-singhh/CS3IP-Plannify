@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,7 +44,7 @@ public class DialogSuccess extends Dialog {
         }
         dialog.show();
 
-//        reference: https://stackoverflow.com/questions/14445745/android-close-dialog-after-5-seconds
+        // reference: https://stackoverflow.com/questions/14445745/android-close-dialog-after-5-seconds
         // automatically close the dialog after 5 seconds
         Handler handler = new Handler();
         Runnable runnable = () -> {

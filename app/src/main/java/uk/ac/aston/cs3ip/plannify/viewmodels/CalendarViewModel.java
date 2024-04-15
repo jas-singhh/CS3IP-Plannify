@@ -21,18 +21,38 @@ public class CalendarViewModel extends ViewModel {
         viewingDate.setValue(LocalDate.now());
     }
 
+    /**
+     * Returns the selected date live data.
+     *
+     * @return the selected date.
+     */
     public MutableLiveData<LocalDate> getSelectedDate() {
         return selectedDate;
     }
 
+    /**
+     * Sets the selected date live data.
+     *
+     * @param selectedDate selected date to set.
+     */
     public void setSelectedDate(LocalDate selectedDate) {
         this.selectedDate.setValue(selectedDate);
     }
 
+    /**
+     * Returns the viewing date.
+     *
+     * @return the viewing date.
+     */
     public MutableLiveData<LocalDate> getViewingDate() {
         return viewingDate;
     }
 
+    /**
+     * Sets the viewing date.
+     *
+     * @param viewingDate viewing date to set.
+     */
     public void setViewingDate(LocalDate viewingDate) {
         this.viewingDate.setValue(viewingDate);
     }

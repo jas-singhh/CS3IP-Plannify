@@ -90,6 +90,12 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
         holder.getIngredientsQuantity().setText(quantityAndUnit);
     }
 
+    /**
+     * Returns a readable format for the ingredient aisle text for the specified ingredient.
+     *
+     * @param ingredient ingredient for which to format the aisle text.
+     * @return formatted version of the ingredient aisle text for the specified ingredient.
+     */
     private String getIngredientQuantityText(ExtendedIngredient ingredient) {
         String quantity = "";// default
 
@@ -164,6 +170,9 @@ public class CustomMealIngredientsAdapter extends RecyclerView.Adapter<CustomMea
         return localDataSet;
     }
 
+    /**
+     * Clears the local data set.
+     */
     public void clearDataSet() {
         if (localDataSet != null && !localDataSet.isEmpty()) {
             localDataSet.clear();

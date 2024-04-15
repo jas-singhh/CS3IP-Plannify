@@ -220,9 +220,9 @@ public class MyMealsGroceryListItemsAdapter extends RecyclerView.Adapter<MyMeals
         }
     }
 
-    public ArrayList<GroceryItem> getLocalDataSet() {
-        return localDataSet;
-    }
+    /**
+     * Clears the local data set.
+     */
     public void clearDataSet() {
         if (localDataSet != null && !localDataSet.isEmpty()) localDataSet.clear();
     }
