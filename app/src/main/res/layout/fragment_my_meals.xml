@@ -61,7 +61,7 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:clickable="true"
                 android:padding="10dp"
-                app:srcCompat="@drawable/ic_next"
+                app:srcCompat="@drawable/ic_arrow_forward"
                 app:tint="@color/text_white" />
 
         </RelativeLayout>
