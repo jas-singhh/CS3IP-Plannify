@@ -89,7 +89,7 @@
 - <b>Automated Grocery List: </b>Automatically generate your grocery list based on your planned meals.
 - <b>Meal Suggestions: </b>Explore a range of suggested meals for different times of the day.
 - <b>Find Meals: </b>Browse through specific meals from an extensive list of recipes based on your preferences.
-- <b>Meal Healthiness Rating: </b>View each meal's healthiness level through the intuitive star-rating system, encouraging healthier meal choices.
+- <b>Meal Health Rating: </b>View each meal's healthiness level through the intuitive star-rating system, encouraging healthier meal choices.
 - <b>Motivational Quote Of The Day: </b>View motivational quotes updated each day to uplift your mood, encouraging you to adopt a healthier lifestyle.
 - <b>Custom Meals: </b>Create your own meals for your weekly plan.
 - <b>Animated Loading Screen: </b>Enjoy your experience with an animated loading screen.
